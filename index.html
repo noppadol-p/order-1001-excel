@@ -197,6 +197,16 @@ main { min-height: 60vh; }
 .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 @media (min-width: 600px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } }
 @media (min-width: 744px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } }
+/* จอใหญ่: หน้าสินค้ากว้างขึ้นและเพิ่มคอลัมน์ (หน้าอื่นคงความกว้างเดิมให้อ่านง่าย) */
+@media (min-width: 1300px) {
+  .wrap { max-width: 1300px; }
+  .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
+}
+@media (min-width: 1600px) {
+  .wrap { max-width: 1580px; }
+  .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; }
+}
+#view-cart .wrap, #view-history .wrap, #view-me .wrap, .checkout .wrap { max-width: 1120px; }
 
 .card {
   display: flex; flex-direction: column;
@@ -435,6 +445,11 @@ main { min-height: 60vh; }
 .menu button small { color: var(--muted); font-size: 13px; }
 .menu .is-danger { color: var(--danger); }
 .account { padding: 14px; }
+.link-btn { display: block; margin: 10px 0 0 auto; padding: 4px 0; border: 0; background: none; color: var(--muted); font-size: 12.5px; text-decoration: underline; text-underline-offset: 2px; }
+.claim-list { margin: 10px 0 0; padding: 0; list-style: none; text-align: left; font-size: 13.5px; }
+.claim-list li { display: flex; justify-content: space-between; gap: 8px; padding: 7px 0; border-top: 1px solid var(--line); }
+.claim-list li small { color: var(--muted); display: block; }
+.claim-list b { font-weight: 600; white-space: nowrap; }
 .acc-txt { margin: 0 0 12px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
 .gsi { min-height: 44px; display: flex; justify-content: center; }
 .acc-err { margin: 8px 0 0; font-size: 13px; color: var(--danger); text-align: center; }
@@ -788,6 +803,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
             <div class="acc-who"><b id="accName"></b><span id="accEmail"></span></div>
             <button type="button" class="chip-btn" id="accLogout">ออกจากระบบ</button>
           </div>
+          <button type="button" class="link-btn" id="accLogoutAll" hidden>ออกจากระบบทุกเครื่อง</button>
         </div>
       </section>
 
@@ -835,7 +851,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.2.2</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.3.0</p>
     </div>
   </section>
 </main>
@@ -913,7 +929,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const API_URL = (CFG.API_URL || /*__API_URL__*/'').trim();   // URL /exec ของ Apps Script (โหมด PWA)
   const USE_SW = true;
   const MAX_QTY = 9999;
-  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', iosHint: 'b1001:ios-hint' };
+  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', session: 'b1001:session', iosHint: 'b1001:ios-hint' };
   const GOOGLE_CLIENT_ID = String(CFG.GOOGLE_CLIENT_ID || '').trim();
   const HISTORY_MAX = 50;
   const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
@@ -929,7 +945,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // สำรองรหัสเครื่องและข้อมูลผู้สั่งไว้ใน cookie อายุ 400 วัน (ต่ออายุทุกครั้งที่เปิดแอป)
   // ถ้า localStorage ถูกล้างแต่ cookie ยังอยู่ แอปจะกู้คืนให้เอง
-  const MIRROR = { 'b1001:device': 'b1001_dev', 'b1001:profile': 'b1001_prof', 'b1001:account': 'b1001_acc' };
+  const MIRROR = { 'b1001:device': 'b1001_dev', 'b1001:profile': 'b1001_prof', 'b1001:account': 'b1001_acc', 'b1001:session': 'b1001_ses' };
   const cookie = {
     get(name) {
       try { const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
@@ -989,6 +1005,9 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     return k;
   }
   const prettyKey = k => k.match(/.{1,4}/g).join('-');   // XXXX-XXXX-...
+  // ตัวตนที่ส่งไปกับทุกคำขอ: บัตรผ่านเมื่อเข้าสู่ระบบ Google ไม่อย่างนั้นใช้รหัสเครื่อง
+  const signedIn = () => !!(store.get(K.session, '') && store.get(K.account, null));
+  const ownerParams = () => (signedIn() ? { session: store.get(K.session, '') } : { device_key: deviceKey() });
   function haptic(ms) { try { navigator.vibrate && navigator.vibrate(ms || 8); } catch (e) {} }
   function bump(el) { if (!el || reduceMotion) return; el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
   const newId = () => (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
@@ -1023,6 +1042,16 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 
   // ================= Backend =================
   const onAppsScript = !!(window.google && google.script && google.script.run);
+  function onSessionError(err) {
+    const m = String((err && err.message) || '');
+    if (m.indexOf('SESSION_INVALID') !== 0) throw err;
+    if (store.get(K.session, '')) {
+      store.set(K.session, ''); store.set(K.account, null);
+      store.set(K.history, []); store.set(K.histSync, 0);
+      setTimeout(() => { if (view === 'me') renderMe(); toast('การเข้าสู่ระบบหมดอายุ กรุณาเข้าสู่ระบบ Google อีกครั้ง'); }, 0);
+    }
+    throw new Error(m.replace(/^SESSION_INVALID:\s*/, ''));
+  }
   function call(fn, arg) {
     if (onAppsScript) {
       return new Promise((resolve, reject) => {
@@ -1031,7 +1060,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           .withFailureHandler(e => reject(new Error(String((e && e.message) || e).replace(/^(Exception|Error):\s*/, ''))))[fn](arg);
       });
     }
-    if (API_URL) return callApi(fn, arg);
+    if (API_URL) return callApi(fn, arg).catch(onSessionError);
     if (DEMO_PRODUCTS) return demo(fn, arg);
     return Promise.reject(new Error('ยังไม่ได้ตั้งค่า API_URL ในไฟล์ config.js'));
   }
@@ -1827,7 +1856,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         const [dd, tt] = t.split('T'), [y, m, day] = dd.split('-');
         try {
           return await call('uploadSlip', {
-            device_key: deviceKey(), order_no: h.order_no, amount,
+            ...ownerParams(), order_no: h.order_no, amount,
             paid_at: `${day}/${m}/${y} ${tt}`, note: document.getElementById('sw-pnote').value.trim(),
             image: { base64: slip.base64, mimeType: slip.mimeType },
           });
@@ -1872,8 +1901,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   function renderAccount() {
     const on = canGoogle();
     $('accountSection').hidden = !on;
-    const acc = on ? store.get(K.account, null) : null;
-    $('accIn').hidden = !acc; $('accOut').hidden = !!acc;
+    const acc = on && signedIn() ? store.get(K.account, null) : null;
+    $('accIn').hidden = !acc; $('accOut').hidden = !!acc; $('accLogoutAll').hidden = !acc;
     ['recoverTitle', 'recoverPanel', 'unlinkPanel'].forEach(id => { $(id).hidden = !!acc; });   // บัญชี Google ใช้แทนรหัสกู้คืน
     if (!on) return;
     if (acc) {
@@ -1906,7 +1935,10 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       showConfirmButton: false, allowOutsideClick: false, allowEscapeKey: false,
       didOpen: () => {
         if (window.Swal) Swal.showLoading();
-        call('linkGoogle', { id_token: resp && resp.credential, device_key: deviceKey() })
+        const ua = navigator.userAgent || '';
+        const device = (/iPhone|iPad/.test(ua) ? 'iOS' : /Android/.test(ua) ? 'Android' : /Mac/.test(ua) ? 'Mac' : /Windows/.test(ua) ? 'Windows' : 'อื่นๆ') +
+          (standalone ? ' (แอป)' : /Chrome\//.test(ua) ? ' Chrome' : /Safari\//.test(ua) ? ' Safari' : '');
+        call('linkGoogle', { id_token: resp && resp.credential, device_key: deviceKey(), device })
           .then(r => { res = r; }).catch(e => { err = e; })
           .then(() => { if (window.Swal) Swal.close(); });
       },
@@ -1914,14 +1946,43 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (err || !res) {
       return dialog({ icon: 'error', title: 'เข้าสู่ระบบไม่สำเร็จ', html: esc((err && err.message) || 'ลองใหม่อีกครั้ง'), confirmButtonText: 'ตกลง' });
     }
-    store.set(K.device, res.key);                         // ใช้รหัสบัญชีแทนรหัสเครื่อง: ทุกเบราว์เซอร์ได้รหัสเดียวกัน
+    store.set(K.session, res.session);                    // บัตรผ่านของเครื่องนี้ (ยกเลิกได้) รหัสเครื่องเดิมยังเก็บไว้
     store.set(K.account, { email: res.email, name: res.name, picture: res.picture });
     store.set(K.history, []); store.set(K.histSync, 0);
     if (!profile.full_name && res.name) saveProfile({ full_name: res.name });
     requestPersist();
     renderMe();
+    // เครื่องนี้มีคำสั่งซื้อที่สั่งโดยไม่ล็อกอิน: ถามก่อนย้ายเข้าบัญชี (กันกรณีมือถือใช้ร่วมกัน)
+    const pend = res.pending || [];
+    if (pend.length) {
+      const shown = pend.slice(0, 5);
+      const c = await dialog({
+        icon: 'question', iconColor: iconColor(), title: 'ย้ายคำสั่งซื้อในเครื่องนี้เข้าบัญชี?',
+        html: `พบ ${num(pend.length)} คำสั่งซื้อที่สั่งจากเครื่องนี้โดยไม่ได้เข้าสู่ระบบ ย้ายเข้าบัญชี <b>${esc(res.email)}</b> เฉพาะเมื่อเป็นของคุณเอง
+          <ul class="claim-list">${shown.map(o => `<li><span>${esc(o.order_no)}<small>${esc(o.created_at)} ${esc(o.full_name)}</small></span><b>${baht(o.total)}</b></li>`).join('')}</ul>
+          ${pend.length > shown.length ? `<p class="pay-line">และอีก ${num(pend.length - shown.length)} คำสั่งซื้อ</p>` : ''}`,
+        showDenyButton: true, confirmButtonText: 'ย้ายเข้าบัญชี', denyButtonText: 'ไม่ใช่ของฉัน ไม่ต้องย้าย',
+        reverseButtons: false, customClass: Object.assign({}, SW_CLASS, { popup: 'sw is-stacked' }),
+      });
+      if (c.isConfirmed) {
+        try {
+          const r = await call('claimDeviceOrders', { session: res.session, device_key: deviceKey() });
+          toast(`ย้ายเข้าบัญชีแล้ว ${num(r.moved ? pend.length : 0)} คำสั่งซื้อ`);
+        } catch (e2) { toast(e2.message || 'ย้ายไม่สำเร็จ ลองใหม่ภายหลัง'); }
+      } else {
+        toast('ไม่ย้าย คำสั่งซื้อเหล่านั้นยังอยู่กับเครื่องนี้');
+      }
+    } else {
+      toast(`เข้าสู่ระบบแล้ว ${res.email}`);
+    }
     syncHistory(true);
-    toast(res.moved_rows ? `เข้าสู่ระบบแล้ว ย้ายประวัติเดิมเข้าบัญชีให้แล้ว` : `เข้าสู่ระบบแล้ว ${res.email}`);
+  }
+  async function signOutLocal() {
+    try { if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); } catch (e) {}
+    store.set(K.session, ''); store.set(K.account, null);
+    store.set(K.history, []); store.set(K.histSync, 0);   // กลับไปใช้ประวัติของรหัสเครื่องนี้
+    renderMe();
+    syncHistory(true);
   }
   $('accLogout').addEventListener('click', async () => {
     const acc = store.get(K.account, null);
@@ -1931,12 +1992,26 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       showCancelButton: true, confirmButtonText: 'ออกจากระบบ', cancelButtonText: 'ยกเลิก', focusCancel: true,
     });
     if (!r.isConfirmed) return;
-    try { if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); } catch (e) {}
-    store.set(K.account, null);
-    store.set(K.device, newDeviceKey());
-    store.set(K.history, []); store.set(K.histSync, 0);
-    renderMe();
+    const tok = store.get(K.session, '');
+    if (tok && !offline) { try { await call('logout', { session: tok }); } catch (e) {} }   // ยกเลิกบัตรผ่านที่หลังบ้าน
+    await signOutLocal();
     toast('ออกจากระบบแล้ว');
+  });
+  $('accLogoutAll').addEventListener('click', async () => {
+    if (offline) return dialog({ icon: 'warning', iconColor: iconColor(), title: 'ยังออฟไลน์อยู่', html: 'ต่ออินเทอร์เน็ตแล้วลองใหม่', confirmButtonText: 'ตกลง' });
+    const acc = store.get(K.account, null);
+    const r = await dialog({
+      icon: 'warning', iconColor: iconColor(), title: 'ออกจากระบบทุกเครื่อง?',
+      html: `ทุกเครื่องและทุกเบราว์เซอร์ที่เข้าสู่ระบบ ${esc(acc ? acc.email : 'บัญชีนี้')} จะต้องเข้าสู่ระบบใหม่ ใช้เมื่อมือถือหายหรือเคยเข้าสู่ระบบบนเครื่องของคนอื่น`,
+      showCancelButton: true, confirmButtonText: 'ออกจากระบบทุกเครื่อง', cancelButtonText: 'ยกเลิก', focusCancel: true,
+      customClass: Object.assign({}, SW_CLASS, { confirmButton: 'btn btn-primary btn-danger' }),
+    });
+    if (!r.isConfirmed) return;
+    try {
+      const res = await call('logoutAll', { session: store.get(K.session, '') });
+      await signOutLocal();
+      toast(`ออกจากระบบแล้ว ${num(res.revoked || 0)} เครื่อง`);
+    } catch (e) { toast(e.message || 'ทำรายการไม่สำเร็จ'); }
   });
 
   // ================= Checkout =================
@@ -1969,7 +2044,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         try {
           return await call('placeOrder', {
             full_name: profile.full_name, department: profile.department, phone: profile.phone,
-            items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, device_key: deviceKey(),
+            items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, ...ownerParams(),
           });
         } catch (err) {
           if (window.Swal) Swal.showValidationMessage((err && err.message) || 'ส่งคำสั่งซื้อไม่สำเร็จ ลองใหม่อีกครั้ง');
@@ -1979,7 +2054,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     });
     let res = r.value;
     if (!hasSwal && r.isConfirmed) {
-      try { res = await call('placeOrder', { full_name: profile.full_name, department: profile.department, phone: profile.phone, items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, device_key: deviceKey() }); }
+      try { res = await call('placeOrder', { full_name: profile.full_name, department: profile.department, phone: profile.phone, items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, ...ownerParams() }); }
       catch (err) { alert(err.message); return; }
     }
     if (!r.isConfirmed || !res) return;
@@ -2066,7 +2141,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     syncing = true; syncFailed = false;
     if (view === 'history' && !store.get(K.history, []).length) renderHistory();
     try {
-      const res = await call('getMyOrders', { device_key: deviceKey() });
+      const res = await call('getMyOrders', ownerParams());
       store.set(K.history, ((res && res.orders) || []).slice(0, HISTORY_MAX));
       store.set(K.histSync, Date.now());
     } catch (e) {
@@ -2262,6 +2337,12 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 
   // ================= Start =================
   setOffline(offline);
+  // ผู้ที่เข้าสู่ระบบด้วยเวอร์ชันก่อน 1.3.0 (รหัสบัญชีแบบคงที่): ล้างออก แล้วเข้าสู่ระบบใหม่เพื่อรับบัตรผ่าน
+  if (store.get(K.account, null) && !store.get(K.session, '')) {
+    store.set(K.account, null); store.set(K.device, newDeviceKey());
+    store.set(K.history, []); store.set(K.histSync, 0);
+    setTimeout(() => toast('ปรับระบบความปลอดภัยแล้ว กรุณาเข้าสู่ระบบ Google อีกครั้งในแท็บ ฉัน'), 1200);
+  }
   // ต่ออายุ cookie สำรอง (400 วันนับจากการเปิดครั้งล่าสุด)
   store.set(K.device, deviceKey());
   if (store.get(K.profile, null)) store.set(K.profile, store.get(K.profile, {}));
