@@ -43,6 +43,11 @@
   --ok-wash: #E9F3EA;
   --warn: #8A5300;
   --warn-wash: #FFF1D6;
+  --info: #1F5A8A;
+  --info-wash: #E4EEF8;
+  --bank: #1B7F3B;
+  --bank-wash: #F1F8F2;
+  --bank-line: #CFE6D5;
   --img-bg: #EEE7DF;
   --field: #FBF8F4;
   --scrim: rgba(26, 23, 20, .5);
@@ -66,7 +71,7 @@
     --line: #2E2823; --line-strong: #423A33;
     --accent: #D3A77E; --accent-press: #C4956B; --accent-text: #D9AE86; --accent-wash: #2C231C; --on-accent: #1A1714;
     --badge: #D3A77E; --on-badge: #1A1714;
-    --danger: #F97066; --danger-wash: #2A1715; --ok: #7BC08A; --ok-wash: #18261B; --warn: #F5B651; --warn-wash: #33260F;
+    --danger: #F97066; --danger-wash: #2A1715; --ok: #7BC08A; --ok-wash: #18261B; --warn: #F5B651; --warn-wash: #33260F; --info: #8CC4F2; --info-wash: #13263A; --bank: #2E9A52; --bank-wash: #142319; --bank-line: #24402C;
     --img-bg: #2A2521; --field: #1A1714; --scrim: rgba(0,0,0,.6);
     --toast-bg: #EDE6DE; --toast-ink: #1A1714;
     color-scheme: dark;
@@ -77,7 +82,7 @@
   --line: #2E2823; --line-strong: #423A33;
   --accent: #D3A77E; --accent-press: #C4956B; --accent-text: #D9AE86; --accent-wash: #2C231C; --on-accent: #1A1714;
   --badge: #D3A77E; --on-badge: #1A1714;
-  --danger: #F97066; --danger-wash: #2A1715; --ok: #7BC08A; --ok-wash: #18261B; --warn: #F5B651; --warn-wash: #33260F;
+  --danger: #F97066; --danger-wash: #2A1715; --ok: #7BC08A; --ok-wash: #18261B; --warn: #F5B651; --warn-wash: #33260F; --info: #8CC4F2; --info-wash: #13263A; --bank: #2E9A52; --bank-wash: #142319; --bank-line: #24402C;
   --img-bg: #2A2521; --field: #1A1714; --scrim: rgba(0,0,0,.6);
   --toast-bg: #EDE6DE; --toast-ink: #1A1714;
   color-scheme: dark;
@@ -331,6 +336,7 @@ main { min-height: 60vh; }
 .chip.is-done { background: var(--ok-wash); color: var(--ok); }
 .chip.is-cancel { background: var(--danger-wash); color: var(--danger); }
 .chip.is-partial { background: var(--warn-wash); color: var(--warn); }
+.chip.is-prep { background: var(--info-wash); color: var(--info); }
 .chip-sm { display: inline-block; justify-self: auto; font-size: 11px; padding: 1px 8px; margin-top: 4px; }
 .hist-name { display: block; }
 .chips { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; grid-row: span 2; }
@@ -342,7 +348,31 @@ main { min-height: 60vh; }
 .pay-st { color: var(--ink); }
 .pay-box .btn { margin-top: 8px; }
 .pay-box .item-note { background: var(--surface); }
-.slip .sw-sum { margin: 0 0 12px; }
+.pay-due { background: var(--paper); border-radius: 14px; padding: 12px 14px; margin: 0 0 10px; text-align: left; }
+.pay-due-lbl, .pay-due-no { display: block; font-size: 12.5px; color: var(--muted); }
+.pay-due-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; margin: 2px 0; }
+.pay-due-row b { white-space: nowrap; }
+.pay-due-row b { font-size: 26px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.bank-card { border: 1px solid var(--bank-line); background: var(--bank-wash); border-radius: 14px; padding: 12px 14px; margin: 0 0 12px; text-align: left; }
+.bank-top { display: flex; align-items: center; gap: 10px; }
+.bank-ico { width: 34px; height: 34px; border-radius: 10px; background: var(--bank); color: #fff; display: grid; place-items: center; flex: none; }
+.bank-ico svg { width: 20px; height: 20px; }
+.bank-who { min-width: 0; line-height: 1.35; }
+.bank-who b { display: block; font-weight: 600; color: var(--ink); }
+.bank-who span { display: block; font-size: 12.5px; color: var(--muted); }
+.bank-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 10px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--bank-line); }
+.bank-num { font-size: 21px; font-weight: 600; letter-spacing: .03em; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bank-row .copy-btn { margin-left: auto; }
+.bank-note { margin: 8px 0 0; font-size: 12.5px; color: var(--muted); }
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 5px; flex: none; min-height: 36px; padding: 0 12px;
+  border-radius: 999px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.copy-btn svg { width: 15px; height: 15px; }
+.copy-btn.is-done { border-color: var(--ok); color: var(--ok); background: var(--ok-wash); }
+.slip-step { margin: 0 0 8px; font-size: 13.5px; color: var(--muted); text-align: left; }
+.slip-step b { color: var(--ink); font-weight: 600; }
 .bank { background: var(--accent-wash); border-radius: 12px; padding: 10px 12px; margin: 0 0 12px; text-align: left; line-height: 1.45; }
 .bank small { display: block; color: var(--muted); font-size: 12.5px; }
 .bank .bank-no { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0; }
@@ -681,6 +711,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
   <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 4l9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 20h18"/></symbol>
   <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
 </svg>
 
@@ -767,15 +798,15 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <input id="p-name" name="full_name" autocomplete="name" maxlength="120" enterkeyhint="next">
           <div class="err">กรอกชื่อ-นามสกุล</div>
         </div>
-        <div class="field" data-field="department">
-          <label for="p-dept">หน่วยงาน</label>
-          <input id="p-dept" name="department" autocomplete="organization-title" maxlength="120" enterkeyhint="next">
-          <div class="err">กรอกหน่วยงาน</div>
-        </div>
         <div class="field" data-field="phone">
-          <label for="p-phone">เบอร์โทร <span>(ไม่บังคับ)</span></label>
-          <input id="p-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" enterkeyhint="done">
-          <div class="err">เบอร์โทรไม่ถูกต้อง</div>
+          <label for="p-phone">เบอร์โทร</label>
+          <input id="p-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" enterkeyhint="next" placeholder="เช่น 081-234-5678">
+          <div class="err">กรอกเบอร์โทรให้ถูกต้อง (9–15 หลัก)</div>
+        </div>
+        <div class="field" data-field="department">
+          <label for="p-dept">หน่วยงาน <span>(ไม่บังคับ)</span></label>
+          <input id="p-dept" name="department" autocomplete="organization-title" maxlength="120" enterkeyhint="done">
+          <div class="err">หน่วยงานยาวเกินไป</div>
         </div>
         <button type="submit" class="btn btn-primary btn-block" style="margin-bottom:14px">บันทึกข้อมูล</button>
       </form>
@@ -804,7 +835,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.1.9</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.2.2</p>
     </div>
   </section>
 </main>
@@ -1027,7 +1058,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (fn === 'getProducts') return wait(DEMO_PRODUCTS);
     const demoOrders = () => store.get('b1001:demo-orders', []);
     if (fn === 'getMyOrders') return wait({ orders: demoOrders().filter(o => o.device === arg.device_key).map(o => Object.assign({}, o, { device: undefined })) });
-    if (fn === 'getAppInfo') return wait({ payment: null });
+    if (fn === 'getAppInfo') return wait({ payment: { bank: 'ธนาคารกสิกรไทย', account_no: '711-1-00099-3', account_name: 'บริษัท จงสถิตย์ จำกัด', note: '' } });
     if (fn === 'uploadSlip') {
       const all = demoOrders(), o = all.find(x => x.order_no === arg.order_no && x.device === arg.device_key);
       if (!o) return Promise.reject(new Error('คำสั่งซื้อนี้ไม่ได้ส่งจากเครื่องนี้'));
@@ -1068,7 +1099,9 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       .map(code => { const p = byCode[code], qty = cart[code]; return { p, code, qty, unit: p.price, total: p.price * qty }; });
   }
   const totals = () => lines().reduce((t, l) => ({ n: t.n + 1, qty: t.qty + l.qty, amt: t.amt + l.total }), { n: 0, qty: 0, amt: 0 });
-  const profileOk = () => profile.full_name.length >= 2 && !!profile.department;
+  // เบอร์โทร: ตัวเลข ช่องว่าง - + ( ) เท่านั้น และมีตัวเลข 9–15 หลัก (เช่น 081-234-5678, 02-123-4567, +66 81 234 5678)
+  const phoneOk = p => /^[0-9+\-\s()]{9,20}$/.test(p || '') && (String(p).replace(/\D/g, '').length >= 9) && (String(p).replace(/\D/g, '').length <= 15);
+  const profileOk = () => profile.full_name.length >= 2 && phoneOk(profile.phone);
 
   // ================= Render: products =================
   const stepper = (code, q) => `
@@ -1128,8 +1161,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     $('buyer').innerHTML = `
       <div class="buyer-ico">${icon('i-user')}</div>
       <div class="buyer-txt">${profileOk()
-        ? `<b>${esc(profile.full_name)}</b><span>${esc(profile.department)}${profile.phone ? ' โทร ' + esc(profile.phone) : ''}</span>`
-        : `<b>ยังไม่ได้ระบุผู้สั่ง</b><span class="warn">กรอกชื่อและหน่วยงานก่อนส่งคำสั่งซื้อ</span>`}</div>
+        ? `<b>${esc(profile.full_name)}</b><span>โทร ${esc(profile.phone)}${profile.department ? ', ' + esc(profile.department) : ''}</span>`
+        : `<b>${profile.full_name ? esc(profile.full_name) : 'ยังไม่ได้ระบุผู้สั่ง'}</b><span class="warn">${profile.full_name ? 'กรอกเบอร์โทรก่อนส่งคำสั่งซื้อ' : 'กรอกชื่อและเบอร์โทรก่อนส่งคำสั่งซื้อ'}</span>`}</div>
       <button type="button" class="chip-btn" id="editBuyer">${profileOk() ? 'แก้ไข' : 'กรอกข้อมูล'}</button>`;
     $('cartSum').innerHTML = `
       <div class="sum-row"><span>จำนวนรายการ</span><b>${num(t.n)} รายการ</b></div>
@@ -1610,8 +1643,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   function validateProfile(v) {
     const bad = [];
     if ((v.full_name || '').length < 2) bad.push('full_name');
-    if (!v.department) bad.push('department');
-    if (v.phone && !/^[0-9+\-\s]{6,20}$/.test(v.phone)) bad.push('phone');
+    if (!phoneOk(v.phone)) bad.push('phone');
+    if ((v.department || '').length > 120) bad.push('department');
     return bad;
   }
   function saveProfile(v) {
@@ -1626,23 +1659,24 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       title: 'ข้อมูลผู้สั่ง',
       html: `<div class="sw-form">
         ${field('full_name', 'ชื่อ-นามสกุล', '', 'autocomplete="name"')}
-        ${field('department', 'หน่วยงาน', '', 'autocomplete="organization-title"')}
-        ${field('phone', 'เบอร์โทร <span>(ไม่บังคับ)</span>', 'tel', 'autocomplete="tel"')}
+        ${field('phone', 'เบอร์โทร', 'tel', 'autocomplete="tel" placeholder="เช่น 081-234-5678"')}
+        ${field('department', 'หน่วยงาน <span>(ไม่บังคับ)</span>', '', 'autocomplete="organization-title"')}
       </div>`,
       showCancelButton: true, confirmButtonText: 'บันทึก', cancelButtonText: 'ยกเลิก',
-      didOpen: () => { const i = $(profile.full_name ? 'sw-department' : 'sw-full_name'); i && i.focus(); },
+      didOpen: () => { const i = $(!profile.full_name ? 'sw-full_name' : !phoneOk(profile.phone) ? 'sw-phone' : 'sw-department'); i && i.focus(); },
       preConfirm: () => {
         const v = { full_name: $('sw-full_name').value.trim(), department: $('sw-department').value.trim(), phone: $('sw-phone').value.trim() };
         const bad = validateProfile(v);
         if (bad.length) {
-          Swal.showValidationMessage({ full_name: 'กรอกชื่อ-นามสกุล', department: 'กรอกหน่วยงาน', phone: 'เบอร์โทรไม่ถูกต้อง' }[bad[0]]);
+          Swal.showValidationMessage({ full_name: 'กรอกชื่อ-นามสกุล', phone: v.phone ? 'เบอร์โทรไม่ถูกต้อง (ต้องมีตัวเลข 9–15 หลัก)' : 'กรอกเบอร์โทร', department: 'หน่วยงานยาวเกินไป' }[bad[0]]);
+          const f = $('sw-' + bad[0]); f && f.focus();
           return false;
         }
         return v;
       },
     });
     if (!hasSwal) {
-      const v = { full_name: (prompt('ชื่อ-นามสกุล', profile.full_name) || '').trim(), department: (prompt('หน่วยงาน', profile.department) || '').trim(), phone: profile.phone };
+      const v = { full_name: (prompt('ชื่อ-นามสกุล', profile.full_name) || '').trim(), phone: (prompt('เบอร์โทร', profile.phone) || '').trim(), department: (prompt('หน่วยงาน (ไม่บังคับ)', profile.department) || '').trim() };
       if (validateProfile(v).length) return false;
       saveProfile(v); if (view === 'cart') renderCart(); return true;
     }
@@ -1742,10 +1776,19 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const r = await dialog({
       title: 'แจ้งโอนเงิน',
       html: `<div class="sw-form slip">
-        <div class="sw-sum"><div><span>คำสั่งซื้อ</span><b>${esc(h.order_no)}</b></div><div class="is-total"><span>ยอดที่ต้องชำระ</span><b>${baht(due)}</b></div></div>
-        ${bank ? `<div class="bank"><small>${esc(bank.bank)}</small>
-            <div class="bank-no"><b>${esc(bank.account_no)}</b><button type="button" class="chip-btn" id="copyBank">คัดลอก</button></div>
-            ${bank.account_name ? `<small>${esc(bank.account_name)}</small>` : ''}${bank.note ? `<small class="bank-note">${esc(bank.note)}</small>` : ''}</div>` : ''}
+        <div class="pay-due">
+          <span class="pay-due-lbl">ยอดที่ต้องชำระ</span>
+          <div class="pay-due-row"><b>${baht(due)}</b><button type="button" class="copy-btn" id="copyAmt" data-copy="${due}" aria-label="คัดลอกยอดที่ต้องชำระ">${icon('i-copy')}<span>คัดลอก</span></button></div>
+          <span class="pay-due-no">คำสั่งซื้อ ${esc(h.order_no)}</span>
+        </div>
+        ${bank ? `<div class="bank-card">
+          <div class="bank-top"><span class="bank-ico">${icon('i-bank')}</span>
+            <div class="bank-who"><b>${esc(bank.bank)}</b>${bank.account_name ? `<span>${esc(bank.account_name)}</span>` : ''}</div></div>
+          <div class="bank-row"><span class="bank-num">${esc(bank.account_no)}</span>
+            <button type="button" class="copy-btn" id="copyBank" data-copy="${esc(String(bank.account_no).replace(/[^0-9]/g, ''))}" aria-label="คัดลอกเลขบัญชี">${icon('i-copy')}<span>คัดลอก</span></button></div>
+          ${bank.note ? `<p class="bank-note">${esc(bank.note)}</p>` : ''}
+        </div>` : ''}
+        <p class="slip-step"><b>โอนเงินแล้ว</b> แนบสลิปเป็นหลักฐาน</p>
         <label class="slip-pick" id="slipPick"><input type="file" id="slipFile" accept="image/*"><span id="slipPh">แตะเพื่อแนบรูปสลิป<br><small>ถ่ายรูปหรือเลือกจากคลังภาพ</small></span></label>
         <div class="field"><label for="sw-amt">ยอดที่โอน (บาท)</label><input id="sw-amt" type="text" inputmode="decimal" value="${due}"></div>
         <div class="field"><label for="sw-time">วันเวลาที่โอน</label><input id="sw-time" type="datetime-local" value="${nowLocal}" max="${nowLocal}"></div>
@@ -1756,8 +1799,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
       allowEscapeKey: () => !(window.Swal && Swal.isLoading()),
       didOpen: el => {
-        const cp = el.querySelector('#copyBank');
-        if (cp) cp.addEventListener('click', async () => { cp.textContent = (await copyText(bank.account_no.replace(/[^0-9]/g, ''))) ? 'คัดลอกแล้ว' : 'คัดลอกไม่ได้'; });
+        el.querySelectorAll('.copy-btn').forEach(btn => btn.addEventListener('click', async () => {
+          const ok = await copyText(btn.dataset.copy);
+          const label = btn.querySelector('span'), was = btn.dataset.label || label.textContent;
+          btn.dataset.label = was;
+          label.textContent = ok ? 'คัดลอกแล้ว' : 'คัดลอกไม่ได้';
+          btn.classList.toggle('is-done', ok); haptic(6);
+          setTimeout(() => { label.textContent = was; btn.classList.remove('is-done'); }, 1600);
+        }));
         el.querySelector('#slipFile').addEventListener('change', e => {
           const f = e.target.files && e.target.files[0];
           if (!f) return;
@@ -1907,7 +1956,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       title: 'ยืนยันส่งคำสั่งซื้อ?',
       html: `<div class="sw-sum">
         <div><span>ผู้สั่ง</span><b>${esc(profile.full_name)}</b></div>
-        <div><span>หน่วยงาน</span><b>${esc(profile.department)}</b></div>
+        <div><span>เบอร์โทร</span><b>${esc(profile.phone)}</b></div>
+        ${profile.department ? `<div><span>หน่วยงาน</span><b>${esc(profile.department)}</b></div>` : ''}
         <div><span>สินค้า</span><b>${num(t.n)} รายการ (${num(t.qty)} ผืน)</b></div>
         <div class="is-total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>
       </div>`,
@@ -1967,7 +2017,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   }
 
   // ================= History =================
-  const STATUS_CLASS = { 'จัดส่งแล้ว': 'is-done', 'ยกเลิก': 'is-cancel', 'จัดส่งบางส่วน': 'is-partial' };
+  const STATUS_CLASS = { 'เตรียมส่งของ': 'is-prep', 'จัดส่งแล้ว': 'is-done', 'ยกเลิก': 'is-cancel', 'จัดส่งบางส่วน': 'is-partial' };
   function renderHistory() {
     const list = store.get(K.history, []);
     const body = $('historyBody');
@@ -2003,7 +2053,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
               <b>${baht(it.total)}</b>
             </div>`).join('')}
           ${payBox(h)}
-          <p class="hist-who">${esc(h.full_name)} (${esc(h.department)})</p>
+          <p class="hist-who">${esc(h.full_name)}${h.department ? ` (${esc(h.department)})` : ''}</p>
           <button type="button" class="btn btn-ghost btn-block" data-reorder="${esc(h.order_no)}">สั่งรายการเดิมอีกครั้ง</button>
         </div>
       </details>`).join('');
