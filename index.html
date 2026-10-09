@@ -908,7 +908,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.4.0</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.5.0</p>
     </div>
   </section>
 </main>
@@ -2297,10 +2297,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
             <div class="hist-line${(it.status || h.status) === 'ยกเลิก' ? ' is-cancelled' : ''}">
               <img src="${esc((byCode[it.code] && byCode[it.code].image) || PLACEHOLDER)}" alt="" data-fallback>
               <div><span class="hist-name">${esc(it.name || it.code)}</span><small>${num(it.qty)} × ${baht(it.unit)}</small>
-                <span class="chip chip-sm ${STATUS_CLASS[it.status || h.status] || ''}">${esc(it.status || h.status || 'รอดำเนินการ')}</span>
+                ${it.status && it.status !== h.status ? `<span class="chip chip-sm ${STATUS_CLASS[it.status] || ''}">${esc(it.status)}</span>` : ''}
                 ${it.note ? `<p class="item-note"><b>หมายเหตุ</b> ${esc(it.note)}</p>` : ''}</div>
               <b>${baht(it.total)}</b>
             </div>`).join('')}
+          ${h.note ? `<p class="item-note"><b>หมายเหตุ</b> ${esc(h.note)}</p>` : ''}
           ${h.discount ? `<div class="hist-sum"><div><span>ยอดสินค้า</span><b>${baht(h.subtotal)}</b></div>
             <div class="disc"><span>ส่วนลดคูปอง (${esc(h.coupon)})</span><b>−${baht(h.discount)}</b></div>
             <div><span>ยอดชำระ</span><b>${baht(h.total_amount)}</b></div></div>` : ''}
