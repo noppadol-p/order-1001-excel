@@ -1198,8 +1198,12 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const coupon = () => store.get(K.coupon, null);
   const priced = () => {
     const t = totals(), c = coupon();
-    const disc = c ? Math.min(t.amt, Math.round(t.amt * c.percent * 100) / 100) : 0;
-    return Object.assign(t, { coupon: c, disc, net: Math.round((t.amt - disc) * 100) / 100 });
+    const percent = Number(c && c.percent);
+    const valid = !!(c && typeof c.code === 'string' && /^[A-Z0-9_-]{1,40}$/.test(c.code) &&
+      Number.isFinite(percent) && percent > 0 && percent <= 1);
+    const safeCoupon = valid ? Object.assign({}, c, { percent }) : null;
+    const disc = safeCoupon ? Math.min(t.amt, Math.round(t.amt * percent * 100) / 100) : 0;
+    return Object.assign(t, { coupon: safeCoupon, disc, net: Math.round((t.amt - disc) * 100) / 100 });
   };
   // เบอร์โทร: ตัวเลข ช่องว่าง - + ( ) เท่านั้น และมีตัวเลข 9–15 หลัก (เช่น 081-234-5678, 02-123-4567, +66 81 234 5678)
   const phoneOk = p => /^[0-9+\-\s()]{9,20}$/.test(p || '') && (String(p).replace(/\D/g, '').length >= 9) && (String(p).replace(/\D/g, '').length <= 15);
@@ -1535,10 +1539,16 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       },
     });
     if (!r.isConfirmed || !r.value) return;
-    store.set(K.coupon, { code: r.value.code, percent: r.value.percent, ends: r.value.ends || '' });
+    const code = String(r.value.code || '').trim().toUpperCase();
+    const percent = Number(r.value.percent);
+    if (!/^[A-Z0-9_-]{1,40}$/.test(code) || !Number.isFinite(percent) || percent <= 0 || percent > 1) {
+      toast('ข้อมูลคูปองจากระบบไม่ถูกต้อง');
+      return;
+    }
+    store.set(K.coupon, { code, percent, ends: String(r.value.ends || '') });
     renderCart(); renderTotals();
     haptic([10, 30, 10]);
-    toast(`ใช้โค้ด ${r.value.code} แล้ว ลด ${baht(priced().disc)}`);
+    toast(`ใช้โค้ด ${esc(code)} แล้ว ลด ${baht(priced().disc)}`);
   }
   $('couponBtn').addEventListener('click', openCoupon);
   $('cartSum').addEventListener('click', e => {
