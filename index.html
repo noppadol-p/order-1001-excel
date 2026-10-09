@@ -313,6 +313,29 @@ main { min-height: 60vh; }
 .sum-row + .sum-row { border-top: 1px solid var(--line); }
 .sum-row b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
 .sum-row.total b { font-size: 18px; }
+/* คูปองส่วนลด */
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; margin: 18px 0 2px; }
+.section-head .section-title { margin: 0 4px 6px; }
+.coupon-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 4px; border: 0; background: none;
+  color: var(--accent-text); font: inherit; font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.coupon-link svg { width: 18px; height: 18px; }
+.sum-row.disc { align-items: center; padding: 4px 0; }
+.sum-row.disc b { color: var(--ok); }
+.cpn-pill { display: inline-flex; align-items: center; height: 28px; margin-left: 6px; padding: 0 0 0 10px; border-radius: 999px;
+  background: var(--ok-wash); color: var(--ok); font-family: 'Poppins', sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: .03em; vertical-align: middle; }
+.cpn-pill button { width: 32px; height: 32px; margin: -2px 0; border: 0; background: none; color: inherit; display: grid; place-items: center; cursor: pointer; }
+.cpn-pill svg { width: 13px; height: 13px; }
+.checkout-sum .co-was { margin-left: 6px; font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: line-through; }
+.sw-cpn-ico { width: 56px; height: 56px; margin: 0 auto 10px; border-radius: 50%; background: var(--accent-wash); color: var(--accent-text); display: grid; place-items: center; }
+.sw-cpn-ico svg { width: 28px; height: 28px; }
+.sw-cpn-note { margin: 0 0 12px; font-size: 14px; color: var(--muted); }
+#sw-coupon { text-align: center; font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+#sw-coupon.is-invalid { border-color: var(--danger); box-shadow: 0 0 0 1px var(--danger); }
+.hist-sum { margin: 8px 0 0; padding: 8px 0 0; border-top: 1px dashed var(--line); font-size: 13.5px; }
+.hist-sum div { display: flex; justify-content: space-between; color: var(--muted); padding: 2px 0; }
+.hist-sum b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.hist-sum .disc b { color: var(--ok); }
+.sw-sum .is-disc { color: var(--ok); }
 
 .checkout {
   position: fixed; left: 0; right: 0; z-index: 28;
@@ -746,6 +769,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
   <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 0 2-2h14a2 2 0 0 0 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 0-2 2H5a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z"/><path d="M9 9.5h.01M15 14.5h.01M15 9.5l-6 5"/></symbol>
   <symbol id="i-bank" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 4l9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 20h18"/></symbol>
   <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
 </svg>
@@ -792,7 +816,10 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div class="panel"><ul class="lines" id="lines"></ul></div>
         <div class="section-title">ผู้สั่ง</div>
         <div class="panel buyer" id="buyer"></div>
-        <div class="section-title">สรุป</div>
+        <div class="section-head">
+          <div class="section-title">สรุป</div>
+          <button type="button" class="coupon-link" id="couponBtn"><svg aria-hidden="true"><use href="#i-ticket"/></svg><span id="couponBtnText">ส่วนลดคูปอง</span></button>
+        </div>
         <div class="panel sum-rows" id="cartSum"></div>
       </div>
       <div class="empty" id="cartEmpty" hidden>
@@ -881,7 +908,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.3.5</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.4.0</p>
     </div>
   </section>
 </main>
@@ -959,7 +986,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const API_URL = (CFG.API_URL || /*__API_URL__*/'').trim();   // URL /exec ของ Apps Script (โหมด PWA)
   const USE_SW = true;
   const MAX_QTY = 9999;
-  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', session: 'b1001:session', iosHint: 'b1001:ios-hint' };
+  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', session: 'b1001:session', coupon: 'b1001:coupon', iosHint: 'b1001:ios-hint' };
   const GOOGLE_CLIENT_ID = String(CFG.GOOGLE_CLIENT_ID || '').trim();
   const HISTORY_MAX = 50;
   const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
@@ -1127,13 +1154,22 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       store.set('b1001:demo-orders', all);
       return wait({ order_no: o.order_no, status: 'รอตรวจสอบ', amount: arg.amount, order_total: o.total_amount });
     }
+    if (fn === 'checkCoupon') {
+      const code = String(arg.code || '').trim().toUpperCase();
+      if (code !== 'SUMMER50') return Promise.reject(new Error('ไม่พบโค้ดนี้ ตรวจตัวสะกดอีกครั้ง'));
+      return wait({ code, percent: 0.5, discount: Math.round((arg.subtotal || 0) * 50) / 100, ends: '31/12/2026' });
+    }
     if (fn === 'placeOrder') {
       const d = new Date(), p = n => String(n).padStart(2, '0');
       const prefix = 'ORD' + String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate()) + '-';
       const k = 'b1001:demo-seq:' + prefix, seq = store.get(k, 0) + 1; store.set(k, seq);
       const qty = arg.items.reduce((s, i) => s + i.qty, 0);
       const amt = arg.items.reduce((s, i) => s + i.qty * byCode[i.code].price, 0);
-      const res = { order_no: prefix + String(seq).padStart(4, '0'), created_at: `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`, total_qty: qty, total_amount: amt, status: 'รอดำเนินการ' };
+      const cp = String(arg.coupon || '').trim().toUpperCase();
+      if (cp && cp !== 'SUMMER50') return Promise.reject(new Error('ไม่พบโค้ดนี้ ตรวจตัวสะกดอีกครั้ง'));
+      const disc = cp ? Math.round(amt * 50) / 100 : 0;
+      const res = { order_no: prefix + String(seq).padStart(4, '0'), created_at: `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`, total_qty: qty,
+        subtotal: amt, coupon: cp, discount: disc, total_amount: Math.round((amt - disc) * 100) / 100, status: 'รอดำเนินการ' };
       const all = demoOrders();
       all.unshift(Object.assign({ device: arg.device_key, full_name: arg.full_name, department: arg.department,
         items: arg.items.map(i => ({ code: i.code, name: '', qty: i.qty, unit: byCode[i.code].price, total: i.qty * byCode[i.code].price })) }, res));
@@ -1158,6 +1194,13 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       .map(code => { const p = byCode[code], qty = cart[code]; return { p, code, qty, unit: p.price, total: p.price * qty }; });
   }
   const totals = () => lines().reduce((t, l) => ({ n: t.n + 1, qty: t.qty + l.qty, amt: t.amt + l.total }), { n: 0, qty: 0, amt: 0 });
+  // คูปองท้ายบิล: แอปคิดเพื่อแสดงผล หลังบ้านตรวจโค้ดและคิดส่วนลดจริงอีกครั้งตอนส่งคำสั่งซื้อ
+  const coupon = () => store.get(K.coupon, null);
+  const priced = () => {
+    const t = totals(), c = coupon();
+    const disc = c ? Math.min(t.amt, Math.round(t.amt * c.percent * 100) / 100) : 0;
+    return Object.assign(t, { coupon: c, disc, net: Math.round((t.amt - disc) * 100) / 100 });
+  };
   // เบอร์โทร: ตัวเลข ช่องว่าง - + ( ) เท่านั้น และมีตัวเลข 9–15 หลัก (เช่น 081-234-5678, 02-123-4567, +66 81 234 5678)
   const phoneOk = p => /^[0-9+\-\s()]{9,20}$/.test(p || '') && (String(p).replace(/\D/g, '').length >= 9) && (String(p).replace(/\D/g, '').length <= 15);
   const profileOk = () => profile.full_name.length >= 2 && phoneOk(profile.phone);
@@ -1223,17 +1266,23 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         ? `<b>${esc(profile.full_name)}</b><span>โทร ${esc(profile.phone)}${profile.department ? ', ' + esc(profile.department) : ''}</span>`
         : `<b>${profile.full_name ? esc(profile.full_name) : 'ยังไม่ได้ระบุผู้สั่ง'}</b><span class="warn">${profile.full_name ? 'กรอกเบอร์โทรก่อนส่งคำสั่งซื้อ' : 'กรอกชื่อและเบอร์โทรก่อนส่งคำสั่งซื้อ'}</span>`}</div>
       <button type="button" class="chip-btn" id="editBuyer">${profileOk() ? 'แก้ไข' : 'กรอกข้อมูล'}</button>`;
+    const pr = priced();
+    $('couponBtnText').textContent = pr.coupon ? 'เปลี่ยนโค้ด' : 'ส่วนลดคูปอง';
     $('cartSum').innerHTML = `
       <div class="sum-row"><span>จำนวนรายการ</span><b>${num(t.n)} รายการ</b></div>
       <div class="sum-row"><span>จำนวนรวม</span><b>${num(t.qty)} ผืน</b></div>
-      <div class="sum-row total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>`;
+      ${pr.coupon ? `<div class="sum-row"><span>ยอดสินค้า</span><b>${baht(t.amt)}</b></div>
+      <div class="sum-row disc"><span>ส่วนลดคูปอง<span class="cpn-pill">${esc(pr.coupon.code)}<button type="button" data-coupon-remove aria-label="เอาคูปอง ${esc(pr.coupon.code)} ออก"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></span></span><b>−${baht(pr.disc)}</b></div>
+      <div class="sum-row total"><span>ยอดชำระ</span><b>${baht(pr.net)}</b></div>`
+      : `<div class="sum-row total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>`}`;
   }
   function renderTotals() {
     const t = totals();
     const b = $('cartBadge');
     b.hidden = !t.n; b.textContent = t.n > 99 ? '99+' : t.n;
     $('coCount').textContent = `${num(t.qty)} ผืน จาก ${num(t.n)} รายการ`;
-    $('coTotal').textContent = baht(t.amt);
+    const pr = priced();
+    $('coTotal').innerHTML = pr.disc ? `${baht(pr.net)}<span class="co-was">${baht(t.amt)}</span>` : baht(t.amt);
     const showCo = view === 'cart' && t.n > 0;
     $('checkout').hidden = !showCo;
     document.body.classList.toggle('has-checkout', showCo);
@@ -1458,6 +1507,47 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   }, true);
   $('q').addEventListener('input', renderGrid);
 
+  // ================= คูปองส่วนลด =================
+  async function openCoupon() {
+    const cur = coupon();
+    const r = await dialog({
+      title: 'ส่วนลดคูปอง',
+      html: `<div class="sw-cpn-ico"><svg aria-hidden="true"><use href="#i-ticket"/></svg></div>
+        <p class="sw-cpn-note">ใส่โค้ดเพื่อรับส่วนลดท้ายบิลของคำสั่งซื้อนี้</p>
+        <div class="sw-form"><div class="field"><label for="sw-coupon">โค้ดส่วนลด</label>
+        <input id="sw-coupon" maxlength="40" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" value="${esc(cur ? cur.code : '')}"></div></div>`,
+      showCancelButton: true, confirmButtonText: 'ใช้โค้ด', cancelButtonText: 'ยกเลิก', focusConfirm: false,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
+      didOpen: el => {
+        const i = el.querySelector('#sw-coupon');
+        i.addEventListener('input', () => { i.classList.remove('is-invalid'); Swal.resetValidationMessage(); });
+        setTimeout(() => i.focus(), 60);
+      },
+      preConfirm: async () => {
+        const i = document.getElementById('sw-coupon');
+        const code = i.value.trim().toUpperCase();
+        const fail = m => { i.classList.add('is-invalid'); Swal.showValidationMessage(m); return false; };
+        if (!code) return fail('กรอกโค้ดส่วนลด');
+        if (offline) return fail('ยังออฟไลน์อยู่ ต่ออินเทอร์เน็ตแล้วลองใหม่');
+        try { return await call('checkCoupon', { code, subtotal: totals().amt }); }
+        catch (err) { return fail((err && err.message) || 'ตรวจโค้ดไม่สำเร็จ ลองใหม่อีกครั้ง'); }
+      },
+    });
+    if (!r.isConfirmed || !r.value) return;
+    store.set(K.coupon, { code: r.value.code, percent: r.value.percent, ends: r.value.ends || '' });
+    renderCart(); renderTotals();
+    haptic([10, 30, 10]);
+    toast(`ใช้โค้ด ${r.value.code} แล้ว ลด ${baht(priced().disc)}`);
+  }
+  $('couponBtn').addEventListener('click', openCoupon);
+  $('cartSum').addEventListener('click', e => {
+    if (!e.target.closest('[data-coupon-remove]')) return;
+    store.set(K.coupon, null);
+    renderCart(); renderTotals();
+    toast('เอาคูปองออกแล้ว');
+  });
+
   $('clearCartBtn').addEventListener('click', async () => {
     const t = totals();
     const r = await dialog({
@@ -1468,6 +1558,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     });
     if (!r.isConfirmed) return;
     Object.keys(cart).forEach(k => delete cart[k]);
+    store.set(K.coupon, null);
     saveCart(); renderGrid(); renderCart(); renderTotals();
     toast('ล้างตะกร้าแล้ว');
   });
@@ -2090,8 +2181,9 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       return dialog({ icon: 'warning', iconColor: iconColor(), title: 'ยังออฟไลน์อยู่', html: 'สินค้าในตะกร้ายังอยู่ครบ ต่ออินเทอร์เน็ตแล้วกดส่งอีกครั้ง', confirmButtonText: 'ตกลง' });
     }
     if (!profileOk() && !(await askProfile())) return;
-    const t = totals();
-    const sig = JSON.stringify([ls.map(l => [l.code, l.qty]), profile]);
+    const t = priced();
+    const couponCode = t.coupon ? t.coupon.code : '';
+    const sig = JSON.stringify([ls.map(l => [l.code, l.qty]), profile, couponCode]);
     if (!pending || pending.sig !== sig) pending = { id: newId(), sig };
 
     const r = await dialog({
@@ -2101,7 +2193,10 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div><span>เบอร์โทร</span><b>${esc(profile.phone)}</b></div>
         ${profile.department ? `<div><span>หน่วยงาน</span><b>${esc(profile.department)}</b></div>` : ''}
         <div><span>สินค้า</span><b>${num(t.n)} รายการ (${num(t.qty)} ผืน)</b></div>
-        <div class="is-total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>
+        ${t.coupon ? `<div><span>ยอดสินค้า</span><b>${baht(t.amt)}</b></div>
+        <div><span>ส่วนลด (${esc(couponCode)})</span><b class="is-disc">−${baht(t.disc)}</b></div>
+        <div class="is-total"><span>ยอดชำระ</span><b>${baht(t.net)}</b></div>`
+        : `<div class="is-total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>`}
       </div>`,
       showCancelButton: true, confirmButtonText: 'ส่งคำสั่งซื้อ', cancelButtonText: 'กลับไปแก้ไข',
       showLoaderOnConfirm: true,
@@ -2111,7 +2206,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         try {
           return await call('placeOrder', {
             full_name: profile.full_name, department: profile.department, phone: profile.phone,
-            items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, ...ownerParams(),
+            items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, coupon: couponCode, ...ownerParams(),
           });
         } catch (err) {
           if (window.Swal) Swal.showValidationMessage((err && err.message) || 'ส่งคำสั่งซื้อไม่สำเร็จ ลองใหม่อีกครั้ง');
@@ -2121,7 +2216,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     });
     let res = r.value;
     if (!hasSwal && r.isConfirmed) {
-      try { res = await call('placeOrder', { full_name: profile.full_name, department: profile.department, phone: profile.phone, items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, ...ownerParams() }); }
+      try { res = await call('placeOrder', { full_name: profile.full_name, department: profile.department, phone: profile.phone, items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, coupon: couponCode, ...ownerParams() }); }
       catch (err) { alert(err.message); return; }
     }
     if (!r.isConfirmed || !res) return;
@@ -2133,18 +2228,20 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       order_no: res.order_no, created_at: res.created_at || '', status: res.status || 'รอดำเนินการ',
       full_name: profile.full_name, department: profile.department,
       total_qty: res.total_qty, total_amount: res.total_amount,
+      subtotal: res.subtotal, coupon: res.coupon || '', discount: res.discount || 0,
       items: ls.map(l => ({ code: l.code, name: l.p.name || '', qty: l.qty, unit: l.unit, total: l.total })),
     });
     store.set(K.history, hist.slice(0, HISTORY_MAX));
     requestPersist();
     Object.keys(cart).forEach(k => delete cart[k]);
+    store.set(K.coupon, null);                            // ใช้คูปองกับคำสั่งซื้อนี้แล้ว
     saveCart(); renderGrid(); renderCart(); renderTotals();
     haptic([10, 40, 10]);
 
     const done = await dialog({
       icon: 'success', iconColor: iconColor(),
       title: 'ส่งคำสั่งซื้อแล้ว',
-      html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${num(res.total_qty)} ผืน ยอดรวม ${baht(res.total_amount)}`,
+      html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${num(res.total_qty)} ผืน ${res.discount ? `ยอดชำระ ${baht(res.total_amount)} (ลด ${baht(res.discount)})` : `ยอดรวม ${baht(res.total_amount)}`}`,
       showDenyButton: true, confirmButtonText: 'ดูประวัติคำสั่งซื้อ', denyButtonText: 'สั่งสินค้าต่อ',
       showCancelButton: true, cancelButtonText: 'แจ้งโอนเงินตอนนี้',
       reverseButtons: false, customClass: Object.assign({}, SW_CLASS, { popup: 'sw is-stacked' }),
@@ -2194,6 +2291,9 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
                 ${it.note ? `<p class="item-note"><b>หมายเหตุ</b> ${esc(it.note)}</p>` : ''}</div>
               <b>${baht(it.total)}</b>
             </div>`).join('')}
+          ${h.discount ? `<div class="hist-sum"><div><span>ยอดสินค้า</span><b>${baht(h.subtotal)}</b></div>
+            <div class="disc"><span>ส่วนลดคูปอง (${esc(h.coupon)})</span><b>−${baht(h.discount)}</b></div>
+            <div><span>ยอดชำระ</span><b>${baht(h.total_amount)}</b></div></div>` : ''}
           ${payBox(h)}
           <p class="hist-who">${esc(h.full_name)}${h.department ? ` (${esc(h.department)})` : ''}</p>
           <button type="button" class="btn btn-ghost btn-block" data-reorder="${esc(h.order_no)}">สั่งรายการเดิมอีกครั้ง</button>

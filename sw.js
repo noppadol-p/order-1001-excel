@@ -1,5 +1,5 @@
 /* Service worker: ทำให้แอปเปิดเร็วและเปิดได้แม้ออฟไลน์ (ส่งคำสั่งซื้อยังต้องออนไลน์) */
-const VERSION = '1.3.5';
+const VERSION = '1.4.0';
 const SHELL = 'b1001-shell-' + VERSION;
 const RUNTIME = 'b1001-runtime';
 const IMAGES = 'b1001-images';
