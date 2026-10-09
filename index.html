@@ -445,6 +445,22 @@ main { min-height: 60vh; }
 .menu button small { color: var(--muted); font-size: 13px; }
 .menu .is-danger { color: var(--danger); }
 .account { padding: 14px; }
+/* หน้า ฉัน */
+.me-hero { display: flex; align-items: center; gap: 14px; padding: 16px; margin: 4px 0 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+.me-avatar { width: 56px; height: 56px; border-radius: 50%; flex: none; overflow: hidden; display: grid; place-items: center;
+  background: var(--accent-wash); color: var(--accent-text); font-size: 22px; font-weight: 600; }
+.me-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.me-avatar svg { width: 26px; height: 26px; }
+.me-hero-txt { min-width: 0; line-height: 1.35; }
+.me-hero-txt b { display: block; font-size: 17px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.me-hero-txt span { display: block; font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.me-card { padding-bottom: 16px; }
+.or-sep { display: flex; align-items: center; gap: 12px; margin: 18px 0 14px; color: var(--muted); font-size: 12.5px; }
+.or-sep::before, .or-sep::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.me-social .gsi { min-height: 44px; }
+.acc-note { margin: 10px 4px 0; font-size: 12.5px; color: var(--muted); line-height: 1.55; text-align: center; }
+.me-social .acc-forgot { display: block; width: max-content; margin: 6px auto 0; }
+.me-social .acc-in { border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
 .link-btn { display: block; margin: 10px 0 0 auto; padding: 4px 0; border: 0; background: none; color: var(--muted); font-size: 12.5px; text-decoration: underline; text-underline-offset: 2px; }
 .claim-list { margin: 10px 0 0; padding: 0; list-style: none; text-align: left; font-size: 13.5px; }
 .claim-list li { display: flex; justify-content: space-between; gap: 8px; padding: 7px 0; border-top: 1px solid var(--line); }
@@ -793,47 +809,52 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 
   <section class="view" id="view-me" aria-label="ฉัน" hidden>
     <div class="wrap">
-      <section id="accountSection" hidden>
-        <div class="section-title">บัญชี Google</div>
-        <div class="panel account">
-          <div id="accOut">
-            <p class="acc-txt">เข้าสู่ระบบด้วย Google (ไม่บังคับ) เพื่อดูประวัติคำสั่งซื้อชุดเดียวกันได้ทุกเครื่อง</p>
-            <div class="gsi" id="gsiBtn"></div>
-            <p class="acc-err" id="gsiErr" hidden></p>
-            <ul class="acc-help">
-              <li>มีบัญชี Google ในมือถืออยู่แล้ว แตะเลือกบัญชีได้เลย ไม่ต้องใส่รหัสผ่าน</li>
-              <li id="iosTip" hidden>บน iPhone: ล็อกอิน Google ใน Safari ไว้ครั้งเดียว ครั้งต่อไปแค่แตะเลือกบัญชี</li>
-            </ul>
-            <a class="acc-forgot" href="https://accounts.google.com/signin/recovery" target="_blank" rel="noopener">ลืมรหัสผ่าน Gmail?</a>
-          </div>
-          <div class="acc-in" id="accIn" hidden>
-            <img class="acc-pic" id="accPic" alt="" referrerpolicy="no-referrer">
-            <div class="acc-who"><b id="accName"></b><span id="accEmail"></span></div>
-            <button type="button" class="chip-btn" id="accLogout">ออกจากระบบ</button>
-          </div>
-          <button type="button" class="link-btn" id="accLogoutAll" hidden>ออกจากระบบทุกเครื่อง</button>
-        </div>
-      </section>
+      <div class="me-hero">
+        <div class="me-avatar" id="meAvatar" aria-hidden="true"></div>
+        <div class="me-hero-txt"><b id="meName"></b><span id="meSub"></span></div>
+      </div>
 
       <div class="section-title">ข้อมูลผู้สั่ง</div>
-      <form class="panel form-pad" id="profileForm" novalidate>
-        <div class="field" data-field="full_name">
-          <label for="p-name">ชื่อ-นามสกุล</label>
-          <input id="p-name" name="full_name" autocomplete="name" maxlength="120" enterkeyhint="next">
-          <div class="err">กรอกชื่อ-นามสกุล</div>
-        </div>
-        <div class="field" data-field="phone">
-          <label for="p-phone">เบอร์โทร</label>
-          <input id="p-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" enterkeyhint="next" placeholder="เช่น 081-234-5678">
-          <div class="err">กรอกเบอร์โทรให้ถูกต้อง (9–15 หลัก)</div>
-        </div>
-        <div class="field" data-field="department">
-          <label for="p-dept">หน่วยงาน <span>(ไม่บังคับ)</span></label>
-          <input id="p-dept" name="department" autocomplete="organization-title" maxlength="120" enterkeyhint="done">
-          <div class="err">หน่วยงานยาวเกินไป</div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block" style="margin-bottom:14px">บันทึกข้อมูล</button>
-      </form>
+      <div class="panel form-pad me-card">
+        <form id="profileForm" novalidate>
+          <div class="field" data-field="full_name">
+            <label for="p-name">ชื่อ-นามสกุล</label>
+            <input id="p-name" name="full_name" autocomplete="name" maxlength="120" enterkeyhint="next">
+            <div class="err">กรอกชื่อ-นามสกุล</div>
+          </div>
+          <div class="field" data-field="phone">
+            <label for="p-phone">เบอร์โทร</label>
+            <input id="p-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" enterkeyhint="next" placeholder="เช่น 081-234-5678">
+            <div class="err">กรอกเบอร์โทรให้ถูกต้อง (9–15 หลัก)</div>
+          </div>
+          <div class="field" data-field="department">
+            <label for="p-dept">หน่วยงาน <span>(ไม่บังคับ)</span></label>
+            <input id="p-dept" name="department" autocomplete="organization-title" maxlength="120" enterkeyhint="done">
+            <div class="err">หน่วยงานยาวเกินไป</div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">บันทึกข้อมูล</button>
+        </form>
+
+        <section id="accountSection" class="me-social" hidden>
+          <div id="accOut">
+            <div class="or-sep"><span>หรือเชื่อมบัญชี</span></div>
+            <div class="gsi" id="gsiBtn"></div>
+            <p class="acc-err" id="gsiErr" hidden></p>
+            <p class="acc-note">ไม่บังคับ ใช้ดูประวัติคำสั่งซื้อชุดเดียวกันได้ทุกเครื่อง มีบัญชี Google ในมือถืออยู่แล้ว แตะเลือกบัญชีได้เลย ไม่ต้องใส่รหัสผ่าน</p>
+            <p class="acc-note" id="iosTip" hidden>บน iPhone: ล็อกอิน Google ใน Safari ไว้ครั้งเดียว ครั้งต่อไปแค่แตะเลือกบัญชี</p>
+            <a class="acc-forgot" href="https://accounts.google.com/signin/recovery" target="_blank" rel="noopener">ลืมรหัสผ่าน Gmail?</a>
+          </div>
+          <div id="accIn" hidden>
+            <div class="or-sep"><span>บัญชีที่เชื่อมไว้</span></div>
+            <div class="acc-in">
+              <img class="acc-pic" id="accPic" alt="" referrerpolicy="no-referrer">
+              <div class="acc-who"><b id="accName"></b><span id="accEmail"></span></div>
+              <button type="button" class="chip-btn" id="accLogout">ออกจากระบบ</button>
+            </div>
+            <button type="button" class="link-btn" id="accLogoutAll" hidden>ออกจากระบบทุกเครื่อง</button>
+          </div>
+        </section>
+      </div>
 
       <div class="section-title">แอป</div>
       <div class="panel">
@@ -859,7 +880,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.3.2</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.3.3</p>
     </div>
   </section>
 </main>
@@ -1728,6 +1749,18 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     toast('บันทึกข้อมูลผู้สั่งแล้ว');
     return true;
   }
+  // ส่วนหัวโปรไฟล์: รูป Google หรืออักษรย่อชื่อ + ชื่อ + อีเมล/เบอร์โทร
+  function renderMeHero() {
+    const acc = signedIn() ? store.get(K.account, null) : null;
+    const name = profile.full_name || (acc && acc.name) || '';
+    const initial = (name.match(/[ก-ฮA-Za-z0-9]/) || [''])[0].toUpperCase();
+    const fallback = initial ? esc(initial) : icon('i-user');
+    $('meAvatar').innerHTML = acc && acc.picture ? `<img src="${esc(acc.picture)}" alt="" referrerpolicy="no-referrer">` : fallback;
+    const img = $('meAvatar').querySelector('img');
+    if (img) img.onerror = () => { $('meAvatar').innerHTML = fallback; };   // รูป Google โหลดไม่ได้: ใช้อักษรย่อแทน
+    $('meName').textContent = name || 'ผู้สั่งใหม่';
+    $('meSub').textContent = acc ? acc.email : profile.phone ? `โทร ${profile.phone}` : 'กรอกชื่อและเบอร์โทรเพื่อเริ่มสั่งซื้อ';
+  }
   function renderMe() {
     const f = $('profileForm');
     ['full_name', 'department', 'phone'].forEach(k => { f.elements[k].value = profile[k] || ''; f.querySelector(`[data-field="${k}"]`).classList.remove('is-invalid'); });
@@ -1735,6 +1768,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     $('histCount').textContent = n ? `${n} รายการ` : '';
     $('recoverCode').textContent = prettyKey(deviceKey());
     renderAccount();
+    renderMeHero();
     isPersisted().then(ok => {
       const el = $('storageState');
       el.classList.toggle('is-ok', ok);
@@ -1757,6 +1791,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       return;
     }
     saveProfile(v);
+    renderMeHero();
     document.activeElement && document.activeElement.blur();
     toast('บันทึกข้อมูลแล้ว');
   });
@@ -1898,7 +1933,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   // ================= เข้าสู่ระบบด้วย Google (ไม่บังคับ) =================
   // ใช้ได้เมื่อเปิดผ่าน GitHub Pages และตั้งค่า GOOGLE_CLIENT_ID ใน config.js
   const canGoogle = () => !!GOOGLE_CLIENT_ID && !!API_URL && !onAppsScript;
-  let gsiLoading = null, gsiReady = false, gsiPrompted = false;
+  let gsiLoading = null, gsiReady = false;   // ล็อกอินเกิดขึ้นเฉพาะเมื่อกดปุ่ม Google เท่านั้น (ไม่เด้งเอง)
   function loadGsi() {
     if (window.google && google.accounts && google.accounts.id) return Promise.resolve();
     if (!gsiLoading) {
@@ -1921,6 +1956,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (acc) {
       $('accName').textContent = acc.name || acc.email;
       $('accEmail').textContent = acc.email;
+      $('accPic').hidden = !acc.picture;
+      $('accPic').onerror = () => { $('accPic').hidden = true; };
       if (acc.picture) $('accPic').src = acc.picture; else $('accPic').removeAttribute('src');
       return;
     }
@@ -1932,20 +1969,15 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID, callback: onGoogleCredential,
           ux_mode: 'popup', auto_select: false, itp_support: true,
-          use_fedcm_for_prompt: true,     // แผ่นเลือกบัญชีของ Chrome (บัญชีในเครื่อง ไม่ต้องใส่รหัสผ่าน)
           use_fedcm_for_button: true,     // ปุ่มก็ใช้หน้าต่างเลือกบัญชีของเครื่อง ถ้าไม่รองรับจะกลับไปใช้ป๊อปอัปเอง
           button_auto_select: false, cancel_on_tap_outside: true, context: 'signin',
         });
         gsiReady = true;
       }
-      if (!gsiPrompted && view === 'me' && !signedIn() && !offline) {
-        gsiPrompted = true;
-        try { google.accounts.id.prompt(); } catch (e) {}
-      }
       const box = $('gsiBtn'); box.innerHTML = '';
       google.accounts.id.renderButton(box, {
-        type: 'standard', theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', locale: 'th',
-        width: Math.max(220, Math.min(360, box.clientWidth || 300)),
+        type: 'standard', theme: 'outline', size: 'large', text: 'continue_with', shape: 'pill', logo_alignment: 'center', locale: 'th',
+        width: Math.max(220, Math.min(400, box.clientWidth || 300)),
       });
     }).catch(() => { $('gsiErr').textContent = 'โหลดปุ่มเข้าสู่ระบบของ Google ไม่ได้ ลองใหม่อีกครั้ง'; $('gsiErr').hidden = false; });
   }
