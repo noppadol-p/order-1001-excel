@@ -453,6 +453,9 @@ main { min-height: 60vh; }
 .acc-txt { margin: 0 0 12px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
 .gsi { min-height: 44px; display: flex; justify-content: center; }
 .acc-err { margin: 8px 0 0; font-size: 13px; color: var(--danger); text-align: center; }
+.acc-help { margin: 12px 0 0; padding: 0 0 0 18px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.acc-help li + li { margin-top: 3px; }
+.acc-forgot { display: inline-block; margin-top: 8px; padding: 6px 0; font-size: 12.5px; color: var(--accent-text); text-underline-offset: 2px; }
 .acc-in { display: flex; align-items: center; gap: 12px; }
 .acc-pic { width: 44px; height: 44px; border-radius: 50%; background: var(--img-bg); object-fit: cover; flex: none; }
 .acc-who { flex: 1; min-width: 0; line-height: 1.35; }
@@ -794,9 +797,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div class="section-title">บัญชี Google</div>
         <div class="panel account">
           <div id="accOut">
-            <p class="acc-txt">เข้าสู่ระบบด้วย Google เพื่อดูประวัติคำสั่งซื้อชุดเดียวกันได้ทุกเครื่องและทุกเบราว์เซอร์ ไม่ต้องจำรหัสกู้คืน (ไม่บังคับ)</p>
+            <p class="acc-txt">เข้าสู่ระบบด้วย Google (ไม่บังคับ) เพื่อดูประวัติคำสั่งซื้อชุดเดียวกันได้ทุกเครื่อง</p>
             <div class="gsi" id="gsiBtn"></div>
             <p class="acc-err" id="gsiErr" hidden></p>
+            <ul class="acc-help">
+              <li>มีบัญชี Google ในมือถืออยู่แล้ว แตะเลือกบัญชีได้เลย ไม่ต้องใส่รหัสผ่าน</li>
+              <li id="iosTip" hidden>บน iPhone: ล็อกอิน Google ใน Safari ไว้ครั้งเดียว ครั้งต่อไปแค่แตะเลือกบัญชี</li>
+            </ul>
+            <a class="acc-forgot" href="https://accounts.google.com/signin/recovery" target="_blank" rel="noopener">ลืมรหัสผ่าน Gmail?</a>
           </div>
           <div class="acc-in" id="accIn" hidden>
             <img class="acc-pic" id="accPic" alt="" referrerpolicy="no-referrer">
@@ -851,7 +859,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.3.0</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.3.2</p>
     </div>
   </section>
 </main>
@@ -1676,9 +1684,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if ((v.department || '').length > 120) bad.push('department');
     return bad;
   }
-  function saveProfile(v) {
+  function saveProfile(v, opts) {
     Object.assign(profile, v);
     store.set(K.profile, profile);
+    // อัปเดตแท็บ ผู้ใช้ ในชีต (ข้อมูลอ้างอิงผู้สั่ง) แบบเงียบๆ ไม่กระทบการใช้งานถ้าส่งไม่สำเร็จ
+    if (!(opts && opts.local) && (API_URL || onAppsScript) && !offline && profileOk()) {
+      call('saveProfile', Object.assign({}, ownerParams(), { full_name: profile.full_name, phone: profile.phone, department: profile.department }))
+        .catch(() => {});
+    }
   }
   async function askProfile() {
     const field = (name, label, type, extra) => `
@@ -1885,7 +1898,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   // ================= เข้าสู่ระบบด้วย Google (ไม่บังคับ) =================
   // ใช้ได้เมื่อเปิดผ่าน GitHub Pages และตั้งค่า GOOGLE_CLIENT_ID ใน config.js
   const canGoogle = () => !!GOOGLE_CLIENT_ID && !!API_URL && !onAppsScript;
-  let gsiLoading = null, gsiReady = false;
+  let gsiLoading = null, gsiReady = false, gsiPrompted = false;
   function loadGsi() {
     if (window.google && google.accounts && google.accounts.id) return Promise.resolve();
     if (!gsiLoading) {
@@ -1912,14 +1925,22 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       return;
     }
     $('gsiErr').hidden = true;
+    $('iosTip').hidden = !isIOS;
     if (offline) { $('gsiBtn').innerHTML = ''; $('gsiErr').textContent = 'ต่ออินเทอร์เน็ตเพื่อเข้าสู่ระบบ'; $('gsiErr').hidden = false; return; }
     loadGsi().then(() => {
       if (!gsiReady) {
         google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID, callback: onGoogleCredential,
-          ux_mode: 'popup', auto_select: false, itp_support: true, use_fedcm_for_prompt: true,
+          ux_mode: 'popup', auto_select: false, itp_support: true,
+          use_fedcm_for_prompt: true,     // แผ่นเลือกบัญชีของ Chrome (บัญชีในเครื่อง ไม่ต้องใส่รหัสผ่าน)
+          use_fedcm_for_button: true,     // ปุ่มก็ใช้หน้าต่างเลือกบัญชีของเครื่อง ถ้าไม่รองรับจะกลับไปใช้ป๊อปอัปเอง
+          button_auto_select: false, cancel_on_tap_outside: true, context: 'signin',
         });
         gsiReady = true;
+      }
+      if (!gsiPrompted && view === 'me' && !signedIn() && !offline) {
+        gsiPrompted = true;
+        try { google.accounts.id.prompt(); } catch (e) {}
       }
       const box = $('gsiBtn'); box.innerHTML = '';
       google.accounts.id.renderButton(box, {
@@ -1946,10 +1967,17 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (err || !res) {
       return dialog({ icon: 'error', title: 'เข้าสู่ระบบไม่สำเร็จ', html: esc((err && err.message) || 'ลองใหม่อีกครั้ง'), confirmButtonText: 'ตกลง' });
     }
+    try { google.accounts.id.cancel(); } catch (e) {}
     store.set(K.session, res.session);                    // บัตรผ่านของเครื่องนี้ (ยกเลิกได้) รหัสเครื่องเดิมยังเก็บไว้
     store.set(K.account, { email: res.email, name: res.name, picture: res.picture });
     store.set(K.history, []); store.set(K.histSync, 0);
-    if (!profile.full_name && res.name) saveProfile({ full_name: res.name });
+    // ข้อมูลผู้สั่งที่บันทึกไว้ในแท็บ ผู้ใช้ ของบัญชีนี้: เติมเฉพาะช่องที่เครื่องนี้ยังว่าง
+    const ref = res.profile || {};
+    const fill = {};
+    if (!profile.full_name && (ref.full_name || res.name)) fill.full_name = ref.full_name || res.name;
+    if (!profile.phone && ref.phone) fill.phone = ref.phone;
+    if (!profile.department && ref.department) fill.department = ref.department;
+    if (Object.keys(fill).length) saveProfile(fill, { local: true });
     requestPersist();
     renderMe();
     // เครื่องนี้มีคำสั่งซื้อที่สั่งโดยไม่ล็อกอิน: ถามก่อนย้ายเข้าบัญชี (กันกรณีมือถือใช้ร่วมกัน)
@@ -1967,6 +1995,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       if (c.isConfirmed) {
         try {
           const r = await call('claimDeviceOrders', { session: res.session, device_key: deviceKey() });
+          // ยืนยันแล้วว่าเครื่องนี้เป็นของคนเดียวกัน: บันทึกข้อมูลผู้สั่งของเครื่องนี้เข้าบัญชี (ใช้เติมฟอร์มบนเครื่องอื่น)
+          if (profileOk()) saveProfile({});
           toast(`ย้ายเข้าบัญชีแล้ว ${num(r.moved ? pend.length : 0)} คำสั่งซื้อ`);
         } catch (e2) { toast(e2.message || 'ย้ายไม่สำเร็จ ลองใหม่ภายหลัง'); }
       } else {
