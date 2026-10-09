@@ -333,6 +333,30 @@ main { min-height: 60vh; }
 .chip.is-partial { background: var(--warn-wash); color: var(--warn); }
 .chip-sm { display: inline-block; justify-self: auto; font-size: 11px; padding: 1px 8px; margin-top: 4px; }
 .hist-name { display: block; }
+.chips { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; grid-row: span 2; }
+.hist summary .chips .chip { justify-self: auto; }
+.pay-box { margin: 10px 0 4px; padding: 10px 12px; border-radius: 10px; background: var(--paper); }
+.pay-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+.pay-head .chip-sm { margin-top: 0; }
+.pay-line { margin: 2px 0; font-size: 12.5px; color: var(--muted); }
+.pay-st { color: var(--ink); }
+.pay-box .btn { margin-top: 8px; }
+.pay-box .item-note { background: var(--surface); }
+.slip .sw-sum { margin: 0 0 12px; }
+.bank { background: var(--accent-wash); border-radius: 12px; padding: 10px 12px; margin: 0 0 12px; text-align: left; line-height: 1.45; }
+.bank small { display: block; color: var(--muted); font-size: 12.5px; }
+.bank .bank-no { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0; }
+.bank .bank-no b { font-size: 18px; letter-spacing: .03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.bank .bank-note { margin-top: 4px; }
+.slip-pick {
+  position: relative; display: flex; align-items: center; justify-content: center; text-align: center;
+  min-height: 120px; margin: 0 0 12px; padding: 12px; border-radius: 12px;
+  border: 1.5px dashed var(--line-strong); background: var(--field); color: var(--accent-text); font-weight: 600; cursor: pointer;
+}
+.slip-pick input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.slip-pick small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 4px; }
+.slip-pick.has-img { border-style: solid; padding: 8px; }
+.slip-pick img { display: block; max-height: 220px; max-width: 100%; margin: 0 auto; border-radius: 8px; }
 .item-note {
   margin: 6px 0 0; padding: 6px 10px; border-radius: 8px;
   background: var(--paper); color: var(--ink); font-size: 13px; line-height: 1.5;
@@ -380,6 +404,15 @@ main { min-height: 60vh; }
 .menu button span { flex: 1; }
 .menu button small { color: var(--muted); font-size: 13px; }
 .menu .is-danger { color: var(--danger); }
+.account { padding: 14px; }
+.acc-txt { margin: 0 0 12px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+.gsi { min-height: 44px; display: flex; justify-content: center; }
+.acc-err { margin: 8px 0 0; font-size: 13px; color: var(--danger); text-align: center; }
+.acc-in { display: flex; align-items: center; gap: 12px; }
+.acc-pic { width: 44px; height: 44px; border-radius: 50%; background: var(--img-bg); object-fit: cover; flex: none; }
+.acc-who { flex: 1; min-width: 0; line-height: 1.35; }
+.acc-who b { display: block; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.acc-who span { display: block; font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .recover { padding: 14px; }
 .recover-txt { margin: 0 0 12px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
 .recover-code {
@@ -711,6 +744,22 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 
   <section class="view" id="view-me" aria-label="ฉัน" hidden>
     <div class="wrap">
+      <section id="accountSection" hidden>
+        <div class="section-title">บัญชี Google</div>
+        <div class="panel account">
+          <div id="accOut">
+            <p class="acc-txt">เข้าสู่ระบบด้วย Google เพื่อดูประวัติคำสั่งซื้อชุดเดียวกันได้ทุกเครื่องและทุกเบราว์เซอร์ ไม่ต้องจำรหัสกู้คืน (ไม่บังคับ)</p>
+            <div class="gsi" id="gsiBtn"></div>
+            <p class="acc-err" id="gsiErr" hidden></p>
+          </div>
+          <div class="acc-in" id="accIn" hidden>
+            <img class="acc-pic" id="accPic" alt="" referrerpolicy="no-referrer">
+            <div class="acc-who"><b id="accName"></b><span id="accEmail"></span></div>
+            <button type="button" class="chip-btn" id="accLogout">ออกจากระบบ</button>
+          </div>
+        </div>
+      </section>
+
       <div class="section-title">ข้อมูลผู้สั่ง</div>
       <form class="panel form-pad" id="profileForm" novalidate>
         <div class="field" data-field="full_name">
@@ -739,8 +788,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         </ul>
       </div>
 
-      <div class="section-title">ย้ายประวัติไปเครื่องอื่น</div>
-      <div class="panel recover">
+      <div class="section-title" id="recoverTitle">ย้ายประวัติไปเครื่องอื่น</div>
+      <div class="panel recover" id="recoverPanel">
         <p class="recover-txt">ประวัติคำสั่งซื้อผูกกับรหัสของเครื่องนี้ เก็บรหัสไว้เพื่อดูประวัติบนมือถือเครื่องใหม่ หรือหลังล้างข้อมูลเบราว์เซอร์</p>
         <div class="recover-code" id="recoverCode" aria-label="รหัสกู้คืนประวัติ"></div>
         <p class="storage-state" id="storageState" aria-live="polite"></p>
@@ -750,12 +799,12 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         </div>
       </div>
 
-      <div class="panel" style="margin-top:12px">
+      <div class="panel" style="margin-top:12px" id="unlinkPanel">
         <ul class="menu">
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.1.6</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.1.9</p>
     </div>
   </section>
 </main>
@@ -833,7 +882,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const API_URL = (CFG.API_URL || /*__API_URL__*/'').trim();   // URL /exec ของ Apps Script (โหมด PWA)
   const USE_SW = true;
   const MAX_QTY = 9999;
-  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', iosHint: 'b1001:ios-hint' };
+  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', iosHint: 'b1001:ios-hint' };
+  const GOOGLE_CLIENT_ID = String(CFG.GOOGLE_CLIENT_ID || '').trim();
   const HISTORY_MAX = 50;
   const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 100"><rect width="80" height="100" fill="#EEE7DF"/>' +
@@ -848,7 +898,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // สำรองรหัสเครื่องและข้อมูลผู้สั่งไว้ใน cookie อายุ 400 วัน (ต่ออายุทุกครั้งที่เปิดแอป)
   // ถ้า localStorage ถูกล้างแต่ cookie ยังอยู่ แอปจะกู้คืนให้เอง
-  const MIRROR = { 'b1001:device': 'b1001_dev', 'b1001:profile': 'b1001_prof' };
+  const MIRROR = { 'b1001:device': 'b1001_dev', 'b1001:profile': 'b1001_prof', 'b1001:account': 'b1001_acc' };
   const cookie = {
     get(name) {
       try { const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
@@ -977,6 +1027,16 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (fn === 'getProducts') return wait(DEMO_PRODUCTS);
     const demoOrders = () => store.get('b1001:demo-orders', []);
     if (fn === 'getMyOrders') return wait({ orders: demoOrders().filter(o => o.device === arg.device_key).map(o => Object.assign({}, o, { device: undefined })) });
+    if (fn === 'getAppInfo') return wait({ payment: null });
+    if (fn === 'uploadSlip') {
+      const all = demoOrders(), o = all.find(x => x.order_no === arg.order_no && x.device === arg.device_key);
+      if (!o) return Promise.reject(new Error('คำสั่งซื้อนี้ไม่ได้ส่งจากเครื่องนี้'));
+      const d = new Date(), p = n => String(n).padStart(2, '0');
+      o.payments = [{ amount: arg.amount, paid_at: arg.paid_at, status: 'รอตรวจสอบ', admin_note: '', reported_at: `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}` }].concat(o.payments || []);
+      o.payment_status = 'รอตรวจสอบสลิป';
+      store.set('b1001:demo-orders', all);
+      return wait({ order_no: o.order_no, status: 'รอตรวจสอบ', amount: arg.amount, order_total: o.total_amount });
+    }
     if (fn === 'placeOrder') {
       const d = new Date(), p = n => String(n).padStart(2, '0');
       const prefix = 'ORD' + String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate()) + '-';
@@ -1598,6 +1658,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const n = store.get(K.history, []).length;
     $('histCount').textContent = n ? `${n} รายการ` : '';
     $('recoverCode').textContent = prettyKey(deviceKey());
+    renderAccount();
     isPersisted().then(ok => {
       const el = $('storageState');
       el.classList.toggle('is-ok', ok);
@@ -1624,6 +1685,210 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     toast('บันทึกข้อมูลแล้ว');
   });
   $('profileForm').addEventListener('input', e => { const fld = e.target.closest('.field'); fld && fld.classList.remove('is-invalid'); });
+
+  // ================= แจ้งโอนเงิน (แนบสลิป) =================
+  const PAY_CLASS = { 'ยังไม่แจ้งโอน': 'is-partial', 'รอตรวจสอบสลิป': '', 'ชำระแล้ว': 'is-done', 'ชำระบางส่วน': 'is-partial', 'สลิปไม่ถูกต้อง': 'is-cancel' };
+  const payStatus = h => (h.status === 'ยกเลิก' ? '' : (h.payment_status || 'ยังไม่แจ้งโอน'));
+  const payDue = h => Math.max(0, Math.round(((h.total_amount || 0) - (h.paid_amount || 0)) * 100) / 100);
+  function payBox(h) {
+    const st = payStatus(h);
+    if (!st) return '';
+    const list = h.payments || [];
+    const rejected = list.find(p => p.status === 'ไม่ถูกต้อง' && p.admin_note);
+    const label = st === 'สลิปไม่ถูกต้อง' ? 'แนบสลิปใหม่' : st === 'ชำระบางส่วน' ? `แจ้งโอนส่วนที่เหลือ ${baht(payDue(h))}` : 'แจ้งโอนเงิน';
+    return `<div class="pay-box">
+      <div class="pay-head"><b>การชำระเงิน</b><span class="chip chip-sm ${PAY_CLASS[st] || ''}">${esc(st)}</span></div>
+      ${h.paid_amount ? `<p class="pay-line">ยืนยันยอดแล้ว ${baht(h.paid_amount)} จาก ${baht(h.total_amount)}</p>` : ''}
+      ${list.map(p => `<p class="pay-line">${esc(p.reported_at || '')} แจ้งโอน ${baht(p.amount)} <span class="pay-st">${esc(p.status)}</span></p>`).join('')}
+      ${st === 'สลิปไม่ถูกต้อง' && rejected ? `<p class="item-note"><b>หมายเหตุ</b> ${esc(rejected.admin_note)}</p>` : ''}
+      ${['ยังไม่แจ้งโอน', 'สลิปไม่ถูกต้อง', 'ชำระบางส่วน'].indexOf(st) >= 0
+        ? `<button type="button" class="btn btn-primary btn-block" data-pay="${esc(h.order_no)}">${label}</button>` : ''}
+      ${st === 'รอตรวจสอบสลิป' ? '<p class="pay-line">ส่งสลิปแล้ว รอผู้ดูแลตรวจสอบ</p>' : ''}
+    </div>`;
+  }
+
+  // ย่อรูปสลิปในเครื่องก่อนส่ง (ด้านยาวไม่เกิน 1600px) อ่านตัวเลขในสลิปได้ชัดและอัปโหลดเร็ว
+  function compressImage(file, maxSide) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('อ่านไฟล์รูปไม่ได้'));
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = () => reject(new Error('ไฟล์นี้ไม่ใช่รูปภาพ'));
+        img.onload = () => {
+          const k = Math.min(1, maxSide / Math.max(img.width, img.height));
+          const c = document.createElement('canvas');
+          c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+          const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+          g.drawImage(img, 0, 0, c.width, c.height);
+          const url = c.toDataURL('image/jpeg', 0.85);
+          resolve({ dataUrl: url, base64: url.split(',')[1], mimeType: 'image/jpeg' });
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  let appInfo = null;
+  async function openSlip(h) {
+    if (offline) return dialog({ icon: 'warning', iconColor: iconColor(), title: 'ยังออฟไลน์อยู่', html: 'ต่ออินเทอร์เน็ตแล้วแจ้งโอนเงินอีกครั้ง', confirmButtonText: 'ตกลง' });
+    if (!appInfo) { try { appInfo = await call('getAppInfo'); } catch (e) { appInfo = { payment: null }; } }
+    const bank = appInfo && appInfo.payment;
+    const due = payDue(h);
+    const d = new Date(), p = n => String(n).padStart(2, '0');
+    const nowLocal = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+    let slip = null;
+    const r = await dialog({
+      title: 'แจ้งโอนเงิน',
+      html: `<div class="sw-form slip">
+        <div class="sw-sum"><div><span>คำสั่งซื้อ</span><b>${esc(h.order_no)}</b></div><div class="is-total"><span>ยอดที่ต้องชำระ</span><b>${baht(due)}</b></div></div>
+        ${bank ? `<div class="bank"><small>${esc(bank.bank)}</small>
+            <div class="bank-no"><b>${esc(bank.account_no)}</b><button type="button" class="chip-btn" id="copyBank">คัดลอก</button></div>
+            ${bank.account_name ? `<small>${esc(bank.account_name)}</small>` : ''}${bank.note ? `<small class="bank-note">${esc(bank.note)}</small>` : ''}</div>` : ''}
+        <label class="slip-pick" id="slipPick"><input type="file" id="slipFile" accept="image/*"><span id="slipPh">แตะเพื่อแนบรูปสลิป<br><small>ถ่ายรูปหรือเลือกจากคลังภาพ</small></span></label>
+        <div class="field"><label for="sw-amt">ยอดที่โอน (บาท)</label><input id="sw-amt" type="text" inputmode="decimal" value="${due}"></div>
+        <div class="field"><label for="sw-time">วันเวลาที่โอน</label><input id="sw-time" type="datetime-local" value="${nowLocal}" max="${nowLocal}"></div>
+        <div class="field"><label for="sw-pnote">หมายเหตุ <span>(ไม่บังคับ)</span></label><input id="sw-pnote" maxlength="300" placeholder="เช่น โอนจากบัญชีของภรรยา"></div>
+      </div>`,
+      showCancelButton: true, confirmButtonText: 'ส่งหลักฐานการโอน', cancelButtonText: 'ยกเลิก', focusConfirm: false,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
+      allowEscapeKey: () => !(window.Swal && Swal.isLoading()),
+      didOpen: el => {
+        const cp = el.querySelector('#copyBank');
+        if (cp) cp.addEventListener('click', async () => { cp.textContent = (await copyText(bank.account_no.replace(/[^0-9]/g, ''))) ? 'คัดลอกแล้ว' : 'คัดลอกไม่ได้'; });
+        el.querySelector('#slipFile').addEventListener('change', e => {
+          const f = e.target.files && e.target.files[0];
+          if (!f) return;
+          Swal.resetValidationMessage();
+          compressImage(f, 1600).then(img => {
+            slip = img;
+            el.querySelector('#slipPick').classList.add('has-img');
+            el.querySelector('#slipPh').innerHTML = `<img src="${img.dataUrl}" alt="สลิปที่แนบ"><small>แตะเพื่อเปลี่ยนรูป</small>`;
+          }).catch(err => Swal.showValidationMessage(err.message));
+        });
+      },
+      preConfirm: async () => {
+        const amount = Number(String(document.getElementById('sw-amt').value).replace(/[, ]/g, ''));
+        const t = document.getElementById('sw-time').value;
+        if (!slip) { Swal.showValidationMessage('แนบรูปสลิปการโอนเงิน'); return false; }
+        if (!(amount > 0)) { Swal.showValidationMessage('กรอกยอดที่โอนเป็นตัวเลข'); return false; }
+        if (!t) { Swal.showValidationMessage('ระบุวันเวลาที่โอน'); return false; }
+        const [dd, tt] = t.split('T'), [y, m, day] = dd.split('-');
+        try {
+          return await call('uploadSlip', {
+            device_key: deviceKey(), order_no: h.order_no, amount,
+            paid_at: `${day}/${m}/${y} ${tt}`, note: document.getElementById('sw-pnote').value.trim(),
+            image: { base64: slip.base64, mimeType: slip.mimeType },
+          });
+        } catch (err) {
+          Swal.showValidationMessage((err && err.message) || 'ส่งสลิปไม่สำเร็จ ลองใหม่อีกครั้ง');
+          return false;
+        }
+      },
+    });
+    if (!r.isConfirmed || !r.value) return;
+    haptic([10, 40, 10]);
+    // แสดงผลทันที แล้วดึงข้อมูลจริงจากระบบ
+    const list = store.get(K.history, []), x = list.find(o => o.order_no === h.order_no);
+    if (x) { x.payment_status = 'รอตรวจสอบสลิป'; x.payments = [{ amount: r.value.amount, status: 'รอตรวจสอบ', reported_at: 'เมื่อสักครู่' }].concat(x.payments || []); store.set(K.history, list); }
+    if (view === 'history') renderHistory();
+    toast('ส่งสลิปแล้ว รอผู้ดูแลตรวจสอบ');
+    syncHistory(true);
+  }
+  $('historyBody').addEventListener('click', e => {
+    const b = e.target.closest('[data-pay]');
+    if (!b) return;
+    const h = store.get(K.history, []).find(x => x.order_no === b.dataset.pay);
+    if (h) openSlip(h);
+  });
+
+  // ================= เข้าสู่ระบบด้วย Google (ไม่บังคับ) =================
+  // ใช้ได้เมื่อเปิดผ่าน GitHub Pages และตั้งค่า GOOGLE_CLIENT_ID ใน config.js
+  const canGoogle = () => !!GOOGLE_CLIENT_ID && !!API_URL && !onAppsScript;
+  let gsiLoading = null, gsiReady = false;
+  function loadGsi() {
+    if (window.google && google.accounts && google.accounts.id) return Promise.resolve();
+    if (!gsiLoading) {
+      gsiLoading = new Promise((resolve, reject) => {
+        const sc = document.createElement('script');
+        sc.src = 'https://accounts.google.com/gsi/client'; sc.async = true;
+        sc.onload = () => resolve(); sc.onerror = () => { gsiLoading = null; reject(new Error('load')); };
+        document.head.appendChild(sc);
+      });
+    }
+    return gsiLoading;
+  }
+  function renderAccount() {
+    const on = canGoogle();
+    $('accountSection').hidden = !on;
+    const acc = on ? store.get(K.account, null) : null;
+    $('accIn').hidden = !acc; $('accOut').hidden = !!acc;
+    ['recoverTitle', 'recoverPanel', 'unlinkPanel'].forEach(id => { $(id).hidden = !!acc; });   // บัญชี Google ใช้แทนรหัสกู้คืน
+    if (!on) return;
+    if (acc) {
+      $('accName').textContent = acc.name || acc.email;
+      $('accEmail').textContent = acc.email;
+      if (acc.picture) $('accPic').src = acc.picture; else $('accPic').removeAttribute('src');
+      return;
+    }
+    $('gsiErr').hidden = true;
+    if (offline) { $('gsiBtn').innerHTML = ''; $('gsiErr').textContent = 'ต่ออินเทอร์เน็ตเพื่อเข้าสู่ระบบ'; $('gsiErr').hidden = false; return; }
+    loadGsi().then(() => {
+      if (!gsiReady) {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID, callback: onGoogleCredential,
+          ux_mode: 'popup', auto_select: false, itp_support: true, use_fedcm_for_prompt: true,
+        });
+        gsiReady = true;
+      }
+      const box = $('gsiBtn'); box.innerHTML = '';
+      google.accounts.id.renderButton(box, {
+        type: 'standard', theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', locale: 'th',
+        width: Math.max(220, Math.min(360, box.clientWidth || 300)),
+      });
+    }).catch(() => { $('gsiErr').textContent = 'โหลดปุ่มเข้าสู่ระบบของ Google ไม่ได้ ลองใหม่อีกครั้ง'; $('gsiErr').hidden = false; });
+  }
+  async function onGoogleCredential(resp) {
+    let res = null, err = null;
+    await dialog({
+      title: 'เข้าสู่ระบบด้วย Google', html: 'กำลังยืนยันบัญชี…',
+      showConfirmButton: false, allowOutsideClick: false, allowEscapeKey: false,
+      didOpen: () => {
+        if (window.Swal) Swal.showLoading();
+        call('linkGoogle', { id_token: resp && resp.credential, device_key: deviceKey() })
+          .then(r => { res = r; }).catch(e => { err = e; })
+          .then(() => { if (window.Swal) Swal.close(); });
+      },
+    });
+    if (err || !res) {
+      return dialog({ icon: 'error', title: 'เข้าสู่ระบบไม่สำเร็จ', html: esc((err && err.message) || 'ลองใหม่อีกครั้ง'), confirmButtonText: 'ตกลง' });
+    }
+    store.set(K.device, res.key);                         // ใช้รหัสบัญชีแทนรหัสเครื่อง: ทุกเบราว์เซอร์ได้รหัสเดียวกัน
+    store.set(K.account, { email: res.email, name: res.name, picture: res.picture });
+    store.set(K.history, []); store.set(K.histSync, 0);
+    if (!profile.full_name && res.name) saveProfile({ full_name: res.name });
+    requestPersist();
+    renderMe();
+    syncHistory(true);
+    toast(res.moved_rows ? `เข้าสู่ระบบแล้ว ย้ายประวัติเดิมเข้าบัญชีให้แล้ว` : `เข้าสู่ระบบแล้ว ${res.email}`);
+  }
+  $('accLogout').addEventListener('click', async () => {
+    const acc = store.get(K.account, null);
+    const r = await dialog({
+      icon: 'question', iconColor: iconColor(), title: 'ออกจากระบบ?',
+      html: `เครื่องนี้จะไม่เห็นประวัติของ ${esc(acc ? acc.email : 'บัญชีนี้')} ประวัติยังอยู่ครบ เข้าสู่ระบบอีกครั้งเมื่อไหร่ก็กลับมา`,
+      showCancelButton: true, confirmButtonText: 'ออกจากระบบ', cancelButtonText: 'ยกเลิก', focusCancel: true,
+    });
+    if (!r.isConfirmed) return;
+    try { if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); } catch (e) {}
+    store.set(K.account, null);
+    store.set(K.device, newDeviceKey());
+    store.set(K.history, []); store.set(K.histSync, 0);
+    renderMe();
+    toast('ออกจากระบบแล้ว');
+  });
 
   // ================= Checkout =================
   $('checkoutBtn').addEventListener('click', checkout);
@@ -1689,11 +1954,16 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       title: 'ส่งคำสั่งซื้อแล้ว',
       html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${num(res.total_qty)} ผืน ยอดรวม ${baht(res.total_amount)}`,
       showDenyButton: true, confirmButtonText: 'ดูประวัติคำสั่งซื้อ', denyButtonText: 'สั่งสินค้าต่อ',
+      showCancelButton: true, cancelButtonText: 'แจ้งโอนเงินตอนนี้',
       reverseButtons: false, customClass: Object.assign({}, SW_CLASS, { popup: 'sw is-stacked' }),
     });
     // กดย้อนกลับของเครื่องตอนกล่องนี้เปิด = ปิดกล่องเฉยๆ (1 ครั้ง = 1 ขั้น)
     if (done.isConfirmed) go('history');
     else if (done.isDenied) go('products');
+    else if (window.Swal && done.dismiss === Swal.DismissReason.cancel) {
+      const h = store.get(K.history, []).find(x => x.order_no === res.order_no);
+      if (h) { go('history'); openSlip(h); }
+    }
   }
 
   // ================= History =================
@@ -1720,7 +1990,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <span class="hist-no">${esc(h.order_no)}</span>
           <span class="hist-total">${baht(h.total_amount)}</span>
           <span class="hist-meta">${esc(h.created_at)} (${num(h.total_qty)} ผืน)${h.status === 'จัดส่งบางส่วน' && h.active_items ? ` ส่งแล้ว ${num(h.shipped_items)}/${num(h.active_items)} รายการ` : ''}</span>
-          <span class="chip ${STATUS_CLASS[h.status] || ''}">${esc(h.status || 'รอดำเนินการ')}</span>
+          <span class="chips"><span class="chip ${STATUS_CLASS[h.status] || ''}">${esc(h.status || 'รอดำเนินการ')}</span>
+            ${payStatus(h) ? `<span class="chip ${PAY_CLASS[payStatus(h)] || ''}">${esc(payStatus(h))}</span>` : ''}</span>
         </summary>
         <div class="hist-body">
           ${h.items.map(it => `
@@ -1731,6 +2002,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
                 ${it.note ? `<p class="item-note"><b>หมายเหตุ</b> ${esc(it.note)}</p>` : ''}</div>
               <b>${baht(it.total)}</b>
             </div>`).join('')}
+          ${payBox(h)}
           <p class="hist-who">${esc(h.full_name)} (${esc(h.department)})</p>
           <button type="button" class="btn btn-ghost btn-block" data-reorder="${esc(h.order_no)}">สั่งรายการเดิมอีกครั้ง</button>
         </div>
