@@ -1,0 +1,1952 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E8DDD0">
+<meta name="format-detection" content="telephone=no">
+<title>สั่งผ้าห่ม 1001</title>
+<meta name="description" content="สั่งผ้าห่ม 1001 Premium Blankets สำหรับพนักงาน">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="1001 สั่งของ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   Tokens: โทนสีจากเว็บ 1001blankets.com
+   ========================================================= */
+:root {
+  --sand: #E8DDD0;
+  --camel: #C4956B;
+  --paper: #F6F1EB;
+  --surface: #FFFFFF;
+  --ink: #1A1714;
+  --muted: #5F5954;
+  --line: #E6DDD3;
+  --line-strong: #CFC4B9;
+  --accent: #9A6A45;        /* camel เข้มขึ้นเพื่อให้ตัวอักษรขาวบนปุ่มอ่านง่าย */
+  --accent-press: #84593A;
+  --accent-text: #7A5333;
+  --accent-wash: #F3EADF;
+  --on-accent: #FFFFFF;
+  --badge: #C4956B;
+  --on-badge: #1A1714;
+  --danger: #B42318;
+  --danger-wash: #FDF0EE;
+  --ok: #2F6B3E;
+  --ok-wash: #E9F3EA;
+  --warn: #8A5300;
+  --warn-wash: #FFF1D6;
+  --img-bg: #EEE7DF;
+  --field: #FBF8F4;
+  --scrim: rgba(26, 23, 20, .5);
+  --toast-bg: #1A1714;
+  --toast-ink: #FFFFFF;
+
+  --r-card: 14px;
+  --r-item: 6px;            /* การ์ดสินค้า: มุมโค้งน้อย */
+  --r-ctl: 12px;
+  --tap: 44px;
+  --appbar-h: 56px;
+  --tab-h: 58px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+  --font: 'Poppins', 'Noto Sans Thai', system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sand: #241F1B; --paper: #161311; --surface: #1F1B18; --ink: #EDE6DE; --muted: #A89F96;
+    --line: #2E2823; --line-strong: #423A33;
+    --accent: #D3A77E; --accent-press: #C4956B; --accent-text: #D9AE86; --accent-wash: #2C231C; --on-accent: #1A1714;
+    --badge: #D3A77E; --on-badge: #1A1714;
+    --danger: #F97066; --danger-wash: #2A1715; --ok: #7BC08A; --ok-wash: #18261B; --warn: #F5B651; --warn-wash: #33260F;
+    --img-bg: #2A2521; --field: #1A1714; --scrim: rgba(0,0,0,.6);
+    --toast-bg: #EDE6DE; --toast-ink: #1A1714;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --sand: #241F1B; --paper: #161311; --surface: #1F1B18; --ink: #EDE6DE; --muted: #A89F96;
+  --line: #2E2823; --line-strong: #423A33;
+  --accent: #D3A77E; --accent-press: #C4956B; --accent-text: #D9AE86; --accent-wash: #2C231C; --on-accent: #1A1714;
+  --badge: #D3A77E; --on-badge: #1A1714;
+  --danger: #F97066; --danger-wash: #2A1715; --ok: #7BC08A; --ok-wash: #18261B; --warn: #F5B651; --warn-wash: #33260F;
+  --img-bg: #2A2521; --field: #1A1714; --scrim: rgba(0,0,0,.6);
+  --toast-bg: #EDE6DE; --toast-ink: #1A1714;
+  color-scheme: dark;
+}
+
+/* ========================================================= Base */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html, body { margin: 0; background: var(--paper); }
+body {
+  font-family: var(--font); color: var(--ink);
+  font-size: 15px; line-height: 1.45;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain;       /* ปิด pull-to-refresh ของเบราว์เซอร์ ใช้ของแอปแทน */
+  padding-bottom: calc(var(--tab-h) + var(--safe-b));
+}
+body.has-checkout { padding-bottom: calc(var(--tab-h) + 76px + var(--safe-b)); }
+body.is-locked { overflow: hidden; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+img { display: block; max-width: 100%; }
+.wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 12px; }
+@media (min-width: 600px) { .wrap { padding: 0 20px; } }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg.i { width: 22px; height: 22px; flex: none; }
+
+/* ========================================================= App bar */
+.appbar {
+  position: sticky; top: 0; z-index: 30;
+  background: var(--sand);
+  padding-top: var(--safe-t);
+  border-bottom: 1px solid var(--line-strong);
+}
+.appbar-row { display: flex; align-items: center; gap: 10px; min-height: var(--appbar-h); }
+.logo { height: 26px; width: auto; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .logo { filter: invert(1); } }
+:root[data-theme="dark"] .logo { filter: invert(1); }
+.back-link {
+  display: inline-flex; align-items: center; gap: 2px; max-width: 100%;
+  min-height: var(--tap); margin-left: -10px; padding: 0 14px 0 6px;
+  border: 0; border-radius: 14px; background: none; color: var(--ink);
+  font-size: 16px; font-weight: 500; line-height: 1.2; white-space: nowrap;
+}
+/* ชื่อหน้า: หัวข้อใหญ่ด้านบนเนื้อหา แยกจากปุ่มย้อนกลับ */
+.page-title { font-size: 24px; font-weight: 600; line-height: 1.3; margin: 16px 0 0; }
+
+.back-link svg { width: 26px; height: 26px; flex: none; }
+.back-link:active { background: rgba(0, 0, 0, .07); }
+@media (hover: hover) { .back-link:hover { background: rgba(0, 0, 0, .05); } }
+@media (prefers-reduced-motion: no-preference) {
+  .back-link:not([hidden]), .page-title:not([hidden]) { animation: titleIn .2s ease-out; }
+  @keyframes titleIn { from { opacity: 0; transform: translateX(8px); } }
+}
+.appbar-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+.pill { font-size: 11px; line-height: 1; padding: 6px 9px; border-radius: 999px; background: var(--surface); color: var(--accent-text); white-space: nowrap; }
+.chip-btn {
+  min-height: 34px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.text-btn { border: 0; background: none; color: var(--accent-text); font-weight: 500; font-size: 14px; min-height: var(--tap); padding: 0 6px; }
+.search { position: relative; padding: 0 0 10px; }
+.search svg { position: absolute; left: 12px; top: 11px; width: 20px; height: 20px; color: var(--muted); pointer-events: none; }
+.search input {
+  width: 100%; height: var(--tap); padding: 0 12px 0 40px;
+  font-size: 16px; /* >=16px กัน iOS ซูม */
+  background: var(--field); border: 1px solid var(--line-strong); border-radius: var(--r-ctl);
+  -webkit-appearance: none; appearance: none;
+}
+.search input::placeholder { color: var(--muted); }
+.search input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+@media (min-width: 744px) {
+  .logo { height: 28px; }
+  .appbar .wrap.split { display: flex; align-items: center; gap: 20px; }
+  .appbar .wrap.split .appbar-row { flex: 1; }
+  .appbar .wrap.split .search { width: 340px; padding: 0; }
+}
+
+.notice { font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.notice .wrap { display: flex; align-items: center; gap: 8px; }
+.notice p { margin: 0; flex: 1; }
+.notice-offline { background: var(--danger-wash); color: var(--danger); }
+
+/* ========================================================= Pull to refresh */
+.ptr {
+  position: fixed; left: 50%; z-index: 25;
+  top: calc(var(--ptr-top, 120px) - 44px);
+  width: 40px; height: 40px; margin-left: -20px; border-radius: 50%;
+  background: var(--surface); color: var(--accent);
+  box-shadow: 0 2px 10px rgba(0,0,0,.12);
+  display: grid; place-items: center;
+  transform: translateY(var(--pull, 0px)) scale(var(--pull-s, .4)); opacity: var(--pull-o, 0);
+  pointer-events: none;
+}
+.ptr svg { width: 22px; height: 22px; transform: rotate(var(--pull-r, 0deg)); }
+.ptr.is-loading svg { animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========================================================= Views */
+main { min-height: 60vh; }
+.view { padding: 12px 0 24px; }
+@media (prefers-reduced-motion: no-preference) {
+  .view.is-entering { animation: viewIn .2s ease-out; }
+  @keyframes viewIn { from { opacity: 0; transform: translateY(6px); } }
+}
+.section-title { font-size: 13px; font-weight: 600; color: var(--muted); margin: 18px 4px 8px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); }
+
+/* ========================================================= Product grid: มือถือ 2 / แท็บเล็ต 3 / iPad 4 */
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (min-width: 600px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } }
+@media (min-width: 744px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } }
+
+.card {
+  display: flex; flex-direction: column;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-item);
+  padding: 6px; transition: border-color .15s ease;
+}
+.card.is-picked { border-color: var(--camel); box-shadow: inset 0 0 0 1px var(--camel); }
+.card-img {
+  position: relative; display: block; width: 100%; padding: 0; border: 0;
+  aspect-ratio: 4 / 5; border-radius: 3px; overflow: hidden; background: var(--img-bg);
+}
+.card-img img { width: 100%; height: 100%; object-fit: cover; }
+.card-img:active img { transform: scale(.98); transition: transform .1s; }
+.qty-badge {
+  position: absolute; top: 6px; right: 6px;
+  min-width: 28px; height: 24px; padding: 0 8px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--badge); color: var(--on-badge); font-size: 12px; font-weight: 600;
+}
+.card-body { display: flex; flex-direction: column; flex: 1; padding: 8px 4px 2px; }
+.card-name { font-size: 14px; font-weight: 500; margin: 0; overflow-wrap: anywhere; }
+.card-code { font-size: 12px; color: var(--muted); margin: 0; }
+.card-price { display: flex; align-items: baseline; gap: 4px; margin: 2px 0 10px; }
+.card-price b { font-size: 19px; font-weight: 600; letter-spacing: -.01em; }
+.card-price span { font-size: 12px; color: var(--muted); }
+.card-act { margin-top: auto; }
+.qty-badge { border-radius: 4px; }
+
+/* ========================================================= Buttons & stepper */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: var(--tap); padding: 0 16px; border-radius: var(--r-ctl);
+  border: 1px solid transparent; font-size: 15px; font-weight: 500; line-height: 1.2;
+}
+.btn-block { width: 100%; }
+.btn-lg { min-height: 50px; font-size: 16px; }
+.btn-primary { background: var(--accent); color: var(--on-accent); }
+.btn-primary:active { background: var(--accent-press); }
+.btn-primary:disabled { background: var(--line); color: var(--muted); cursor: not-allowed; }
+.btn-add { background: var(--surface); border-color: var(--accent); color: var(--accent-text); }
+.btn-add:active { background: var(--accent-wash); }
+.btn-ghost { background: var(--surface); border-color: var(--line-strong); color: var(--ink); }
+.btn-ghost:active { background: var(--paper); }
+.btn-danger-text { background: none; border: 0; color: var(--danger); }
+@media (hover: hover) {
+  .btn-primary:not(:disabled):hover { background: var(--accent-press); }
+  .btn-add:hover, .btn-ghost:hover { background: var(--accent-wash); }
+}
+.btn svg { width: 18px; height: 18px; }
+
+.stepper {
+  display: grid; grid-template-columns: var(--tap) minmax(0, 1fr) var(--tap);
+  height: var(--tap); border: 1px solid var(--accent); border-radius: var(--r-ctl);
+  overflow: hidden; background: var(--surface);
+}
+.stepper button {
+  border: 0; background: var(--accent-wash); color: var(--accent-text);
+  display: grid; place-items: center;
+}
+.stepper button svg { width: 18px; height: 18px; }
+.stepper button:active, .stepper button.is-holding { background: var(--accent); color: var(--on-accent); }
+.stepper input {
+  width: 100%; min-width: 0; border: 0; background: transparent;
+  text-align: center; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield; appearance: textfield;
+}
+.stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.stepper input:focus { outline: none; background: var(--accent-wash); }
+.stepper.lg { --tap: 52px; }
+.stepper.lg input { font-size: 20px; }
+@media (max-width: 359.98px) { :root { --tap: 40px; } .card { padding: 5px; } .logo { height: 22px; } }
+
+/* ========================================================= Cart */
+.lines { list-style: none; margin: 0; padding: 0 14px; }
+.line {
+  display: grid; grid-template-columns: 60px minmax(0, 1fr) auto;
+  grid-template-areas: "img info del" "img step total";
+  gap: 6px 12px; align-items: center; padding: 14px 0;
+}
+.line + .line { border-top: 1px solid var(--line); }
+.line-img { grid-area: img; width: 60px; height: 75px; padding: 0; border: 0; border-radius: 8px; overflow: hidden; background: var(--img-bg); align-self: start; }
+.line-img img { width: 100%; height: 100%; object-fit: cover; }
+.line-info { grid-area: info; min-width: 0; }
+.line-name { font-weight: 500; overflow-wrap: anywhere; }
+.line-unit { font-size: 13px; color: var(--muted); }
+.line-del { grid-area: del; justify-self: end; width: 40px; height: 40px; border: 0; background: none; color: var(--muted); border-radius: 50%; display: grid; place-items: center; }
+.line-del:active { background: var(--danger-wash); color: var(--danger); }
+.line .stepper { grid-area: step; width: 136px; --tap: 40px; }
+.line-total { grid-area: total; justify-self: end; font-weight: 600; font-variant-numeric: tabular-nums; }
+.is-flash { animation: flash .6s ease-out; }
+@keyframes flash { from { background: var(--accent-wash); } }
+
+.buyer { padding: 14px; display: flex; align-items: flex-start; gap: 12px; }
+.buyer-ico { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-wash); color: var(--accent-text); display: grid; place-items: center; flex: none; }
+.buyer-ico svg { width: 22px; height: 22px; }
+.buyer-txt { flex: 1; min-width: 0; }
+.buyer-txt b { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.buyer-txt span { font-size: 13px; color: var(--muted); }
+.buyer-txt .warn { color: var(--danger); }
+
+.sum-rows { padding: 6px 14px; }
+.sum-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; color: var(--muted); }
+.sum-row + .sum-row { border-top: 1px solid var(--line); }
+.sum-row b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.sum-row.total b { font-size: 18px; }
+
+.checkout {
+  position: fixed; left: 0; right: 0; z-index: 28;
+  bottom: calc(var(--tab-h) + var(--safe-b));
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding: 10px 0;
+}
+.checkout .wrap { display: flex; align-items: center; gap: 12px; }
+.checkout-sum { margin-right: auto; line-height: 1.2; }
+.checkout-sum small { display: block; font-size: 12.5px; color: var(--muted); }
+.checkout-sum b { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.checkout .btn { min-width: 168px; }
+
+/* ========================================================= Empty states */
+.empty { text-align: center; padding: 56px 24px; color: var(--muted); }
+.empty-ico { width: 72px; height: 72px; margin: 0 auto 14px; border-radius: 50%; background: var(--accent-wash); color: var(--accent-text); display: grid; place-items: center; }
+.empty-ico svg { width: 34px; height: 34px; }
+.empty h2 { font-size: 18px; color: var(--ink); margin: 0 0 4px; }
+.empty p { margin: 0 0 18px; }
+
+/* ========================================================= History */
+.hist { margin: 0 0 10px; }
+.hist summary {
+  list-style: none; cursor: pointer; padding: 14px;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px 12px; align-items: center;
+}
+.hist summary::-webkit-details-marker { display: none; }
+.hist-no { font-weight: 600; font-variant-numeric: tabular-nums; }
+.hist-total { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.hist-meta { font-size: 12.5px; color: var(--muted); }
+.chip { justify-self: end; font-size: 12px; padding: 2px 10px; border-radius: 999px; background: var(--accent-wash); color: var(--accent-text); white-space: nowrap; }
+.chip.is-done { background: var(--ok-wash); color: var(--ok); }
+.chip.is-cancel { background: var(--danger-wash); color: var(--danger); }
+.chip.is-partial { background: var(--warn-wash); color: var(--warn); }
+.chip-sm { display: inline-block; justify-self: auto; font-size: 11px; padding: 1px 8px; margin-top: 4px; }
+.hist-name { display: block; }
+.item-note {
+  margin: 6px 0 0; padding: 6px 10px; border-radius: 8px;
+  background: var(--paper); color: var(--ink); font-size: 13px; line-height: 1.5;
+  white-space: pre-line; overflow-wrap: anywhere;
+}
+.item-note b { font-weight: 600; color: var(--accent-text); margin-right: 4px; }
+.hist-body .hist-line { align-items: start; }
+.hist-body .hist-line > b { padding-top: 2px; }
+.storage-state { margin: 10px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.storage-state.is-ok { color: var(--ok); }
+.hist-line.is-cancelled .hist-name, .hist-line.is-cancelled small, .hist-line.is-cancelled b { text-decoration: line-through; color: var(--muted); }
+.hist-line.is-cancelled img { opacity: .5; }
+.hist[open] summary { border-bottom: 1px solid var(--line); }
+.hist-body { padding: 4px 14px 14px; }
+.hist-line { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 0; }
+.hist-line + .hist-line { border-top: 1px solid var(--line); }
+.hist-line img { width: 44px; height: 55px; object-fit: cover; border-radius: 6px; background: var(--img-bg); }
+.hist-line small { display: block; color: var(--muted); font-size: 12.5px; }
+.hist-line b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.hist-who { font-size: 12.5px; color: var(--muted); margin: 8px 0 12px; }
+.hist-note { font-size: 12.5px; color: var(--muted); margin: 0 4px 10px; }
+
+/* ========================================================= Profile */
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px; text-align: left; }
+.field label span { font-weight: 400; color: var(--muted); }
+.field input {
+  width: 100%; height: 48px; padding: 0 12px; font-size: 16px;
+  background: var(--field); color: var(--ink);
+  border: 1px solid var(--line-strong); border-radius: var(--r-ctl);
+  -webkit-appearance: none; appearance: none;
+}
+.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+.field.is-invalid input { border-color: var(--danger); }
+.field .err { display: none; font-size: 13px; color: var(--danger); margin-top: 4px; text-align: left; }
+.field.is-invalid .err { display: block; }
+.form-pad { padding: 16px 14px 4px; }
+.menu { list-style: none; margin: 0; padding: 0; }
+.menu li + li { border-top: 1px solid var(--line); }
+.menu button {
+  width: 100%; min-height: 54px; padding: 0 14px; border: 0; background: none;
+  display: flex; align-items: center; gap: 12px; text-align: left; font-size: 15px;
+}
+.menu button:active { background: var(--paper); }
+.menu button span { flex: 1; }
+.menu button small { color: var(--muted); font-size: 13px; }
+.menu .is-danger { color: var(--danger); }
+.recover { padding: 14px; }
+.recover-txt { margin: 0 0 12px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+.recover-code {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 17px; font-weight: 600;
+  letter-spacing: .06em; text-align: center; padding: 12px 8px; border-radius: 12px;
+  background: var(--paper); border: 1px dashed var(--line-strong); user-select: all; -webkit-user-select: all;
+  word-break: break-all;
+}
+.recover-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.recover-actions .btn { font-size: 14px; padding: 0 8px; }
+.recover-actions .btn svg { width: 18px; height: 18px; }
+.sync-note { display: flex; align-items: center; gap: 6px; }
+.sync-note.is-stale { color: var(--danger); }
+.sw-code { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.foot-note { font-size: 12.5px; color: var(--muted); text-align: center; margin: 18px 0 0; }
+
+/* ========================================================= Tab bar */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 29;
+  background: var(--surface); border-top: 1px solid var(--line);
+  padding-bottom: var(--safe-b);
+}
+.tabbar-in { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 560px; margin: 0 auto; height: var(--tab-h); }
+.tab {
+  position: relative; border: 0; background: none; color: var(--muted);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  font-size: 11.5px; font-weight: 500;
+}
+.tab svg { width: 24px; height: 24px; }
+.tab[aria-current="page"] { color: var(--accent-text); }
+.tab[aria-current="page"]::before {
+  content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 3px; border-radius: 0 0 3px 3px; background: var(--accent);
+}
+.tab-badge {
+  position: absolute; top: 5px; left: calc(50% + 6px);
+  min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px;
+  background: var(--badge); color: var(--on-badge); font-size: 11px; font-weight: 600;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+body.is-typing .tabbar, body.is-typing .checkout { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .bump { animation: bump .32s ease-out; }
+  @keyframes bump { 35% { transform: scale(1.25); } }
+}
+
+/* ========================================================= Detail sheet */
+.sheet { position: fixed; inset: 0; z-index: 50; display: flex; align-items: flex-end; justify-content: center; }
+.sheet-scrim { position: absolute; inset: 0; background: var(--scrim); }
+.sheet-panel {
+  position: relative; width: 100%; max-height: 94%;
+  display: flex; flex-direction: column;
+  background: var(--surface); border-radius: 20px 20px 0 0;
+  padding-bottom: var(--safe-b);
+  touch-action: pan-y;
+}
+.sheet-grab { padding: 8px 0 4px; cursor: grab; touch-action: none; }
+.sheet-grip { width: 40px; height: 5px; border-radius: 5px; background: var(--line-strong); margin: 0 auto; }
+.sheet-close { position: absolute; top: 8px; right: 8px; z-index: 2; width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(255,255,255,.9); color: #1A1714; display: grid; place-items: center; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+.sheet-body { overflow-y: auto; overscroll-behavior: contain; padding: 0 16px 16px; }
+.detail-img { width: 100%; padding: 0; border: 0; background: var(--img-bg); border-radius: 14px; overflow: hidden; aspect-ratio: 4 / 5; max-height: 50vh; display: block; margin: 4px auto 0; }
+.detail-img img { width: 100%; height: 100%; object-fit: contain; }
+.detail-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin: 14px 0 4px; }
+.detail-head h2 { font-size: 18px; margin: 0; overflow-wrap: anywhere; }
+.detail-head p { margin: 0; font-size: 13px; color: var(--muted); }
+.detail-price { font-size: 22px; font-weight: 600; white-space: nowrap; }
+.detail-price small { font-size: 13px; color: var(--muted); font-weight: 400; }
+.detail-qty { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 16px 0; }
+.detail-qty label { font-weight: 500; }
+.detail-qty .stepper { width: 180px; }
+.qty-chips { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; margin: -4px 0 16px; }
+.qty-chips button {
+  min-height: 40px; border-radius: 999px; border: 1px solid var(--line-strong);
+  background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums;
+}
+.qty-chips button:active { background: var(--accent-wash); }
+.qty-chips button.is-on { background: var(--accent-wash); border-color: var(--accent); color: var(--accent-text); font-weight: 600; }
+@media (max-height: 760px) { .detail-img { max-height: 38vh; } .detail-head { margin-top: 10px; } .detail-qty { margin: 10px 0 12px; } }
+.detail-in-cart { font-size: 13px; color: var(--accent-text); margin: -6px 0 12px; }
+@media (min-width: 744px) {
+  .sheet { align-items: center; padding: 24px; }
+  .sheet-panel { max-width: 520px; border-radius: 20px; max-height: 90vh; padding-bottom: 0; }
+  .sheet-grab { display: none; }
+  .sheet-body { padding-top: 16px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sheet:not([hidden]) .sheet-panel { animation: rise .26s cubic-bezier(.2,.8,.2,1); }
+  .sheet:not([hidden]) .sheet-scrim { animation: fade .2s ease-out; }
+  @keyframes rise { from { transform: translateY(40%); } }
+  @keyframes fade { from { opacity: 0; } }
+}
+
+/* ========================================================= Image viewer */
+.viewer { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.92); display: flex; flex-direction: column; }
+.viewer-head { display: flex; align-items: center; padding: calc(4px + var(--safe-t)) 4px 4px 16px; color: #fff; }
+.viewer-head span { margin-right: auto; font-weight: 500; }
+.viewer-head button { width: var(--tap); height: var(--tap); border: 0; background: none; color: #fff; display: grid; place-items: center; }
+.viewer-img { flex: 1; min-height: 0; display: grid; place-items: center; padding: 8px 12px calc(16px + var(--safe-b)); }
+.viewer-img img { max-height: 100%; width: auto; max-width: 100%; object-fit: contain; border-radius: 8px; }
+
+/* ========================================================= Fly-to-cart */
+.fly {
+  position: fixed; z-index: 3000; pointer-events: none;   /* อยู่เหนือ dialog ของ SweetAlert2 */
+  border-radius: 14px; background: var(--img-bg) center / cover no-repeat;
+  border: 3px solid var(--surface);
+  box-shadow: 0 14px 30px rgba(26, 23, 20, .28), 0 2px 6px rgba(26, 23, 20, .12);
+  will-change: transform, opacity;
+}
+.tab { overflow: visible; }
+.tab.is-catch svg { animation: catchBag .55s cubic-bezier(.3, 1.6, .5, 1); transform-origin: 50% 90%; }
+@keyframes catchBag {
+  0% { transform: translateY(0) scale(1, 1); }
+  20% { transform: translateY(4px) scale(1.18, .78); }
+  45% { transform: translateY(-5px) scale(.92, 1.12) rotate(-8deg); }
+  65% { transform: translateY(0) scale(1.04, .96) rotate(6deg); }
+  82% { transform: rotate(-3deg); }
+  100% { transform: none; }
+}
+.tab-badge.is-pop { animation: badgePop .45s cubic-bezier(.3, 1.8, .5, 1); }
+@keyframes badgePop { 0% { transform: scale(.4); } 60% { transform: scale(1.35); } 100% { transform: scale(1); } }
+.catch-ring {
+  position: absolute; left: 50%; top: 18px; width: 40px; height: 40px; margin: -20px 0 0 -20px;
+  border-radius: 50%; border: 2px solid var(--camel); pointer-events: none;
+  animation: ring .65s ease-out forwards;
+}
+@keyframes ring { from { transform: scale(.4); opacity: .9; } to { transform: scale(1.6); opacity: 0; } }
+.catch-plus {
+  position: absolute; left: 50%; top: -6px; transform: translateX(-50%);
+  padding: 2px 9px; border-radius: 999px; background: var(--accent); color: var(--on-accent);
+  font-size: 12px; font-weight: 600; white-space: nowrap; pointer-events: none;
+  animation: plusUp .9s ease-out forwards;
+}
+@keyframes plusUp {
+  0% { opacity: 0; transform: translate(-50%, 8px) scale(.7); }
+  20% { opacity: 1; transform: translate(-50%, -6px) scale(1.05); }
+  70% { opacity: 1; transform: translate(-50%, -18px) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -30px) scale(.95); }
+}
+
+/* ========================================================= Skeleton */
+.skeleton .card-img, .skeleton .sk { background: var(--img-bg); }
+.skeleton .sk { height: 12px; border-radius: 6px; margin: 8px 4px 0; }
+.skeleton .w60 { width: 60%; } .skeleton .w40 { width: 40%; height: 18px; }
+.skeleton .sk-btn { height: var(--tap); margin-top: 12px; border-radius: var(--r-ctl); }
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton { animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .55; } }
+}
+.state { text-align: center; color: var(--muted); padding: 48px 16px; }
+.state p { margin: 0 0 12px; }
+
+/* ========================================================= SweetAlert2: ปรับให้เข้ากับแอป */
+.swal2-container { padding: 20px; }
+.swal2-container.swal2-center.swal2-backdrop-show { background: var(--scrim) !important; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+.swal2-container.swal2-top, .swal2-container.swal2-bottom { background: transparent !important; pointer-events: none; }
+.swal2-container.swal2-top > .swal2-popup, .swal2-container.swal2-bottom > .swal2-popup { pointer-events: auto; }
+
+.swal2-popup.sw {
+  font-family: var(--font); background: var(--surface); color: var(--ink);
+  width: min(360px, 100%); padding: 24px 20px 20px; border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(26, 23, 20, .22), 0 2px 6px rgba(26, 23, 20, .08);
+  display: flex !important; flex-direction: column; gap: 0;
+}
+.sw .swal2-title { font-size: 18px; font-weight: 600; line-height: 1.35; color: var(--ink); padding: 0; margin: 0; }
+.sw .swal2-html-container { font-size: 14.5px; line-height: 1.55; color: var(--muted); margin: 8px 0 0; padding: 0; }
+.sw .swal2-icon { margin: 0 auto 14px; width: 64px; height: 64px; border-width: 3px; }
+.sw .swal2-icon .swal2-icon-content { font-size: 40px; }
+.sw .swal2-icon.swal2-success [class^='swal2-success-line'] { height: 4px; }
+.sw .swal2-icon.swal2-success .swal2-success-line-tip { top: 31px; left: 9px; width: 18px; }
+.sw .swal2-icon.swal2-success .swal2-success-line-long { top: 26px; right: 6px; width: 35px; }
+.sw .swal2-icon.swal2-success .swal2-success-ring { width: 64px; height: 64px; top: -3px; left: -3px; }
+.sw .swal2-icon.swal2-success [class^='swal2-success-circular-line'], .sw .swal2-icon.swal2-success .swal2-success-fix { display: none; }
+
+/* ปุ่ม: ยกเลิกซ้าย ปุ่มหลักขวา (ปุ่มหลักกว้างกว่า) */
+.sw-actions {
+  display: flex !important; flex-wrap: nowrap; width: 100%; gap: 10px;
+  margin: 22px 0 0 !important; padding: 0 !important;
+}
+.sw-actions .btn { flex: 1 1 0; margin: 0; min-height: 48px; border-radius: 14px; font-size: 15px; padding: 0 12px; }
+.sw-actions .btn.btn-primary { flex-grow: 1.6; }
+.sw-actions .btn-ghost { border-color: var(--line); background: var(--paper); }
+.sw-actions .btn-ghost:active { background: var(--line); }
+.sw-actions .btn-danger { background: var(--danger); color: #fff; }
+.sw-actions .btn-danger:active { filter: brightness(.92); }
+.sw.is-stacked .sw-actions { flex-direction: column; }
+.sw.is-stacked .sw-actions .btn { flex: none; width: 100%; }
+
+.sw .swal2-validation-message {
+  background: var(--danger-wash); color: var(--danger); border-radius: 12px;
+  margin: 14px 0 0; padding: 8px 12px; font-size: 13.5px; justify-content: flex-start;
+}
+.sw .swal2-validation-message::before { background-color: var(--danger); width: 18px; min-width: 18px; height: 18px; font-size: 12px; margin: 0 8px 0 0; }
+.sw .swal2-loader { border-color: var(--accent) transparent var(--accent) transparent; width: 1.6em; height: 1.6em; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sw-in { animation: swIn .2s cubic-bezier(.2, .8, .2, 1); }
+  .sw-out { animation: swOut .12s ease-in forwards; }
+  @keyframes swIn { from { opacity: 0; transform: translateY(8px) scale(.97); } }
+  @keyframes swOut { to { opacity: 0; transform: scale(.98); } }
+}
+
+/* สรุปคำสั่งซื้อ */
+.sw-sum { text-align: left; background: var(--paper); border-radius: 14px; padding: 2px 14px; margin-top: 12px; }
+.sw-sum div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; font-size: 14px; }
+.sw-sum div + div { border-top: 1px solid var(--line); }
+.sw-sum b { color: var(--ink); font-weight: 600; text-align: right; }
+.sw-sum .is-total b { font-size: 17px; }
+.sw-no {
+  display: inline-block; margin: 10px 0 8px; padding: 8px 16px; border-radius: 12px;
+  background: var(--accent-wash); color: var(--accent-text);
+  font-size: 22px; font-weight: 600; letter-spacing: .03em; font-variant-numeric: tabular-nums;
+}
+.sw-form { text-align: left; margin-top: 14px; }
+.sw-form .field:last-child { margin-bottom: 0; }
+
+/* modal ใส่จำนวน */
+.qd { margin-top: 2px; color: var(--ink); }
+.qd-price { font-size: 13.5px; color: var(--muted); margin: 0 0 18px; }
+.qd-row { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.qd-btn {
+  width: 52px; height: 52px; flex: none; border-radius: 50%;
+  border: 1.5px solid var(--line-strong); background: var(--surface); color: var(--ink);
+  display: grid; place-items: center; transition: background .12s, border-color .12s;
+}
+.qd-btn svg { width: 22px; height: 22px; }
+.qd-btn:active { background: var(--accent-wash); border-color: var(--accent); }
+.qd-btn:disabled { opacity: .35; }
+.qd-num { width: 120px; text-align: center; }
+.qd-num input {
+  width: 100%; border: 0; border-bottom: 2px solid var(--line); background: transparent; border-radius: 0;
+  text-align: center; font-size: 36px; font-weight: 600; line-height: 1.2; padding: 2px 0 4px; color: var(--ink);
+  font-variant-numeric: tabular-nums; -moz-appearance: textfield; appearance: textfield;
+}
+.qd-num input::-webkit-outer-spin-button, .qd-num input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.qd-num input:focus { outline: none; border-bottom-color: var(--accent); }
+.qd-num span { display: block; font-size: 13px; color: var(--muted); margin-top: 4px; }
+.qd-total { margin: 16px 0 0; font-size: 14px; color: var(--muted); }
+.qd-total b { color: var(--ink); font-weight: 600; font-size: 16px; font-variant-numeric: tabular-nums; }
+.swal2-popup.swal2-toast.sw-toast {
+  font-family: var(--font); background: var(--toast-bg); color: var(--toast-ink);
+  border-radius: 14px; padding: 10px 12px; box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  display: flex !important; align-items: center; gap: 8px;
+}
+.sw-toast .swal2-title { color: var(--toast-ink); font-size: 14px; font-weight: 500; margin: 0 !important; }
+.sw-toast .swal2-actions { margin: 0 0 0 auto !important; }
+.sw-toast .swal2-confirm { background: none; border: 0; color: var(--camel); font-weight: 600; font-size: 14px; padding: 6px 8px; min-height: 0; }
+.sw-toast .swal2-timer-progress-bar { background: var(--camel); }
+.swal2-container.swal2-top { padding-top: calc(var(--safe-t) + 8px); }
+.swal2-container.swal2-bottom { padding-bottom: calc(var(--tab-h) + var(--safe-b) + 10px); }
+body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab-h) + 76px + var(--safe-b) + 10px); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M14 9l2 2"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+</svg>
+
+<header class="appbar" id="appbar">
+  <div class="wrap" id="appbarWrap">
+    <div class="appbar-row">
+      <img class="logo" id="appLogo" src="data:image/png;base64,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" alt="1001 Premium Blankets" width="359" height="64">
+      <button type="button" class="back-link" id="backBtn" hidden>
+        <svg aria-hidden="true"><use href="#i-back"/></svg>ย้อนกลับ
+      </button>
+      <div class="appbar-actions">
+        
+        <button type="button" class="chip-btn" id="installBtn" hidden>ติดตั้งแอป</button>
+        <button type="button" class="text-btn" id="clearCartBtn" hidden>ล้างตะกร้า</button>
+      </div>
+    </div>
+    <div class="search" id="searchRow" role="search">
+      <svg aria-hidden="true"><use href="#i-search"/></svg>
+      <label for="q" class="sr-only">ค้นหารหัสสินค้า</label>
+      <input id="q" type="search" placeholder="ค้นหารหัสสินค้า" autocomplete="off" enterkeyhint="search">
+    </div>
+  </div>
+</header>
+
+<div class="notice notice-offline" id="offlineBar" role="status" hidden>
+  <div class="wrap"><p>ออฟไลน์อยู่ ดูสินค้าและตะกร้าได้ ส่งคำสั่งซื้อได้เมื่อกลับมาออนไลน์</p></div>
+</div>
+
+<div class="ptr" id="ptr" aria-hidden="true"><svg><use href="#i-refresh"/></svg></div>
+
+<main>
+  <div class="wrap"><h1 class="page-title" id="pageTitle" hidden></h1></div>
+  <section class="view" id="view-products" aria-label="สินค้า">
+    <div class="wrap">
+      <div class="grid" id="grid"></div>
+      <div class="state" id="state" hidden></div>
+    </div>
+  </section>
+
+  <section class="view" id="view-cart" aria-label="ตะกร้า" hidden>
+    <div class="wrap">
+      <div id="cartFull">
+        <div class="panel"><ul class="lines" id="lines"></ul></div>
+        <div class="section-title">ผู้สั่ง</div>
+        <div class="panel buyer" id="buyer"></div>
+        <div class="section-title">สรุป</div>
+        <div class="panel sum-rows" id="cartSum"></div>
+      </div>
+      <div class="empty" id="cartEmpty" hidden>
+        <div class="empty-ico"><svg><use href="#i-bag"/></svg></div>
+        <h2>ตะกร้ายังว่าง</h2>
+        <p>เลือกผ้าห่มที่ต้องการ แล้วกลับมาส่งคำสั่งซื้อที่นี่</p>
+        <button type="button" class="btn btn-primary" data-go="products">ไปเลือกสินค้า</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-history" aria-label="ประวัติคำสั่งซื้อ" hidden>
+    <div class="wrap" id="historyBody"></div>
+  </section>
+
+  <section class="view" id="view-me" aria-label="ฉัน" hidden>
+    <div class="wrap">
+      <div class="section-title">ข้อมูลผู้สั่ง</div>
+      <form class="panel form-pad" id="profileForm" novalidate>
+        <div class="field" data-field="full_name">
+          <label for="p-name">ชื่อ-นามสกุล</label>
+          <input id="p-name" name="full_name" autocomplete="name" maxlength="120" enterkeyhint="next">
+          <div class="err">กรอกชื่อ-นามสกุล</div>
+        </div>
+        <div class="field" data-field="department">
+          <label for="p-dept">หน่วยงาน</label>
+          <input id="p-dept" name="department" autocomplete="organization-title" maxlength="120" enterkeyhint="next">
+          <div class="err">กรอกหน่วยงาน</div>
+        </div>
+        <div class="field" data-field="phone">
+          <label for="p-phone">เบอร์โทร <span>(ไม่บังคับ)</span></label>
+          <input id="p-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" enterkeyhint="done">
+          <div class="err">เบอร์โทรไม่ถูกต้อง</div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-bottom:14px">บันทึกข้อมูล</button>
+      </form>
+
+      <div class="section-title">แอป</div>
+      <div class="panel">
+        <ul class="menu">
+          <li><button type="button" id="menuInstall"><svg class="i"><use href="#i-download"/></svg><span>ติดตั้งบนหน้าจอหลัก</span><small id="installState"></small></button></li>
+          <li><button type="button" id="menuHistory"><svg class="i"><use href="#i-receipt"/></svg><span>ประวัติคำสั่งซื้อ</span><small id="histCount"></small></button></li>
+        </ul>
+      </div>
+
+      <div class="section-title">ย้ายประวัติไปเครื่องอื่น</div>
+      <div class="panel recover">
+        <p class="recover-txt">ประวัติคำสั่งซื้อผูกกับรหัสของเครื่องนี้ เก็บรหัสไว้เพื่อดูประวัติบนมือถือเครื่องใหม่ หรือหลังล้างข้อมูลเบราว์เซอร์</p>
+        <div class="recover-code" id="recoverCode" aria-label="รหัสกู้คืนประวัติ"></div>
+        <p class="storage-state" id="storageState" aria-live="polite"></p>
+        <div class="recover-actions">
+          <button type="button" class="btn btn-ghost" id="copyCode"><svg class="i"><use href="#i-copy"/></svg>คัดลอกรหัส</button>
+          <button type="button" class="btn btn-ghost" id="useCode"><svg class="i"><use href="#i-key"/></svg>ใช้รหัสเดิม</button>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:12px">
+        <ul class="menu">
+          <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
+        </ul>
+      </div>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.1.6</p>
+    </div>
+  </section>
+</main>
+
+<div class="checkout" id="checkout" hidden>
+  <div class="wrap">
+    <div class="checkout-sum"><small id="coCount">0 ผืน</small><b id="coTotal">฿0</b></div>
+    <button type="button" class="btn btn-primary btn-lg" id="checkoutBtn">ส่งคำสั่งซื้อ</button>
+  </div>
+</div>
+
+<nav class="tabbar" aria-label="เมนูหลัก">
+  <div class="tabbar-in">
+    <button type="button" class="tab" data-tab="products"><svg><use href="#i-grid"/></svg>สินค้า</button>
+    <button type="button" class="tab" data-tab="cart" id="tabCart"><svg><use href="#i-bag"/></svg>ตะกร้า<span class="tab-badge" id="cartBadge" hidden>0</span></button>
+    <button type="button" class="tab" data-tab="history"><svg><use href="#i-receipt"/></svg>ประวัติ</button>
+    <button type="button" class="tab" data-tab="me"><svg><use href="#i-user"/></svg>ฉัน</button>
+  </div>
+</nav>
+
+<div class="sheet" id="detail" role="dialog" aria-modal="true" aria-labelledby="dTitle" hidden>
+  <div class="sheet-scrim" data-close-detail></div>
+  <div class="sheet-panel" id="detailPanel">
+    <div class="sheet-grab" id="detailGrab"><div class="sheet-grip"></div></div>
+    <button type="button" class="sheet-close" data-close-detail aria-label="ปิด"><svg class="i"><use href="#i-x"/></svg></button>
+    <div class="sheet-body">
+      <button type="button" class="detail-img" id="dImgBtn" aria-label="ดูรูปเต็มจอ"><img id="dImg" alt=""></button>
+      <div class="detail-head">
+        <div><h2 id="dTitle"></h2><p id="dSub"></p></div>
+        <div class="detail-price" id="dPrice"></div>
+      </div>
+      <div class="detail-qty">
+        <label for="dQty">จำนวน (ผืน)</label>
+        <div class="stepper lg">
+          <button type="button" data-dstep="dec" aria-label="ลดจำนวน"><svg><use href="#i-minus"/></svg></button>
+          <input id="dQty" type="number" inputmode="numeric" pattern="[0-9]*" min="0" value="1">
+          <button type="button" data-dstep="inc" aria-label="เพิ่มจำนวน"><svg><use href="#i-plus"/></svg></button>
+        </div>
+      </div>
+      <div class="qty-chips" id="dChips" role="group" aria-label="เลือกจำนวนด่วน">
+        <button type="button" data-dqty="1">1</button>
+        <button type="button" data-dqty="5">5</button>
+        <button type="button" data-dqty="10">10</button>
+        <button type="button" data-dqty="20">20</button>
+        <button type="button" data-dqty="50">50</button>
+        <button type="button" data-dqty="100">100</button>
+      </div>
+      <p class="detail-in-cart" id="dInCart" hidden></p>
+      <button type="button" class="btn btn-primary btn-block btn-lg" id="dAction">เพิ่มลงตะกร้า</button>
+    </div>
+  </div>
+</div>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="ดูรูปสินค้า" hidden>
+  <div class="viewer-head"><span id="viewerTitle"></span><button type="button" data-close-viewer aria-label="ปิดรูป"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="viewer-img" data-close-viewer><img id="viewerImg" alt=""></div>
+</div>
+
+<script src="config.js"></script>
+<script>
+/*!
+* sweetalert2 v11.26.25
+* Released under the MIT License.
+*/
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?module.exports=t():"function"==typeof define&&define.amd?define(t):(e="undefined"!=typeof globalThis?globalThis:e||self).Sweetalert2=t()}(this,function(){"use strict";function e(e,t,n){if("function"==typeof e?e===t:e.has(t))return arguments.length<3?t:n;throw new TypeError("Private element is not present on this object")}function t(t,n){return t.get(e(t,n))}function n(e,t,n){(function(e,t){if(t.has(e))throw new TypeError("Cannot initialize the same private elements twice on an object")})(e,t),t.set(e,n)}const o={},i=e=>new Promise(t=>{if(!e)return t();const n=window.scrollX,i=window.scrollY;o.restoreFocusTimeout=setTimeout(()=>{o.previousActiveElement instanceof HTMLElement?(o.previousActiveElement.focus(),o.previousActiveElement=null):document.body&&document.body.focus(),t()},100),window.scrollTo(n,i)}),s="swal2-",r=["container","shown","height-auto","iosfix","popup","modal","no-backdrop","no-transition","toast","toast-shown","show","hide","close","title","html-container","actions","confirm","deny","cancel","footer","icon","icon-content","image","input","file","range","select","radio","checkbox","label","textarea","inputerror","input-label","validation-message","progress-steps","active-progress-step","progress-step","progress-step-line","loader","loading","styled","top","top-start","top-end","top-left","top-right","center","center-start","center-end","center-left","center-right","bottom","bottom-start","bottom-end","bottom-left","bottom-right","grow-row","grow-column","grow-fullscreen","rtl","timer-progress-bar","timer-progress-bar-container","scrollbar-measure","icon-success","icon-warning","icon-info","icon-question","icon-error","draggable","dragging"].reduce((e,t)=>(e[t]=s+t,e),{}),a=["success","warning","info","question","error"].reduce((e,t)=>(e[t]=s+t,e),{}),l="SweetAlert2:",c=e=>e.charAt(0).toUpperCase()+e.slice(1),u=e=>{console.warn(`${l} ${"object"==typeof e?e.join(" "):e}`)},d=e=>{console.error(`${l} ${e}`)},p=[],m=(e,t=null)=>{var n;n=`"${e}" is deprecated and will be removed in the next major release.${t?` Use "${t}" instead.`:""}`,p.includes(n)||(p.push(n),u(n))},h=e=>"function"==typeof e?e():e,g=e=>e&&"function"==typeof e.toPromise,f=e=>g(e)?e.toPromise():Promise.resolve(e),b=e=>e&&Promise.resolve(e)===e,y=()=>document.body.querySelector(`.${r.container}`),v=e=>{const t=y();return t?t.querySelector(e):null},w=e=>v(`.${e}`),C=()=>w(r.popup),A=()=>w(r.icon),E=()=>w(r.title),k=()=>w(r["html-container"]),B=()=>w(r.image),$=()=>w(r["progress-steps"]),L=()=>w(r["validation-message"]),P=()=>v(`.${r.actions} .${r.confirm}`),x=()=>v(`.${r.actions} .${r.cancel}`),T=()=>v(`.${r.actions} .${r.deny}`),S=()=>v(`.${r.loader}`),O=()=>w(r.actions),M=()=>w(r.footer),H=()=>w(r["timer-progress-bar"]),j=()=>w(r.close),I=()=>{const e=C();if(!e)return[];const t=e.querySelectorAll('[tabindex]:not([tabindex="-1"]):not([tabindex="0"])'),n=Array.from(t).sort((e,t)=>{const n=parseInt(e.getAttribute("tabindex")||"0"),o=parseInt(t.getAttribute("tabindex")||"0");return n>o?1:n<o?-1:0}),o=e.querySelectorAll('\n  a[href],\n  area[href],\n  input:not([disabled]),\n  select:not([disabled]),\n  textarea:not([disabled]),\n  button:not([disabled]),\n  iframe,\n  object,\n  embed,\n  [tabindex="0"],\n  [contenteditable],\n  audio[controls],\n  video[controls],\n  summary\n'),i=Array.from(o).filter(e=>"-1"!==e.getAttribute("tabindex"));return[...new Set(n.concat(i))].filter(e=>ee(e))},D=()=>N(document.body,r.shown)&&!N(document.body,r["toast-shown"])&&!N(document.body,r["no-backdrop"]),V=()=>{const e=C();return!!e&&N(e,r.toast)},q=(e,t)=>{if(e.textContent="",t){const n=(new DOMParser).parseFromString(t,"text/html"),o=n.querySelector("head");o&&Array.from(o.childNodes).forEach(t=>{e.appendChild(t)});const i=n.querySelector("body");i&&Array.from(i.childNodes).forEach(t=>{t instanceof HTMLVideoElement||t instanceof HTMLAudioElement?e.appendChild(t.cloneNode(!0)):e.appendChild(t)})}},N=(e,t)=>!!t&&t.split(/\s+/).every(t=>e.classList.contains(t)),_=(e,t,n)=>{if(((e,t)=>{Array.from(e.classList).forEach(n=>{Object.values(r).includes(n)||Object.values(a).includes(n)||Object.values(t.showClass||{}).includes(n)||e.classList.remove(n)})})(e,t),!t.customClass)return;const o=t.customClass[n];o&&("string"==typeof o||o.forEach?z(e,o):u(`Invalid type of customClass.${n}! Expected string or iterable object, got "${typeof o}"`))},F=(e,t)=>{if(!t)return null;switch(t){case"select":case"textarea":case"file":return e.querySelector(`.${r.popup} > .${r[t]}`);case"checkbox":return e.querySelector(`.${r.popup} > .${r.checkbox} input`);case"radio":return e.querySelector(`.${r.popup} > .${r.radio} input:checked`)||e.querySelector(`.${r.popup} > .${r.radio} input:first-child`);case"range":return e.querySelector(`.${r.popup} > .${r.range} input`);default:return e.querySelector(`.${r.popup} > .${r.input}`)}},R=e=>{if(e.focus(),"file"!==e.type){const t=e.value;e.value="",e.value=t}},U=(e,t,n)=>{if(!e||!t)return;const o="string"==typeof t?t.split(/\s+/).filter(Boolean):t;(Array.isArray(e)?e:[e]).forEach(e=>{o.forEach(t=>{n?e.classList.add(t):e.classList.remove(t)})})},z=(e,t)=>{U(e,t,!0)},W=(e,t)=>{U(e,t,!1)},K=(e,t)=>Array.from(e.children).find(e=>e instanceof HTMLElement&&N(e,t)),Y=(e,t,n)=>{n===`${parseInt(`${n}`)}`&&(n=parseInt(n)),n||0===n?e.style.setProperty(t,"number"==typeof n?`${n}px`:n):e.style.removeProperty(t)},X=(e,t="flex")=>{e&&(e.style.display=t)},Z=e=>{e&&(e.style.display="none")},J=(e,t="block")=>{e&&new MutationObserver(()=>{Q(e,e.innerHTML,t)}).observe(e,{childList:!0,subtree:!0})},G=(e,t,n,o)=>{const i=e.querySelector(t);i&&i.style.setProperty(n,o)},Q=(e,t,n="flex")=>{t?X(e,n):Z(e)},ee=e=>Boolean(e&&(e.offsetWidth||e.offsetHeight||e.getClientRects().length)),te=e=>Boolean(e.scrollHeight>e.clientHeight),ne=e=>{const t=window.getComputedStyle(e),n=parseFloat(t.getPropertyValue("animation-duration")||"0"),o=parseFloat(t.getPropertyValue("transition-duration")||"0");return n>0||o>0},oe=(e,t=!1)=>{const n=H();n&&ee(n)&&(t&&(n.style.transition="none",n.style.width="100%"),setTimeout(()=>{n.style.transition=`width ${e/1e3}s linear`,n.style.width="0%"},10))},ie=`\n <div aria-labelledby="${r.title}" aria-describedby="${r["html-container"]}" class="${r.popup}" tabindex="-1">\n   <button type="button" class="${r.close}"></button>\n   <ul class="${r["progress-steps"]}"></ul>\n   <div class="${r.icon}"></div>\n   <img class="${r.image}" />\n   <h2 class="${r.title}" id="${r.title}"></h2>\n   <div class="${r["html-container"]}" id="${r["html-container"]}"></div>\n   <input class="${r.input}" id="${r.input}" />\n   <input type="file" class="${r.file}" />\n   <div class="${r.range}">\n     <input type="range" />\n     <output></output>\n   </div>\n   <select class="${r.select}" id="${r.select}"></select>\n   <div class="${r.radio}"></div>\n   <label class="${r.checkbox}">\n     <input type="checkbox" id="${r.checkbox}" />\n     <span class="${r.label}"></span>\n   </label>\n   <textarea class="${r.textarea}" id="${r.textarea}"></textarea>\n   <div class="${r["validation-message"]}" id="${r["validation-message"]}"></div>\n   <div class="${r.actions}">\n     <div class="${r.loader}"></div>\n     <button type="button" class="${r.confirm}"></button>\n     <button type="button" class="${r.deny}"></button>\n     <button type="button" class="${r.cancel}"></button>\n   </div>\n   <div class="${r.footer}"></div>\n   <div class="${r["timer-progress-bar-container"]}">\n     <div class="${r["timer-progress-bar"]}"></div>\n   </div>\n </div>\n`.replace(/(^|\n)\s*/g,""),se=()=>{o.currentInstance&&o.currentInstance.resetValidationMessage()},re=e=>{const t=(()=>{const e=y();return!!e&&(e.remove(),W([document.documentElement,document.body],[r["no-backdrop"],r["toast-shown"],r["has-column"]]),!0)})();if("undefined"==typeof window||"undefined"==typeof document)return void d("SweetAlert2 requires document to initialize");const n=document.createElement("div");n.className=r.container,t&&z(n,r["no-transition"]),q(n,ie),n.dataset.swal2Theme=e.theme;const i=(e=>{if("string"==typeof e){const t=document.querySelector(e);if(!t)throw new Error(`Target element "${e}" not found`);return t}return e})(e.target||"body");i.appendChild(n),e.topLayer&&(n.setAttribute("popover",""),n.showPopover()),(e=>{const t=C();t&&(t.setAttribute("role",e.toast?"alert":"dialog"),t.setAttribute("aria-live",e.toast?"polite":"assertive"),e.toast||t.setAttribute("aria-modal","true"))})(e),(e=>{"rtl"===window.getComputedStyle(e).direction&&(z(y(),r.rtl),o.isRTL=!0)})(i),(()=>{const e=C();if(!e)return;const t=K(e,r.input),n=K(e,r.file),o=e.querySelector(`.${r.range} input`),i=e.querySelector(`.${r.range} output`),s=K(e,r.select),a=e.querySelector(`.${r.checkbox} input`),l=K(e,r.textarea);t&&(t.oninput=se),n&&(n.onchange=se),s&&(s.onchange=se),a&&(a.onchange=se),l&&(l.oninput=se),o&&i&&(o.oninput=()=>{se(),i.value=o.value},o.onchange=()=>{se(),i.value=o.value})})()},ae=(e,t)=>{e instanceof HTMLElement?t.appendChild(e):"object"==typeof e?le(e,t):e&&q(t,e)},le=(e,t)=>{"jquery"in e?ce(t,e):q(t,e.toString())},ce=(e,t)=>{if(e.textContent="",0 in t)for(let n=0;n in t;n++)e.appendChild(t[n].cloneNode(!0));else e.appendChild(t.cloneNode(!0))},ue=(e,t)=>{const n=O(),o=S();n&&o&&(t.showConfirmButton||t.showDenyButton||t.showCancelButton?X(n):Z(n),_(n,t,"actions"),function(e,t,n){const o=P(),i=T(),s=x();if(!o||!i||!s)return;de(o,"confirm",n),de(i,"deny",n),de(s,"cancel",n),function(e,t,n,o){if(!o.buttonsStyling)return void W([e,t,n],r.styled);z([e,t,n],r.styled);const i=[[e,"confirm",o.confirmButtonColor],[t,"deny",o.denyButtonColor],[n,"cancel",o.cancelButtonColor]];i.forEach(([e,t,n])=>{n&&e.style.setProperty(`--swal2-${t}-button-background-color`,n),function(e){const t=window.getComputedStyle(e);if(t.getPropertyValue("--swal2-action-button-focus-box-shadow"))return;const n=t.backgroundColor.replace(/rgba?\((\d+), (\d+), (\d+).*/,"rgba($1, $2, $3, 0.5)");e.style.setProperty("--swal2-action-button-focus-box-shadow",t.getPropertyValue("--swal2-outline").replace(/ rgba\(.*/,` ${n}`))}(e)})}(o,i,s,n),n.reverseButtons&&(n.toast?(e.insertBefore(s,o),e.insertBefore(i,o)):(e.insertBefore(s,t),e.insertBefore(i,t),e.insertBefore(o,t)))}(n,o,t),q(o,t.loaderHtml||""),_(o,t,"loader"))};function de(e,t,n){const o=c(t);Q(e,n[`show${o}Button`],"inline-block"),q(e,n[`${t}ButtonText`]||""),e.setAttribute("aria-label",n[`${t}ButtonAriaLabel`]||""),e.className=r[t],_(e,n,`${t}Button`)}const pe=(e,t)=>{const n=y();n&&(!function(e,t){"string"==typeof t?e.style.background=t:t||z([document.documentElement,document.body],r["no-backdrop"])}(n,t.backdrop),function(e,t){if(!t)return;t in r?z(e,r[t]):(u('The "position" parameter is not valid, defaulting to "center"'),z(e,r.center))}(n,t.position),function(e,t){if(!t)return;z(e,r[`grow-${t}`])}(n,t.grow),_(n,t,"container"))};var me={innerParams:new WeakMap,domCache:new WeakMap,focusedElement:new WeakMap};const he=["input","file","range","select","radio","checkbox","textarea"],ge=e=>{if(!e.input)return;if(!Ae[e.input])return void d(`Unexpected type of input! Expected ${Object.keys(Ae).join(" | ")}, got "${e.input}"`);const t=we(e.input);if(!t)return;const n=Ae[e.input](t,e);X(t),e.inputAutoFocus&&setTimeout(()=>{R(n)})},fe=(e,t)=>{const n=C();if(!n)return;const o=F(n,e);if(o){(e=>{for(const{name:t}of Array.from(e.attributes))["id","type","value","style"].includes(t)||e.removeAttribute(t)})(o);for(const e in t)o.setAttribute(e,t[e])}},be=e=>{if(!e.input)return;const t=we(e.input);t&&_(t,e,"input")},ye=(e,t)=>{!e.placeholder&&t.inputPlaceholder&&(e.placeholder=t.inputPlaceholder)},ve=(e,t,n)=>{if(n.inputLabel){const o=document.createElement("label"),i=r["input-label"];o.setAttribute("for",e.id),o.className=i,"object"==typeof n.customClass&&z(o,n.customClass.inputLabel),o.innerText=n.inputLabel,t.insertAdjacentElement("beforebegin",o)}},we=e=>{const t=C();if(t)return K(t,r[e]||r.input)},Ce=(e,t)=>{["string","number"].includes(typeof t)?e.value=`${t}`:b(t)||u(`Unexpected type of inputValue! Expected "string", "number" or "Promise", got "${typeof t}"`)},Ae={};Ae.text=Ae.email=Ae.password=Ae.number=Ae.tel=Ae.url=Ae.search=Ae.date=Ae["datetime-local"]=Ae.time=Ae.week=Ae.month=(e,t)=>{const n=e;return Ce(n,t.inputValue),ve(n,n,t),ye(n,t),n.type=t.input,n},Ae.file=(e,t)=>{const n=e;return ve(n,n,t),ye(n,t),n},Ae.range=(e,t)=>{const n=e,o=n.querySelector("input"),i=n.querySelector("output");return o&&(Ce(o,t.inputValue),o.type=t.input,ve(o,e,t)),i&&Ce(i,t.inputValue),e},Ae.select=(e,t)=>{const n=e;if(n.textContent="",t.inputPlaceholder){const e=document.createElement("option");q(e,t.inputPlaceholder),e.value="",e.disabled=!0,e.selected=!0,n.appendChild(e)}return ve(n,n,t),n},Ae.radio=e=>(e.textContent="",e),Ae.checkbox=(e,t)=>{const n=C();if(!n)throw new Error("Popup not found");const o=F(n,"checkbox");if(!o)throw new Error("Checkbox input not found");o.value="1",o.checked=Boolean(t.inputValue);const i=e.querySelector("span");if(i){const e=t.inputPlaceholder||t.inputLabel;e&&q(i,e)}return o},Ae.textarea=(e,t)=>{const n=e;Ce(n,t.inputValue),ye(n,t),ve(n,n,t);return setTimeout(()=>{if("MutationObserver"in window){const e=C();if(!e)return;const o=parseInt(window.getComputedStyle(e).width);new MutationObserver(()=>{if(!document.body.contains(n))return;const e=n.offsetWidth+(i=n,parseInt(window.getComputedStyle(i).marginLeft)+parseInt(window.getComputedStyle(i).marginRight));var i;const s=C();s&&(e>o?s.style.width=`${e}px`:Y(s,"width",t.width))}).observe(n,{attributes:!0,attributeFilter:["style"]})}}),n};const Ee=(e,t)=>{const n=k();n&&(J(n),_(n,t,"htmlContainer"),t.html?(ae(t.html,n),X(n,"block")):t.text?(n.textContent=t.text,X(n,"block")):Z(n),((e,t)=>{const n=C();if(!n)return;const o=me.innerParams.get(e),i=!o||t.input!==o.input;he.forEach(e=>{const o=K(n,r[e]);o&&(fe(e,t.inputAttributes),o.className=r[e],i&&Z(o))}),t.input&&(i&&ge(t),be(t))})(e,t))},ke=(e,t)=>{for(const[n,o]of Object.entries(a))t.icon!==n&&W(e,o);z(e,t.icon&&a[t.icon]),Le(e,t),Be(),_(e,t,"icon")},Be=()=>{const e=C();if(!e)return;const t=window.getComputedStyle(e).getPropertyValue("background-color");e.querySelectorAll("[class^=swal2-success-circular-line], .swal2-success-fix").forEach(e=>{e.style.backgroundColor=t})},$e=(e,t)=>{if(!t.icon&&!t.iconHtml)return;let n=e.innerHTML,o="";if(t.iconHtml)o=Pe(t.iconHtml);else if("success"===t.icon)o=(e=>`\n  ${e.animation?'<div class="swal2-success-circular-line-left"></div>':""}\n  <span class="swal2-success-line-tip"></span> <span class="swal2-success-line-long"></span>\n  <div class="swal2-success-ring"></div>\n  ${e.animation?'<div class="swal2-success-fix"></div>':""}\n  ${e.animation?'<div class="swal2-success-circular-line-right"></div>':""}\n`)(t),n=n.replace(/ style=".*?"/g,"");else if("error"===t.icon)o='\n  <span class="swal2-x-mark">\n    <span class="swal2-x-mark-line-left"></span>\n    <span class="swal2-x-mark-line-right"></span>\n  </span>\n';else if(t.icon){o=Pe({question:"?",warning:"!",info:"i"}[t.icon])}n.trim()!==o.trim()&&q(e,o)},Le=(e,t)=>{if(t.iconColor){e.style.color=t.iconColor,e.style.borderColor=t.iconColor;for(const n of[".swal2-success-line-tip",".swal2-success-line-long",".swal2-x-mark-line-left",".swal2-x-mark-line-right"])G(e,n,"background-color",t.iconColor);G(e,".swal2-success-ring","border-color",t.iconColor)}},Pe=e=>`<div class="${r["icon-content"]}">${e}</div>`;let xe=!1,Te=0,Se=0,Oe=0,Me=0;const He=e=>{const t=C();if(!t)return;const n=A();if(e.target===t||n&&n.contains(e.target)){xe=!0;const n=De(e);Te=n.clientX,Se=n.clientY,Oe=parseInt(t.style.insetInlineStart)||0,Me=parseInt(t.style.insetBlockStart)||0,z(t,"swal2-dragging")}},je=e=>{const t=C();if(t&&xe){let{clientX:n,clientY:i}=De(e);const s=n-Te;t.style.insetInlineStart=`${Oe+(o.isRTL?-s:s)}px`,t.style.insetBlockStart=`${Me+(i-Se)}px`}},Ie=()=>{const e=C();xe=!1,W(e,"swal2-dragging")},De=e=>{const t=e.type.startsWith("touch")?e.touches[0]:e;return{clientX:t.clientX,clientY:t.clientY}},Ve=(e,t)=>{const n=y(),o=C();if(n&&o){if(t.toast){Y(n,"width",t.width),o.style.width="100%";const e=S();e&&o.insertBefore(e,A())}else Y(o,"width",t.width);Y(o,"padding",t.padding),t.color&&(o.style.color=t.color),t.background&&(o.style.background=t.background),Z(L()),qe(o,t),t.draggable&&!t.toast?(z(o,r.draggable),(e=>{e.addEventListener("mousedown",He),document.body.addEventListener("mousemove",je),e.addEventListener("mouseup",Ie),e.addEventListener("touchstart",He),document.body.addEventListener("touchmove",je),e.addEventListener("touchend",Ie)})(o)):(W(o,r.draggable),(e=>{e.removeEventListener("mousedown",He),document.body.removeEventListener("mousemove",je),e.removeEventListener("mouseup",Ie),e.removeEventListener("touchstart",He),document.body.removeEventListener("touchmove",je),e.removeEventListener("touchend",Ie)})(o))}},qe=(e,t)=>{const n=t.showClass||{};e.className=`${r.popup} ${ee(e)?n.popup:""}`,t.toast?(z([document.documentElement,document.body],r["toast-shown"]),z(e,r.toast)):z(e,r.modal),_(e,t,"popup"),"string"==typeof t.customClass&&z(e,t.customClass),t.icon&&z(e,r[`icon-${t.icon}`])},Ne=e=>{const t=document.createElement("li");return z(t,r["progress-step"]),q(t,e),t},_e=e=>{const t=document.createElement("li");return z(t,r["progress-step-line"]),e.progressStepsDistance&&Y(t,"width",e.progressStepsDistance),t},Fe=(e,t)=>{var n;Ve(0,t),pe(0,t),((e,t)=>{const n=$();if(!n)return;const{progressSteps:o,currentProgressStep:i}=t;o&&0!==o.length&&void 0!==i?(X(n),n.textContent="",i>=o.length&&u("Invalid currentProgressStep parameter, it should be less than progressSteps.length (currentProgressStep like JS arrays starts from 0)"),o.forEach((e,s)=>{const a=Ne(e);if(n.appendChild(a),s===i&&z(a,r["active-progress-step"]),s!==o.length-1){const e=_e(t);n.appendChild(e)}})):Z(n)})(0,t),((e,t)=>{const n=me.innerParams.get(e),o=A();if(!o)return;if(n&&t.icon===n.icon)return $e(o,t),void ke(o,t);if(!t.icon&&!t.iconHtml)return void Z(o);if(t.icon&&-1===Object.keys(a).indexOf(t.icon))return d(`Unknown icon! Expected "success", "error", "warning", "info" or "question", got "${t.icon}"`),void Z(o);X(o),$e(o,t),ke(o,t),z(o,t.showClass&&t.showClass.icon),window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",Be)})(e,t),((e,t)=>{const n=B();n&&(t.imageUrl?(X(n,""),n.setAttribute("src",t.imageUrl),n.setAttribute("alt",t.imageAlt||""),Y(n,"width",t.imageWidth),Y(n,"height",t.imageHeight),n.className=r.image,_(n,t,"image")):Z(n))})(0,t),((e,t)=>{const n=E();n&&(J(n),Q(n,Boolean(t.title||t.titleText),"block"),t.title&&ae(t.title,n),t.titleText&&(n.innerText=t.titleText),_(n,t,"title"))})(0,t),((e,t)=>{const n=j();n&&(q(n,t.closeButtonHtml||""),_(n,t,"closeButton"),Q(n,t.showCloseButton),n.setAttribute("aria-label",t.closeButtonAriaLabel||""))})(0,t),Ee(e,t),ue(0,t),((e,t)=>{const n=M();n&&(J(n),Q(n,Boolean(t.footer),"block"),t.footer&&ae(t.footer,n),_(n,t,"footer"))})(0,t);const i=C();"function"==typeof t.didRender&&i&&t.didRender(i),null===(n=o.eventEmitter)||void 0===n||n.emit("didRender",i)},Re=()=>{var e;return null===(e=P())||void 0===e?void 0:e.click()},Ue=Object.freeze({cancel:"cancel",backdrop:"backdrop",close:"close",esc:"esc",timer:"timer"}),ze=e=>{if(e.keydownTarget&&e.keydownHandlerAdded&&e.keydownHandler){const t=e.keydownHandler;e.keydownTarget.removeEventListener("keydown",t,{capture:e.keydownListenerCapture}),e.keydownHandlerAdded=!1}},We=(e,t)=>{var n;const o=I();return o.length?(-2===(e+=t)&&(e=o.length-1),e===o.length?e=0:-1===e&&(e=o.length-1),o[e].focus(),!(navigator.userAgent.includes("Firefox")&&o[e]instanceof HTMLIFrameElement)):(null===(n=C())||void 0===n||n.focus(),!0)},Ke=["ArrowRight","ArrowDown"],Ye=["ArrowLeft","ArrowUp"],Xe=(e,t,n)=>{e&&(t.isComposing||229===t.keyCode||(e.stopKeydownPropagation&&t.stopPropagation(),"Enter"===t.key?Ze(t,e):"Tab"===t.key?Je(t):[...Ke,...Ye].includes(t.key)?Ge(t.key):"Escape"===t.key&&Qe(t,e,n)))},Ze=(e,t)=>{if(!h(t.allowEnterKey))return;const n=C();if(!n||!t.input)return;const o=F(n,t.input);if(e.target&&o&&e.target instanceof HTMLElement&&e.target.outerHTML===o.outerHTML){if(["textarea","file"].includes(t.input))return;Re(),e.preventDefault()}},Je=e=>{const t=e.target,n=I().findIndex(e=>e===t);let o=!0;o=e.shiftKey?We(n,-1):We(n,1),e.stopPropagation(),o&&e.preventDefault()},Ge=e=>{const t=O(),n=P(),o=T(),i=x();if(!(t&&n&&o&&i))return;const s=[n,o,i];if(document.activeElement instanceof HTMLElement&&!s.includes(document.activeElement))return;const r=Ke.includes(e)?"nextElementSibling":"previousElementSibling";let a=document.activeElement;if(a){for(let e=0;e<t.children.length;e++){if(a=a[r],!a)return;if(a instanceof HTMLButtonElement&&ee(a))break}a instanceof HTMLButtonElement&&a.focus()}},Qe=(e,t,n)=>{e.preventDefault(),h(t.allowEscapeKey)&&n(Ue.esc)};var et={swalPromiseResolve:new WeakMap,swalPromiseReject:new WeakMap};const tt=()=>{Array.from(document.body.children).forEach(e=>{e.hasAttribute("data-previous-aria-hidden")?(e.setAttribute("aria-hidden",e.getAttribute("data-previous-aria-hidden")||""),e.removeAttribute("data-previous-aria-hidden")):e.removeAttribute("aria-hidden")})},nt="undefined"!=typeof window&&Boolean(window.GestureEvent),ot=nt&&/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream,it=()=>{const e=y();if(!e)return;let t;e.ontouchstart=e=>{t=st(e)},e.ontouchmove=e=>{t&&(e.preventDefault(),e.stopPropagation())}},st=e=>{const t=e.target,n=y(),o=k();return!(!n||!o)&&(!rt(e)&&!at(e)&&(t===n||!(te(n)||!(t instanceof HTMLElement)||((e,t)=>{let n=e;for(;n&&n!==t;){if(te(n))return!0;n=n.parentElement}return!1})(t,o)||"INPUT"===t.tagName||"TEXTAREA"===t.tagName||te(o)&&o.contains(t))))},rt=e=>Boolean(e.touches&&e.touches.length&&"stylus"===e.touches[0].touchType),at=e=>e.touches&&e.touches.length>1;let lt=null;const ct=e=>{null===lt&&(document.body.scrollHeight>window.innerHeight||"scroll"===e)&&(lt=parseInt(window.getComputedStyle(document.body).getPropertyValue("padding-right")),document.body.style.paddingRight=`${lt+(()=>{const e=document.createElement("div");e.className=r["scrollbar-measure"],document.body.appendChild(e);const t=e.getBoundingClientRect().width-e.clientWidth;return document.body.removeChild(e),t})()}px`)};function ut(e,t,n,s){V()?yt(e,s):(i(n).then(()=>yt(e,s)),ze(o)),nt?(t.setAttribute("style","display:none !important"),t.removeAttribute("class"),t.innerHTML=""):t.remove(),D()&&(null!==lt&&(document.body.style.paddingRight=`${lt}px`,lt=null),(()=>{if(N(document.body,r.iosfix)){const e=parseInt(document.body.style.top,10);W(document.body,r.iosfix),document.body.style.top="",document.body.scrollTop=-1*e}})(),tt()),W([document.documentElement,document.body],[r.shown,r["height-auto"],r["no-backdrop"],r["toast-shown"]])}function dt(e){e=gt(e);const t=et.swalPromiseResolve.get(this),n=pt(this);this.isAwaitingPromise?e.isDismissed||(ht(this),t(e)):n&&t(e)}const pt=e=>{const t=C();if(!t)return!1;const n=me.innerParams.get(e);if(!n||N(t,n.hideClass.popup))return!1;W(t,n.showClass.popup),z(t,n.hideClass.popup);const o=y();return W(o,n.showClass.backdrop),z(o,n.hideClass.backdrop),ft(e,t,n),!0};function mt(e){const t=et.swalPromiseReject.get(this);ht(this),t&&t(e)}const ht=e=>{e.isAwaitingPromise&&(delete e.isAwaitingPromise,me.innerParams.get(e)||e._destroy())},gt=e=>void 0===e?{isConfirmed:!1,isDenied:!1,isDismissed:!0}:Object.assign({isConfirmed:!1,isDenied:!1,isDismissed:!1},e),ft=(e,t,n)=>{var i;const s=y(),r=ne(t);"function"==typeof n.willClose&&n.willClose(t),null===(i=o.eventEmitter)||void 0===i||i.emit("willClose",t),r&&s?bt(e,t,s,Boolean(n.returnFocus),n.didClose):s&&ut(e,s,Boolean(n.returnFocus),n.didClose)},bt=(e,t,n,i,s)=>{o.swalCloseEventFinishedCallback=ut.bind(null,e,n,i,s);const r=function(e){var n;e.target===t&&(null===(n=o.swalCloseEventFinishedCallback)||void 0===n||n.call(o),delete o.swalCloseEventFinishedCallback,t.removeEventListener("animationend",r),t.removeEventListener("transitionend",r))};t.addEventListener("animationend",r),t.addEventListener("transitionend",r)},yt=(e,t)=>{setTimeout(()=>{var n;"function"==typeof t&&t.bind(e.params)(),null===(n=o.eventEmitter)||void 0===n||n.emit("didClose"),e._destroy&&e._destroy()})},vt=e=>{let t=C();if(t||new Gn,t=C(),!t)return;const n=S();V()?Z(A()):wt(t,e),X(n),t.setAttribute("data-loading","true"),t.setAttribute("aria-busy","true"),t.focus()},wt=(e,t)=>{const n=O(),o=S();n&&o&&(!t&&ee(P())&&(t=P()),X(n),t&&(Z(t),o.setAttribute("data-button-to-replace",t.className),n.insertBefore(o,t)),z([e,n],r.loading))},Ct=e=>e.checked?1:0,At=e=>e.checked?e.value:null,Et=e=>e.files&&e.files.length?null!==e.getAttribute("multiple")?e.files:e.files[0]:null,kt=(e,t)=>{const n=C();if(!n)return;const o=e=>{"select"===t.input?function(e,t,n){const o=K(e,r.select);if(!o)return;const i=(e,t,o)=>{const i=document.createElement("option");i.value=o,q(i,t),i.selected=Lt(o,n.inputValue),e.appendChild(i)};t.forEach(e=>{const t=e[0],n=e[1];if(Array.isArray(n)){const e=document.createElement("optgroup");e.label=t,e.disabled=!1,o.appendChild(e),n.forEach(t=>i(e,t[1],t[0]))}else i(o,n,t)}),o.focus()}(n,$t(e),t):"radio"===t.input&&function(e,t,n){const o=K(e,r.radio);if(!o)return;t.forEach(e=>{const t=e[0],i=e[1],s=document.createElement("input"),a=document.createElement("label");s.type="radio",s.name=r.radio,s.value=t,Lt(t,n.inputValue)&&(s.checked=!0);const l=document.createElement("span");q(l,i),l.className=r.label,a.appendChild(s),a.appendChild(l),o.appendChild(a)});const i=o.querySelectorAll("input");i.length&&i[0].focus()}(n,$t(e),t)};g(t.inputOptions)||b(t.inputOptions)?(vt(P()),f(t.inputOptions).then(t=>{e.hideLoading(),o(t)})):"object"==typeof t.inputOptions?o(t.inputOptions):d("Unexpected type of inputOptions! Expected object, Map or Promise, got "+typeof t.inputOptions)},Bt=(e,t)=>{const n=e.getInput();n&&(Z(n),f(t.inputValue).then(o=>{n.value="number"===t.input?`${parseFloat(o)||0}`:`${o}`,X(n),n.focus(),e.hideLoading()}).catch(t=>{d(`Error in inputValue promise: ${t}`),n.value="",X(n),n.focus(),e.hideLoading()}))};const $t=e=>(e instanceof Map?Array.from(e):Object.entries(e)).map(([e,t])=>[e,"object"==typeof t?$t(t):t]),Lt=(e,t)=>Boolean(t)&&null!=t&&t.toString()===e.toString(),Pt=(e,t)=>{const n=me.innerParams.get(e);if(!n.input)return void d(`The "input" parameter is needed to be set when using returnInputValueOn${c(t)}`);const o=e.getInput(),i=((e,t)=>{const n=e.getInput();if(!n)return null;switch(t.input){case"checkbox":return Ct(n);case"radio":return At(n);case"file":return Et(n);default:return t.inputAutoTrim?n.value.trim():n.value}})(e,n);n.inputValidator?xt(e,i,t):o&&!o.checkValidity()?(e.enableButtons(),e.showValidationMessage(n.validationMessage||o.validationMessage)):"deny"===t?Tt(e,i):Mt(e,i)},xt=(e,t,n)=>{const o=me.innerParams.get(e);e.disableInput();Promise.resolve().then(()=>f(o.inputValidator(t,o.validationMessage))).then(o=>{e.enableButtons(),e.enableInput(),o?e.showValidationMessage(o):"deny"===n?Tt(e,t):Mt(e,t)})},Tt=(e,t)=>{const n=me.innerParams.get(e);if(n.showLoaderOnDeny&&vt(T()),n.preDeny){e.isAwaitingPromise=!0;Promise.resolve().then(()=>f(n.preDeny(t,n.validationMessage))).then(n=>{!1===n?(e.hideLoading(),ht(e)):e.close({isDenied:!0,value:void 0===n?t:n})}).catch(t=>Ot(e,t))}else e.close({isDenied:!0,value:t})},St=(e,t)=>{e.close({isConfirmed:!0,value:t})},Ot=(e,t)=>{e.rejectPromise(t)},Mt=(e,t)=>{const n=me.innerParams.get(e);if(n.showLoaderOnConfirm&&vt(),n.preConfirm){e.resetValidationMessage(),e.isAwaitingPromise=!0;Promise.resolve().then(()=>f(n.preConfirm(t,n.validationMessage))).then(n=>{ee(L())||!1===n?(e.hideLoading(),ht(e)):St(e,void 0===n?t:n)}).catch(t=>Ot(e,t))}else St(e,t)};function Ht(){const e=me.innerParams.get(this);if(!e)return;const t=me.domCache.get(this);Z(t.loader),V()?e.icon&&X(A()):jt(t),W([t.popup,t.actions],r.loading),t.popup.removeAttribute("aria-busy"),t.popup.removeAttribute("data-loading"),this.enableButtons()}const jt=e=>{const t=e.loader.getAttribute("data-button-to-replace"),n=t?e.popup.getElementsByClassName(t):[];n.length?X(n[0],"inline-block"):ee(P())||ee(T())||ee(x())||Z(e.actions)};function It(){const e=me.innerParams.get(this),t=me.domCache.get(this);return t?F(t.popup,e.input):null}function Dt(e,t,n){const o=me.domCache.get(e);t.forEach(e=>{o[e].disabled=n})}function Vt(e,t){const n=C();if(n&&e)if("radio"===e.type){n.querySelectorAll(`[name="${r.radio}"]`).forEach(e=>{e.disabled=t})}else e.disabled=t}function qt(){Dt(this,["confirmButton","denyButton","cancelButton"],!1);const e=me.focusedElement.get(this);e instanceof HTMLElement&&document.activeElement===document.body&&e.focus(),me.focusedElement.delete(this)}function Nt(){me.focusedElement.set(this,document.activeElement),Dt(this,["confirmButton","denyButton","cancelButton"],!0)}function _t(){Vt(this.getInput(),!1)}function Ft(){Vt(this.getInput(),!0)}function Rt(e){const t=me.domCache.get(this),n=me.innerParams.get(this);q(t.validationMessage,e),t.validationMessage.className=r["validation-message"],n.customClass&&n.customClass.validationMessage&&z(t.validationMessage,n.customClass.validationMessage),X(t.validationMessage);const o=this.getInput();o&&(o.setAttribute("aria-invalid","true"),o.setAttribute("aria-describedby",r["validation-message"]),R(o),z(o,r.inputerror))}function Ut(){const e=me.domCache.get(this);e.validationMessage&&Z(e.validationMessage);const t=this.getInput();t&&(t.removeAttribute("aria-invalid"),t.removeAttribute("aria-describedby"),W(t,r.inputerror))}const zt={title:"",titleText:"",text:"",html:"",footer:"",icon:void 0,iconColor:void 0,iconHtml:void 0,template:void 0,toast:!1,draggable:!1,animation:!0,theme:"light",showClass:{popup:"swal2-show",backdrop:"swal2-backdrop-show",icon:"swal2-icon-show"},hideClass:{popup:"swal2-hide",backdrop:"swal2-backdrop-hide",icon:"swal2-icon-hide"},customClass:{},target:"body",color:void 0,backdrop:!0,heightAuto:!0,allowOutsideClick:!0,allowEscapeKey:!0,allowEnterKey:!0,stopKeydownPropagation:!0,keydownListenerCapture:!1,showConfirmButton:!0,showDenyButton:!1,showCancelButton:!1,preConfirm:void 0,preDeny:void 0,confirmButtonText:"OK",confirmButtonAriaLabel:"",confirmButtonColor:void 0,denyButtonText:"No",denyButtonAriaLabel:"",denyButtonColor:void 0,cancelButtonText:"Cancel",cancelButtonAriaLabel:"",cancelButtonColor:void 0,buttonsStyling:!0,reverseButtons:!1,focusConfirm:!0,focusDeny:!1,focusCancel:!1,returnFocus:!0,showCloseButton:!1,closeButtonHtml:"&times;",closeButtonAriaLabel:"Close this dialog",loaderHtml:"",showLoaderOnConfirm:!1,showLoaderOnDeny:!1,imageUrl:void 0,imageWidth:void 0,imageHeight:void 0,imageAlt:"",timer:void 0,timerProgressBar:!1,width:void 0,padding:void 0,background:void 0,input:void 0,inputPlaceholder:"",inputLabel:"",inputValue:"",inputOptions:{},inputAutoFocus:!0,inputAutoTrim:!0,inputAttributes:{},inputValidator:void 0,returnInputValueOnDeny:!1,validationMessage:void 0,grow:!1,position:"center",progressSteps:[],currentProgressStep:void 0,progressStepsDistance:void 0,willOpen:void 0,didOpen:void 0,didRender:void 0,willClose:void 0,didClose:void 0,didDestroy:void 0,scrollbarPadding:!0,topLayer:!1},Wt=["allowEscapeKey","allowOutsideClick","background","buttonsStyling","cancelButtonAriaLabel","cancelButtonColor","cancelButtonText","closeButtonAriaLabel","closeButtonHtml","color","confirmButtonAriaLabel","confirmButtonColor","confirmButtonText","currentProgressStep","customClass","denyButtonAriaLabel","denyButtonColor","denyButtonText","didClose","didDestroy","draggable","footer","hideClass","html","icon","iconColor","iconHtml","imageAlt","imageHeight","imageUrl","imageWidth","preConfirm","preDeny","progressSteps","returnFocus","reverseButtons","showCancelButton","showCloseButton","showConfirmButton","showDenyButton","text","title","titleText","theme","willClose"],Kt={allowEnterKey:void 0},Yt=["allowOutsideClick","allowEnterKey","backdrop","draggable","focusConfirm","focusDeny","focusCancel","returnFocus","heightAuto","keydownListenerCapture"],Xt=e=>Object.prototype.hasOwnProperty.call(zt,e),Zt=e=>-1!==Wt.indexOf(e),Jt=e=>Kt[e],Gt=e=>{Xt(e)||u(`Unknown parameter "${e}"`)},Qt=e=>{Yt.includes(e)&&u(`The parameter "${e}" is incompatible with toasts`)},en=e=>{const t=Jt(e);t&&m(e,t)},tn=e=>{!1===e.backdrop&&e.allowOutsideClick&&u('"allowOutsideClick" parameter requires `backdrop` parameter to be set to `true`'),e.theme&&!["light","dark","auto","minimal","borderless","bootstrap-4","bootstrap-4-light","bootstrap-4-dark","bootstrap-5","bootstrap-5-light","bootstrap-5-dark","material-ui","material-ui-light","material-ui-dark","embed-iframe","bulma","bulma-light","bulma-dark"].includes(e.theme)&&u(`Invalid theme "${e.theme}"`);for(const t in e)Gt(t),e.toast&&Qt(t),en(t)};function nn(e){const t=y(),n=C(),o=me.innerParams.get(this);if(!n||N(n,o.hideClass.popup))return void u("You're trying to update the closed or closing popup, that won't work. Use the update() method in preConfirm parameter or show a new popup.");const i=on(e),s=Object.assign({},o,i);tn(s),t&&(t.dataset.swal2Theme=s.theme),Fe(this,s),me.innerParams.set(this,s),Object.defineProperties(this,{params:{value:Object.assign({},this.params,e),writable:!1,enumerable:!0}})}const on=e=>{const t={};return Object.keys(e).forEach(n=>{if(Zt(n)){const o=e;t[n]=o[n]}else u(`Invalid parameter to update: ${n}`)}),t};function sn(){var e;const t=me.domCache.get(this),n=me.innerParams.get(this);n?(t.popup&&o.swalCloseEventFinishedCallback&&(o.swalCloseEventFinishedCallback(),delete o.swalCloseEventFinishedCallback),"function"==typeof n.didDestroy&&n.didDestroy(),null===(e=o.eventEmitter)||void 0===e||e.emit("didDestroy"),rn(this)):an(this)}const rn=e=>{an(e),delete e.params,delete o.keydownHandler,delete o.keydownTarget,delete o.currentInstance},an=e=>{e.isAwaitingPromise?(ln(me,e),e.isAwaitingPromise=!0):(ln(et,e),ln(me,e),delete e.isAwaitingPromise,delete e.disableButtons,delete e.enableButtons,delete e.getInput,delete e.disableInput,delete e.enableInput,delete e.hideLoading,delete e.disableLoading,delete e.showValidationMessage,delete e.resetValidationMessage,delete e.close,delete e.closePopup,delete e.closeModal,delete e.closeToast,delete e.rejectPromise,delete e.update,delete e._destroy)},ln=(e,t)=>{for(const n in e)e[n].delete(t)};var cn=Object.freeze({__proto__:null,_destroy:sn,close:dt,closeModal:dt,closePopup:dt,closeToast:dt,disableButtons:Nt,disableInput:Ft,disableLoading:Ht,enableButtons:qt,enableInput:_t,getInput:It,handleAwaitingPromise:ht,hideLoading:Ht,rejectPromise:mt,resetValidationMessage:Ut,showValidationMessage:Rt,update:nn});const un=(e,t,n)=>{t.popup.onclick=()=>{e&&(dn(e)||e.timer||e.input)||n(Ue.close)}},dn=e=>Boolean(e.showConfirmButton||e.showDenyButton||e.showCancelButton||e.showCloseButton);let pn=!1;const mn=e=>{e.popup.onmousedown=()=>{e.container.onmouseup=function(t){e.container.onmouseup=()=>{},t.target===e.container&&(pn=!0)}}},hn=e=>{e.container.onmousedown=t=>{t.target===e.container&&t.preventDefault(),e.popup.onmouseup=function(t){e.popup.onmouseup=()=>{},(t.target===e.popup||t.target instanceof HTMLElement&&e.popup.contains(t.target))&&(pn=!0)}}},gn=(e,t,n)=>{t.container.onclick=o=>{pn?pn=!1:o.target===t.container&&h(e.allowOutsideClick)&&n(Ue.backdrop)}},fn=e=>e instanceof Element||(e=>"object"==typeof e&&null!==e&&"jquery"in e)(e);const bn=()=>{if(o.timeout)return(()=>{const e=H();if(!e)return;const t=parseInt(window.getComputedStyle(e).width);e.style.removeProperty("transition"),e.style.width="100%";const n=t/parseInt(window.getComputedStyle(e).width)*100;e.style.width=`${n}%`})(),o.timeout.stop()},yn=()=>{if(o.timeout){const e=o.timeout.start();return oe(e),e}};let vn=!1;const wn={};const Cn=e=>{for(let t=e.target;t&&t!==document;t=t.parentNode)for(const e in wn){const n=t.getAttribute&&t.getAttribute(e);if(n)return void wn[e].fire({template:n})}};o.eventEmitter=new class{constructor(){this.events={}}_getHandlersByEventName(e){return void 0===this.events[e]&&(this.events[e]=[]),this.events[e]}on(e,t){const n=this._getHandlersByEventName(e);n.includes(t)||n.push(t)}once(e,t){const n=(...o)=>{this.removeListener(e,n),t.apply(this,o)};this.on(e,n)}emit(e,...t){this._getHandlersByEventName(e).forEach(e=>{try{e.apply(this,t)}catch(e){console.error(e)}})}removeListener(e,t){const n=this._getHandlersByEventName(e),o=n.indexOf(t);o>-1&&n.splice(o,1)}removeAllListeners(e){void 0!==this.events[e]&&(this.events[e].length=0)}reset(){this.events={}}};var An=Object.freeze({__proto__:null,argsToParams:e=>{const t={};return"object"!=typeof e[0]||fn(e[0])?["title","html","icon"].forEach((n,o)=>{const i=e[o];"string"==typeof i||fn(i)?t[n]=i:void 0!==i&&d(`Unexpected type of ${n}! Expected "string" or "Element", got ${typeof i}`)}):Object.assign(t,e[0]),t},bindClickHandler:function(e="data-swal-template"){wn[e]=this,vn||(document.body.addEventListener("click",Cn),vn=!0)},clickCancel:()=>{var e;return null===(e=x())||void 0===e?void 0:e.click()},clickConfirm:Re,clickDeny:()=>{var e;return null===(e=T())||void 0===e?void 0:e.click()},enableLoading:vt,fire:function(...e){return new this(...e)},getActions:O,getCancelButton:x,getCloseButton:j,getConfirmButton:P,getContainer:y,getDenyButton:T,getFocusableElements:I,getFooter:M,getHtmlContainer:k,getIcon:A,getIconContent:()=>w(r["icon-content"]),getImage:B,getInputLabel:()=>w(r["input-label"]),getLoader:S,getPopup:C,getProgressSteps:$,getTimerLeft:()=>o.timeout&&o.timeout.getTimerLeft(),getTimerProgressBar:H,getTitle:E,getValidationMessage:L,increaseTimer:e=>{if(o.timeout){const t=o.timeout.increase(e);return oe(t,!0),t}},isDeprecatedParameter:Jt,isLoading:()=>{const e=C();return!!e&&e.hasAttribute("data-loading")},isTimerRunning:()=>Boolean(o.timeout&&o.timeout.isRunning()),isUpdatableParameter:Zt,isValidParameter:Xt,isVisible:()=>ee(C()),mixin:function(e){return class extends(this){_main(t,n){return super._main(t,Object.assign({},e,n))}}},off:(e,t)=>{o.eventEmitter&&(e?t?o.eventEmitter.removeListener(e,t):o.eventEmitter.removeAllListeners(e):o.eventEmitter.reset())},on:(e,t)=>{o.eventEmitter&&o.eventEmitter.on(e,t)},once:(e,t)=>{o.eventEmitter&&o.eventEmitter.once(e,t)},resumeTimer:yn,showLoading:vt,stopTimer:bn,toggleTimer:()=>{const e=o.timeout;return e&&(e.running?bn():yn())}});class En{constructor(e,t){this.callback=e,this.remaining=t,this.running=!1,this.start()}start(){return this.running||(this.running=!0,this.started=new Date,this.id=setTimeout(this.callback,this.remaining)),this.remaining}stop(){return this.started&&this.running&&(this.running=!1,clearTimeout(this.id),this.remaining-=(new Date).getTime()-this.started.getTime()),this.remaining}increase(e){const t=this.running;return t&&this.stop(),this.remaining+=e,t&&this.start(),this.remaining}getTimerLeft(){return this.running&&(this.stop(),this.start()),this.remaining}isRunning(){return this.running}}const kn=["swal-title","swal-html","swal-footer"],Bn=e=>{const t={};return Array.from(e.querySelectorAll("swal-param")).forEach(e=>{Mn(e,["name","value"]);const n=e.getAttribute("name"),o=e.getAttribute("value");n&&o&&(t[n]=n in zt&&"boolean"==typeof zt[n]?"false"!==o:n in zt&&"object"==typeof zt[n]?JSON.parse(o):o)}),t},$n=e=>{const t={};return Array.from(e.querySelectorAll("swal-function-param")).forEach(e=>{const n=e.getAttribute("name"),o=e.getAttribute("value");n&&o&&(t[n]=new Function(`return ${o}`)())}),t},Ln=e=>{const t={};return Array.from(e.querySelectorAll("swal-button")).forEach(e=>{Mn(e,["type","color","aria-label"]);const n=e.getAttribute("type");if(!n||!["confirm","cancel","deny"].includes(n))return;t[`${n}ButtonText`]=e.innerHTML,t[`show${c(n)}Button`]=!0;const o=e.getAttribute("color");null!==o&&(t[`${n}ButtonColor`]=o);const i=e.getAttribute("aria-label");null!==i&&(t[`${n}ButtonAriaLabel`]=i)}),t},Pn=e=>{const t={},n=e.querySelector("swal-image");if(n){Mn(n,["src","width","height","alt"]);const e=n.getAttribute("src");null!==e&&(t.imageUrl=e||void 0);const o=n.getAttribute("width");null!==o&&(t.imageWidth=o||void 0);const i=n.getAttribute("height");null!==i&&(t.imageHeight=i||void 0);const s=n.getAttribute("alt");null!==s&&(t.imageAlt=s||void 0)}return t},xn=e=>{const t={},n=e.querySelector("swal-icon");return n&&(Mn(n,["type","color"]),n.hasAttribute("type")&&(t.icon=n.getAttribute("type")),n.hasAttribute("color")&&(t.iconColor=n.getAttribute("color")),t.iconHtml=n.innerHTML),t},Tn=e=>{const t={},n=e.querySelector("swal-input");n&&(Mn(n,["type","label","placeholder","value"]),t.input=n.getAttribute("type")||"text",n.hasAttribute("label")&&(t.inputLabel=n.getAttribute("label")),n.hasAttribute("placeholder")&&(t.inputPlaceholder=n.getAttribute("placeholder")),n.hasAttribute("value")&&(t.inputValue=n.getAttribute("value")));const o=Array.from(e.querySelectorAll("swal-input-option"));return o.length&&(t.inputOptions={},o.forEach(e=>{Mn(e,["value"]);const n=e.getAttribute("value");if(!n)return;const o=e.innerHTML;t.inputOptions[n]=o})),t},Sn=(e,t)=>{const n={};for(const o in t){const i=t[o],s=e.querySelector(i);s&&(Mn(s,[]),n[i.replace(/^swal-/,"")]=s.innerHTML.trim())}return n},On=e=>{const t=kn.concat(["swal-param","swal-function-param","swal-button","swal-image","swal-icon","swal-input","swal-input-option"]);Array.from(e.children).forEach(e=>{const n=e.tagName.toLowerCase();t.includes(n)||u(`Unrecognized element <${n}>`)})},Mn=(e,t)=>{Array.from(e.attributes).forEach(n=>{-1===t.indexOf(n.name)&&u([`Unrecognized attribute "${n.name}" on <${e.tagName.toLowerCase()}>.`,""+(t.length?`Allowed attributes are: ${t.join(", ")}`:"To set the value, use HTML within the element.")])})},Hn=e=>{var t,n;const i=y(),s=C();if(!i||!s)return;"function"==typeof e.willOpen&&e.willOpen(s),null===(t=o.eventEmitter)||void 0===t||t.emit("willOpen",s);const r=window.getComputedStyle(document.body).overflowY;if(Vn(i,s,e),setTimeout(()=>{In(i,s)},10),D()&&(Dn(i,void 0!==e.scrollbarPadding&&e.scrollbarPadding,r),(()=>{const e=y();Array.from(document.body.children).forEach(t=>{t.contains(e)||(t.hasAttribute("aria-hidden")&&t.setAttribute("data-previous-aria-hidden",t.getAttribute("aria-hidden")||""),t.setAttribute("aria-hidden","true"))})})()),ot&&!1===e.backdrop&&s.scrollHeight>i.clientHeight&&(i.style.pointerEvents="auto"),V()||o.previousActiveElement||(o.previousActiveElement=document.activeElement),"function"==typeof e.didOpen){const t=e.didOpen;setTimeout(()=>t(s))}null===(n=o.eventEmitter)||void 0===n||n.emit("didOpen",s)},jn=e=>{const t=C();if(!t||e.target!==t)return;const n=y();n&&(t.removeEventListener("animationend",jn),t.removeEventListener("transitionend",jn),n.style.overflowY="auto",W(n,r["no-transition"]))},In=(e,t)=>{ne(t)?(e.style.overflowY="hidden",t.addEventListener("animationend",jn),t.addEventListener("transitionend",jn)):e.style.overflowY="auto"},Dn=(e,t,n)=>{(()=>{if(nt&&!N(document.body,r.iosfix)){const e=document.body.scrollTop;document.body.style.top=-1*e+"px",z(document.body,r.iosfix),it()}})(),t&&"hidden"!==n&&ct(n),setTimeout(()=>{e.scrollTop=0})},Vn=(e,t,n)=>{var o;null!==(o=n.showClass)&&void 0!==o&&o.backdrop&&z(e,n.showClass.backdrop),n.animation?(t.style.setProperty("opacity","0","important"),X(t,"grid"),setTimeout(()=>{var e;null!==(e=n.showClass)&&void 0!==e&&e.popup&&z(t,n.showClass.popup),t.style.removeProperty("opacity")},10)):X(t,"grid"),z([document.documentElement,document.body],r.shown),n.heightAuto&&n.backdrop&&!n.toast&&z([document.documentElement,document.body],r["height-auto"])};var qn=(e,t)=>/^[a-zA-Z0-9.+_'-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+$/.test(e)?Promise.resolve():Promise.resolve(t||"Invalid email address"),Nn=(e,t)=>/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-z]{2,63}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$/.test(e)?Promise.resolve():Promise.resolve(t||"Invalid URL");function _n(e){!function(e){e.inputValidator||("email"===e.input&&(e.inputValidator=qn),"url"===e.input&&(e.inputValidator=Nn))}(e),e.showLoaderOnConfirm&&!e.preConfirm&&u("showLoaderOnConfirm is set to true, but preConfirm is not defined.\nshowLoaderOnConfirm should be used together with preConfirm, see usage example:\nhttps://sweetalert2.github.io/#ajax-request"),function(e){(!e.target||"string"==typeof e.target&&!document.querySelector(e.target)||"string"!=typeof e.target&&!e.target.appendChild)&&(u('Target parameter is not valid, defaulting to "body"'),e.target="body")}(e),"string"==typeof e.title&&(e.title=e.title.split("\n").join("<br />")),re(e)}let Fn;var Rn=new WeakMap;class Un{constructor(...t){if(n(this,Rn,Promise.resolve({isConfirmed:!1,isDenied:!1,isDismissed:!0})),"undefined"==typeof window)return;Fn=this;const o=Object.freeze(this.constructor.argsToParams(t));var i,s,r;this.params=o,this.isAwaitingPromise=!1,i=Rn,s=this,r=this._main(Fn.params),i.set(e(i,s),r)}_main(e,t={}){if(tn(Object.assign({},t,e)),o.currentInstance){const e=et.swalPromiseResolve.get(o.currentInstance),{isAwaitingPromise:t}=o.currentInstance;o.currentInstance._destroy(),t||e({isDismissed:!0}),D()&&tt()}o.currentInstance=Fn;const n=Wn(e,t);_n(n),Object.freeze(n),o.timeout&&(o.timeout.stop(),delete o.timeout),clearTimeout(o.restoreFocusTimeout);const i=Kn(Fn);return Fe(Fn,n),me.innerParams.set(Fn,n),zn(Fn,i,n)}then(e){return t(Rn,this).then(e)}finally(e){return t(Rn,this).finally(e)}}const zn=(e,t,n)=>new Promise((i,s)=>{const r=t=>{e.close({isDismissed:!0,dismiss:t,isConfirmed:!1,isDenied:!1})};et.swalPromiseResolve.set(e,i),et.swalPromiseReject.set(e,s),t.confirmButton.onclick=()=>{(e=>{const t=me.innerParams.get(e);e.disableButtons(),t.input?Pt(e,"confirm"):Mt(e,!0)})(e)},t.denyButton.onclick=()=>{(e=>{const t=me.innerParams.get(e);e.disableButtons(),t.returnInputValueOnDeny?Pt(e,"deny"):Tt(e,!1)})(e)},t.cancelButton.onclick=()=>{((e,t)=>{e.disableButtons(),t(Ue.cancel)})(e,r)},t.closeButton.onclick=()=>{r(Ue.close)},((e,t,n)=>{e.toast?un(e,t,n):(mn(t),hn(t),gn(e,t,n))})(n,t,r),((e,t,n)=>{if(ze(e),!t.toast){const o=e=>Xe(t,e,n);e.keydownHandler=o;const i=t.keydownListenerCapture?window:C();if(i){e.keydownTarget=i,e.keydownListenerCapture=t.keydownListenerCapture;const n=o;e.keydownTarget.addEventListener("keydown",n,{capture:e.keydownListenerCapture}),e.keydownHandlerAdded=!0}}})(o,n,r),((e,t)=>{"select"===t.input||"radio"===t.input?kt(e,t):["text","email","number","tel","textarea"].some(e=>e===t.input)&&(g(t.inputValue)||b(t.inputValue))&&(vt(P()),Bt(e,t))})(e,n),Hn(n),Yn(o,n,r),Xn(t,n),setTimeout(()=>{t.container.scrollTop=0})}),Wn=(e,t)=>{const n=(e=>{const t="string"==typeof e.template?document.querySelector(e.template):e.template;if(!t)return{};const n=t.content;return On(n),Object.assign(Bn(n),$n(n),Ln(n),Pn(n),xn(n),Tn(n),Sn(n,kn))})(e),o=Object.assign({},zt,t,n,e);return o.showClass=Object.assign({},zt.showClass,o.showClass),o.hideClass=Object.assign({},zt.hideClass,o.hideClass),!1===o.animation&&(o.showClass={backdrop:"swal2-noanimation"},o.hideClass={}),o},Kn=e=>{const t={popup:C(),container:y(),actions:O(),confirmButton:P(),denyButton:T(),cancelButton:x(),loader:S(),closeButton:j(),validationMessage:L(),progressSteps:$()};return me.domCache.set(e,t),t},Yn=(e,t,n)=>{const o=H();Z(o),t.timer&&(e.timeout=new En(()=>{n("timer"),delete e.timeout},t.timer),t.timerProgressBar&&o&&(X(o),_(o,t,"timerProgressBar"),setTimeout(()=>{e.timeout&&e.timeout.running&&oe(t.timer)})))},Xn=(e,t)=>{if(!t.toast)return h(t.allowEnterKey)?void(Zn(e)||Jn(e,t)||We(-1,1)):(m("allowEnterKey","preConfirm: () => false"),void e.popup.focus())},Zn=e=>{const t=Array.from(e.popup.querySelectorAll("[autofocus]"));for(const e of t)if(e instanceof HTMLElement&&ee(e))return e.focus(),!0;return!1},Jn=(e,t)=>t.focusDeny&&ee(e.denyButton)?(e.denyButton.focus(),!0):t.focusCancel&&ee(e.cancelButton)?(e.cancelButton.focus(),!0):!(!t.focusConfirm||!ee(e.confirmButton))&&(e.confirmButton.focus(),!0);Un.prototype.disableButtons=Nt,Un.prototype.enableButtons=qt,Un.prototype.getInput=It,Un.prototype.disableInput=Ft,Un.prototype.enableInput=_t,Un.prototype.hideLoading=Ht,Un.prototype.disableLoading=Ht,Un.prototype.showValidationMessage=Rt,Un.prototype.resetValidationMessage=Ut,Un.prototype.close=dt,Un.prototype.closePopup=dt,Un.prototype.closeModal=dt,Un.prototype.closeToast=dt,Un.prototype.rejectPromise=mt,Un.prototype.update=nn,Un.prototype._destroy=sn,Object.assign(Un,An),Object.keys(cn).forEach(e=>{Un[e]=function(...t){if(Fn&&Fn[e])return Fn[e](...t)}}),Un.DismissReason=Ue,Un.version="11.26.25";const Gn=Un;return Gn.default=Gn,Gn}),void 0!==this&&this.Sweetalert2&&(this.swal=this.sweetAlert=this.Swal=this.SweetAlert=this.Sweetalert2);
+"undefined"!=typeof document&&function(e,t){var n=e.createElement("style");if(e.getElementsByTagName("head")[0].appendChild(n),n.styleSheet)n.styleSheet.disabled||(n.styleSheet.cssText=t);else try{n.innerHTML=t}catch(e){n.innerText=t}}(document,":root{--swal2-outline: 0 0 0 3px rgba(100, 150, 200, 0.5);--swal2-container-padding: 0.625em;--swal2-backdrop: rgba(0, 0, 0, 0.4);--swal2-backdrop-transition: background-color 0.15s;--swal2-width: 32em;--swal2-padding: 0 0 1.25em;--swal2-border: none;--swal2-border-radius: 0.3125rem;--swal2-background: white;--swal2-color: #545454;--swal2-show-animation: swal2-show 0.3s;--swal2-hide-animation: swal2-hide 0.15s forwards;--swal2-icon-zoom: 1;--swal2-title-padding: 0.8em 1em 0;--swal2-html-container-padding: 1em 1.6em 0.3em;--swal2-input-border: 1px solid #d9d9d9;--swal2-input-border-radius: 0.1875em;--swal2-input-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;--swal2-input-background: transparent;--swal2-input-transition: border-color 0.2s, box-shadow 0.2s;--swal2-input-hover-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;--swal2-input-focus-border: 1px solid #b4dbed;--swal2-input-focus-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(100, 150, 200, 0.5);--swal2-progress-step-background: #add8e6;--swal2-validation-message-background: #f0f0f0;--swal2-validation-message-color: #666;--swal2-footer-border-color: #eee;--swal2-footer-background: transparent;--swal2-footer-color: inherit;--swal2-timer-progress-bar-background: rgba(0, 0, 0, 0.3);--swal2-close-button-position: initial;--swal2-close-button-inset: auto;--swal2-close-button-font-size: 2.5em;--swal2-close-button-color: #ccc;--swal2-close-button-transition: color 0.2s, box-shadow 0.2s;--swal2-close-button-outline: initial;--swal2-close-button-box-shadow: inset 0 0 0 3px transparent;--swal2-close-button-focus-box-shadow: inset var(--swal2-outline);--swal2-close-button-hover-transform: none;--swal2-actions-justify-content: center;--swal2-actions-width: auto;--swal2-actions-margin: 1.25em auto 0;--swal2-actions-padding: 0;--swal2-actions-border-radius: 0;--swal2-actions-background: transparent;--swal2-action-button-transition: background-color 0.2s, box-shadow 0.2s;--swal2-action-button-hover: black 10%;--swal2-action-button-active: black 10%;--swal2-confirm-button-box-shadow: none;--swal2-confirm-button-border-radius: 0.25em;--swal2-confirm-button-background-color: #7066e0;--swal2-confirm-button-color: #fff;--swal2-deny-button-box-shadow: none;--swal2-deny-button-border-radius: 0.25em;--swal2-deny-button-background-color: #dc3741;--swal2-deny-button-color: #fff;--swal2-cancel-button-box-shadow: none;--swal2-cancel-button-border-radius: 0.25em;--swal2-cancel-button-background-color: #6e7881;--swal2-cancel-button-color: #fff;--swal2-toast-show-animation: swal2-toast-show 0.5s;--swal2-toast-hide-animation: swal2-toast-hide 0.1s forwards;--swal2-toast-border: none;--swal2-toast-box-shadow: 0 0 1px hsl(0deg 0% 0% / 0.075), 0 1px 2px hsl(0deg 0% 0% / 0.075), 1px 2px 4px hsl(0deg 0% 0% / 0.075), 1px 3px 8px hsl(0deg 0% 0% / 0.075), 2px 4px 16px hsl(0deg 0% 0% / 0.075)}[data-swal2-theme=dark]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white);--swal2-timer-progress-bar-background: rgba(255, 255, 255, 0.7)}@media(prefers-color-scheme: dark){[data-swal2-theme=auto]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white);--swal2-timer-progress-bar-background: rgba(255, 255, 255, 0.7)}}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:auto}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px var(--swal2-backdrop)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:\"top-start     top            top-end\" \"center-start  center         center-end\" \"bottom-start  bottom-center  bottom-end\";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:var(--swal2-container-padding);overflow-x:hidden;transition:var(--swal2-backdrop-transition);-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:var(--swal2-backdrop)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container)[popover]{width:auto;border:0}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:var(--swal2-width);max-width:100%;padding:var(--swal2-padding);border:var(--swal2-border);border-radius:var(--swal2-border-radius);background:var(--swal2-background);color:var(--swal2-color);font-family:inherit;font-size:1rem}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:var(--swal2-title-padding);color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;overflow-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:var(--swal2-actions-justify-content);width:var(--swal2-actions-width);margin:var(--swal2-actions-margin);padding:var(--swal2-actions-padding);border-radius:var(--swal2-actions-border-radius);background:var(--swal2-actions-background)}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:var(--swal2-action-button-transition);border:none;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border-radius:var(--swal2-confirm-button-border-radius);background:initial;background-color:var(--swal2-confirm-button-background-color);box-shadow:var(--swal2-confirm-button-box-shadow);color:var(--swal2-confirm-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):hover{background-color:color-mix(in srgb, var(--swal2-confirm-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):active{background-color:color-mix(in srgb, var(--swal2-confirm-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border-radius:var(--swal2-deny-button-border-radius);background:initial;background-color:var(--swal2-deny-button-background-color);box-shadow:var(--swal2-deny-button-box-shadow);color:var(--swal2-deny-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):hover{background-color:color-mix(in srgb, var(--swal2-deny-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):active{background-color:color-mix(in srgb, var(--swal2-deny-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border-radius:var(--swal2-cancel-button-border-radius);background:initial;background-color:var(--swal2-cancel-button-background-color);box-shadow:var(--swal2-cancel-button-box-shadow);color:var(--swal2-cancel-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):hover{background-color:color-mix(in srgb, var(--swal2-cancel-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):active{background-color:color-mix(in srgb, var(--swal2-cancel-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none;box-shadow:var(--swal2-action-button-focus-box-shadow)}div:where(.swal2-container) button:where(.swal2-styled)[disabled]:not(.swal2-loading){opacity:.4}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid var(--swal2-footer-border-color);background:var(--swal2-footer-background);color:var(--swal2-footer-color);font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:var(--swal2-border-radius);border-bottom-left-radius:var(--swal2-border-radius)}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:var(--swal2-timer-progress-bar-background)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){position:var(--swal2-close-button-position);inset:var(--swal2-close-button-inset);z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:var(--swal2-close-button-transition);border:none;border-radius:var(--swal2-border-radius);outline:var(--swal2-close-button-outline);background:rgba(0,0,0,0);color:var(--swal2-close-button-color);font-family:monospace;font-size:var(--swal2-close-button-font-size);cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:var(--swal2-close-button-hover-transform);background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:var(--swal2-close-button-focus-box-shadow)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:var(--swal2-html-container-padding);overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;overflow-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:var(--swal2-input-transition);border:var(--swal2-input-border);border-radius:var(--swal2-input-border-radius);background:var(--swal2-input-background);box-shadow:var(--swal2-input-box-shadow);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):hover,div:where(.swal2-container) input:where(.swal2-file):hover,div:where(.swal2-container) textarea:where(.swal2-textarea):hover{box-shadow:var(--swal2-input-hover-box-shadow)}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:var(--swal2-input-focus-border);outline:none;box-shadow:var(--swal2-input-focus-box-shadow)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:var(--swal2-background)}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:var(--swal2-input-background);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:var(--swal2-input-background);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:var(--swal2-background);color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:var(--swal2-validation-message-background);color:var(--swal2-validation-message-color);font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:\"!\";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:var(--swal2-progress-step-background);color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:var(--swal2-progress-step-background)}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;zoom:var(--swal2-icon-zoom);border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:var(--swal2-show-animation)}.swal2-hide{animation:var(--swal2-hide-animation)}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;border:var(--swal2-toast-border);background:var(--swal2-background);box-shadow:var(--swal2-toast-box-shadow);pointer-events:auto}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}.swal2-toast.swal2-show{animation:var(--swal2-toast-show-animation)}.swal2-toast.swal2-hide{animation:var(--swal2-toast-hide-animation)}@keyframes swal2-show{0%{transform:translate3d(0, -50px, 0) scale(0.9);opacity:0}100%{transform:translate3d(0, 0, 0) scale(1);opacity:1}}@keyframes swal2-hide{0%{transform:translate3d(0, 0, 0) scale(1);opacity:1}100%{transform:translate3d(0, -50px, 0) scale(0.9);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}");
+</script>
+<script>
+(function () {
+  'use strict';
+
+  // ================= Config =================
+  const DEMO_PRODUCTS = null;
+  const CFG = window.APP_CONFIG || {};
+  const API_URL = (CFG.API_URL || /*__API_URL__*/'').trim();   // URL /exec ของ Apps Script (โหมด PWA)
+  const USE_SW = true;
+  const MAX_QTY = 9999;
+  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', iosHint: 'b1001:ios-hint' };
+  const HISTORY_MAX = 50;
+  const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 100"><rect width="80" height="100" fill="#EEE7DF"/>' +
+    '<path d="M18 66 34 48l11 12 7-7 10 13Z" fill="#D8CCBE"/><circle cx="54" cy="38" r="5" fill="#D8CCBE"/></svg>');
+
+  // ================= Helpers =================
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const num = n => Number(n || 0).toLocaleString('th-TH', { maximumFractionDigits: 2 });
+  const baht = n => '฿' + num(n);
+  const icon = id => `<svg><use href="#${id}"/></svg>`;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // สำรองรหัสเครื่องและข้อมูลผู้สั่งไว้ใน cookie อายุ 400 วัน (ต่ออายุทุกครั้งที่เปิดแอป)
+  // ถ้า localStorage ถูกล้างแต่ cookie ยังอยู่ แอปจะกู้คืนให้เอง
+  const MIRROR = { 'b1001:device': 'b1001_dev', 'b1001:profile': 'b1001_prof' };
+  const cookie = {
+    get(name) {
+      try { const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : null; }
+      catch (e) { return null; }
+    },
+    set(name, value) {
+      try {
+        document.cookie = name + '=' + encodeURIComponent(value) + '; Max-Age=34560000; Path=/; SameSite=Lax' +
+          (location.protocol === 'https:' ? '; Secure' : '');
+      } catch (e) {}
+    },
+  };
+  const store = {
+    get(k, d) {
+      let raw = null;
+      try { raw = localStorage.getItem(k); } catch (e) {}
+      if (raw == null && MIRROR[k]) {
+        raw = cookie.get(MIRROR[k]);
+        if (raw != null) { try { localStorage.setItem(k, raw); } catch (e) {} }   // กู้คืนจาก cookie
+      }
+      try { const v = JSON.parse(raw); return v == null ? d : v; } catch (e) { return d; }
+    },
+    set(k, v) {
+      const raw = JSON.stringify(v);
+      try { localStorage.setItem(k, raw); } catch (e) {}
+      if (MIRROR[k]) cookie.set(MIRROR[k], raw);
+    },
+  };
+  // ขอให้เบราว์เซอร์เก็บข้อมูลของแอปแบบถาวร (ไม่ลบเองเมื่อพื้นที่เต็มหรือไม่ได้ใช้นาน)
+  async function requestPersist() {
+    try {
+      if (!navigator.storage || !navigator.storage.persist) return false;
+      if (await navigator.storage.persisted()) return true;
+      return await navigator.storage.persist();
+    } catch (e) { return false; }
+  }
+  async function isPersisted() {
+    try { return !!(navigator.storage && navigator.storage.persisted && await navigator.storage.persisted()); } catch (e) { return false; }
+  }
+  // ===== รหัสเครื่อง: สุ่ม 128 บิต เข้ารหัสเป็น 26 ตัวอักษร (Crockford base32) =====
+  const B32 = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
+  function newDeviceKey() {
+    const bytes = new Uint8Array(17);
+    (window.crypto || window.msCrypto).getRandomValues(bytes);
+    let bits = '', out = '';
+    bytes.forEach(b => { bits += b.toString(2).padStart(8, '0'); });
+    for (let i = 0; i < 26; i++) out += B32[parseInt(bits.slice(i * 5, i * 5 + 5), 2)];
+    return out;
+  }
+  function normalizeKey(v) {
+    return String(v || '').toUpperCase().replace(/[^0-9A-Z]/g, '').replace(/O/g, '0').replace(/[IL]/g, '1');
+  }
+  const validKey = k => /^[0-9A-Z]{26}$/.test(k) && [...k].every(c => B32.indexOf(c) >= 0);
+  function deviceKey() {
+    let k = store.get(K.device, '');
+    if (!validKey(k)) { k = newDeviceKey(); store.set(K.device, k); }
+    return k;
+  }
+  const prettyKey = k => k.match(/.{1,4}/g).join('-');   // XXXX-XXXX-...
+  function haptic(ms) { try { navigator.vibrate && navigator.vibrate(ms || 8); } catch (e) {} }
+  function bump(el) { if (!el || reduceMotion) return; el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+  const newId = () => (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+
+  // ================= SweetAlert2 =================
+  // ถ้าโหลด SweetAlert2 ไม่ได้ (เช่นออฟไลน์ครั้งแรก) ใช้กล่องข้อความของเบราว์เซอร์แทน
+  const hasSwal = !!window.Swal;
+  const strip = h => String(h || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const SW_CLASS = { popup: 'sw', actions: 'sw-actions', confirmButton: 'btn btn-primary', denyButton: 'btn btn-ghost', cancelButton: 'btn btn-ghost' };
+  const Dlg = hasSwal ? Swal.mixin({
+    buttonsStyling: false, heightAuto: false, reverseButtons: true, focusConfirm: true,
+    customClass: SW_CLASS,
+    showClass: { popup: reduceMotion ? '' : 'sw-in', backdrop: 'swal2-backdrop-show' },
+    hideClass: { popup: reduceMotion ? '' : 'sw-out', backdrop: 'swal2-backdrop-hide' },
+  }) : null;
+  const Toast = hasSwal ? Swal.mixin({
+    toast: true, position: 'bottom', timer: 2200, timerProgressBar: false, showConfirmButton: false, heightAuto: false,
+    customClass: { popup: 'sw-toast' },
+  }) : null;
+  function dialog(opts) {
+    if (Dlg) return modal(() => Dlg.fire(opts));
+    const text = (opts.title ? opts.title + '\n' : '') + strip(opts.html || opts.text);
+    if (opts.showCancelButton || opts.showDenyButton) return Promise.resolve({ isConfirmed: window.confirm(text) });
+    window.alert(text);
+    return Promise.resolve({ isConfirmed: true });
+  }
+  function toast(title, opts) {
+    if (Toast) return Toast.fire(Object.assign({ title }, opts || {}));
+    return Promise.resolve({});
+  }
+  const iconColor = () => getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+
+  // ================= Backend =================
+  const onAppsScript = !!(window.google && google.script && google.script.run);
+  function call(fn, arg) {
+    if (onAppsScript) {
+      return new Promise((resolve, reject) => {
+        google.script.run
+          .withSuccessHandler(resolve)
+          .withFailureHandler(e => reject(new Error(String((e && e.message) || e).replace(/^(Exception|Error):\s*/, ''))))[fn](arg);
+      });
+    }
+    if (API_URL) return callApi(fn, arg);
+    if (DEMO_PRODUCTS) return demo(fn, arg);
+    return Promise.reject(new Error('ยังไม่ได้ตั้งค่า API_URL ในไฟล์ config.js'));
+  }
+  async function callApi(fn, arg) {
+    let res;
+    try {
+      res = fn === 'getProducts'
+        ? await fetch(API_URL + '?action=products', { cache: 'no-store' })
+        : await fetch(API_URL, {                       // text/plain = ไม่มี preflight ซึ่ง Apps Script รองรับ
+            method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: fn, data: arg }),
+          });
+    } catch (e) {
+      throw new Error(navigator.onLine ? 'เชื่อมต่อระบบไม่ได้ ลองใหม่อีกครั้ง' : 'ออฟไลน์อยู่ ต่ออินเทอร์เน็ตแล้วลองใหม่');
+    }
+    let data = null;
+    try { data = await res.json(); } catch (e) {}
+    if (!data) throw new Error('ระบบตอบกลับไม่ถูกต้อง ลองใหม่อีกครั้ง');
+    if (!data.ok) throw new Error(data.error || 'ทำรายการไม่สำเร็จ');
+    return data.result;
+  }
+  function demo(fn, arg) {
+    const wait = v => new Promise(r => setTimeout(() => r(v), 600));
+    if (fn === 'getProducts') return wait(DEMO_PRODUCTS);
+    const demoOrders = () => store.get('b1001:demo-orders', []);
+    if (fn === 'getMyOrders') return wait({ orders: demoOrders().filter(o => o.device === arg.device_key).map(o => Object.assign({}, o, { device: undefined })) });
+    if (fn === 'placeOrder') {
+      const d = new Date(), p = n => String(n).padStart(2, '0');
+      const prefix = 'ORD' + String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate()) + '-';
+      const k = 'b1001:demo-seq:' + prefix, seq = store.get(k, 0) + 1; store.set(k, seq);
+      const qty = arg.items.reduce((s, i) => s + i.qty, 0);
+      const amt = arg.items.reduce((s, i) => s + i.qty * byCode[i.code].price, 0);
+      const res = { order_no: prefix + String(seq).padStart(4, '0'), created_at: `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`, total_qty: qty, total_amount: amt, status: 'รอดำเนินการ' };
+      const all = demoOrders();
+      all.unshift(Object.assign({ device: arg.device_key, full_name: arg.full_name, department: arg.department,
+        items: arg.items.map(i => ({ code: i.code, name: '', qty: i.qty, unit: byCode[i.code].price, total: i.qty * byCode[i.code].price })) }, res));
+      store.set('b1001:demo-orders', all.slice(0, 200));
+      return wait(res);
+    }
+    return Promise.reject(new Error('ไม่รองรับคำสั่งนี้'));
+  }
+
+  // ================= State =================
+  let products = [], byCode = {};
+  const cart = store.get(K.cart, {});
+  const profile = Object.assign({ full_name: '', department: '', phone: '' }, store.get(K.profile, {}));
+  let offline = !navigator.onLine;
+  let pending = null;          // {id, sig} ใช้ซ้ำเมื่อส่งใหม่หลังเน็ตหลุด กันคำสั่งซื้อซ้ำ
+  let view = 'products';
+  const scrollPos = {};
+  const saveCart = () => store.set(K.cart, cart);
+  const qtyOf = c => cart[c] || 0;
+  function lines() {
+    return Object.keys(cart).filter(c => byCode[c] && cart[c] > 0)
+      .map(code => { const p = byCode[code], qty = cart[code]; return { p, code, qty, unit: p.price, total: p.price * qty }; });
+  }
+  const totals = () => lines().reduce((t, l) => ({ n: t.n + 1, qty: t.qty + l.qty, amt: t.amt + l.total }), { n: 0, qty: 0, amt: 0 });
+  const profileOk = () => profile.full_name.length >= 2 && !!profile.department;
+
+  // ================= Render: products =================
+  const stepper = (code, q) => `
+    <div class="stepper">
+      <button type="button" data-step="dec" data-code="${esc(code)}" aria-label="ลดจำนวน ${esc(code)}">${icon('i-minus')}</button>
+      <input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="${MAX_QTY}" value="${q}" data-qty="${esc(code)}" aria-label="จำนวน ${esc(code)}">
+      <button type="button" data-step="inc" data-code="${esc(code)}" aria-label="เพิ่มจำนวน ${esc(code)}">${icon('i-plus')}</button>
+    </div>`;
+  function cardInner(p) {
+    const q = qtyOf(p.code);
+    return `
+      <button type="button" class="card-img" data-detail="${esc(p.code)}" aria-label="ดูรายละเอียด ${esc(p.code)}">
+        <img src="${esc(p.image || PLACEHOLDER)}" alt="" loading="lazy" decoding="async" data-fallback>
+        ${q ? `<span class="qty-badge">${num(q)}</span>` : ''}
+      </button>
+      <div class="card-body">
+        <h2 class="card-name">${esc(p.name || p.code)}</h2>
+        ${p.name ? `<p class="card-code">${esc(p.code)}</p>` : ''}
+        <div class="card-price"><b>${baht(p.price)}</b><span>/ผืน</span></div>
+        <div class="card-act">${q ? stepper(p.code, q)
+          : `<button type="button" class="btn btn-add btn-block" data-add="${esc(p.code)}">${icon('i-plus')}เพิ่มลงตะกร้า</button>`}</div>
+      </div>`;
+  }
+  function renderGrid() {
+    const q = $('q').value.trim().toLowerCase();
+    const list = products.filter(p => !q || p.code.toLowerCase().includes(q) || (p.name || '').toLowerCase().includes(q));
+    $('grid').innerHTML = list.map(p => `<article class="card${qtyOf(p.code) ? ' is-picked' : ''}" data-card="${esc(p.code)}">${cardInner(p)}</article>`).join('');
+    const st = $('state');
+    st.hidden = list.length > 0;
+    if (!list.length && products.length) st.innerHTML = `<p>ไม่พบรหัสสินค้า “${esc($('q').value.trim())}”</p><button type="button" class="btn btn-add" id="clearSearch">ล้างคำค้นหา</button>`;
+  }
+  function renderCard(code, focusSel) {
+    const el = document.querySelector(`[data-card="${CSS.escape(code)}"]`);
+    if (!el) return;
+    el.innerHTML = cardInner(byCode[code]);
+    el.classList.toggle('is-picked', qtyOf(code) > 0);
+    if (focusSel) { const t = el.querySelector(focusSel) || el.querySelector('[data-add],[data-step="inc"]'); t && t.focus({ preventScroll: true }); }
+  }
+  function skeleton() {
+    $('state').hidden = true;
+    $('grid').innerHTML = Array.from({ length: 8 }, () => `<div class="card skeleton" aria-hidden="true"><div class="card-img"></div><div class="sk w60"></div><div class="sk w40"></div><div class="sk sk-btn"></div></div>`).join('');
+  }
+
+  // ================= Render: cart =================
+  function renderCart(flashCode) {
+    const ls = lines(), t = totals();
+    $('cartFull').hidden = !ls.length;
+    $('cartEmpty').hidden = !!ls.length;
+    $('lines').innerHTML = ls.map(l => `
+      <li class="line${l.code === flashCode ? ' is-flash' : ''}" data-line="${esc(l.code)}">
+        <button type="button" class="line-img" data-detail="${esc(l.code)}" aria-label="ดูรายละเอียด ${esc(l.code)}"><img src="${esc(l.p.image || PLACEHOLDER)}" alt="" data-fallback></button>
+        <div class="line-info"><div class="line-name">${esc(l.p.name || l.code)}</div><div class="line-unit">${baht(l.unit)} /ผืน</div></div>
+        <button type="button" class="line-del" data-remove="${esc(l.code)}" aria-label="ลบ ${esc(l.code)}"><svg class="i"><use href="#i-trash"/></svg></button>
+        ${stepper(l.code, l.qty)}
+        <div class="line-total">${baht(l.total)}</div>
+      </li>`).join('');
+    $('buyer').innerHTML = `
+      <div class="buyer-ico">${icon('i-user')}</div>
+      <div class="buyer-txt">${profileOk()
+        ? `<b>${esc(profile.full_name)}</b><span>${esc(profile.department)}${profile.phone ? ' โทร ' + esc(profile.phone) : ''}</span>`
+        : `<b>ยังไม่ได้ระบุผู้สั่ง</b><span class="warn">กรอกชื่อและหน่วยงานก่อนส่งคำสั่งซื้อ</span>`}</div>
+      <button type="button" class="chip-btn" id="editBuyer">${profileOk() ? 'แก้ไข' : 'กรอกข้อมูล'}</button>`;
+    $('cartSum').innerHTML = `
+      <div class="sum-row"><span>จำนวนรายการ</span><b>${num(t.n)} รายการ</b></div>
+      <div class="sum-row"><span>จำนวนรวม</span><b>${num(t.qty)} ผืน</b></div>
+      <div class="sum-row total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>`;
+  }
+  function renderTotals() {
+    const t = totals();
+    const b = $('cartBadge');
+    b.hidden = !t.n; b.textContent = t.n > 99 ? '99+' : t.n;
+    $('coCount').textContent = `${num(t.qty)} ผืน จาก ${num(t.n)} รายการ`;
+    $('coTotal').textContent = baht(t.amt);
+    const showCo = view === 'cart' && t.n > 0;
+    $('checkout').hidden = !showCo;
+    document.body.classList.toggle('has-checkout', showCo);
+    $('clearCartBtn').hidden = !(view === 'cart' && t.n > 0);
+  }
+
+  // ================= Cart actions =================
+  function setQty(code, v, opt) {
+    opt = opt || {};
+    let n = parseInt(v, 10);
+    if (!Number.isFinite(n) || n < 0) n = 0;
+    if (n > MAX_QTY) { n = MAX_QTY; toast(`สั่งได้สูงสุด ${num(MAX_QTY)} ผืนต่อรายการ`); }
+    const before = qtyOf(code);
+    if (n === before) { if (opt.input) opt.input.value = n || ''; return; }
+    if (n === 0) delete cart[code]; else cart[code] = n;
+    saveCart();
+    renderCard(code, opt.focus);
+    if (view === 'cart') {
+      renderCart();
+      if (opt.focus) { const t = document.querySelector(`[data-line="${CSS.escape(code)}"] ${opt.focus}`); t && t.focus({ preventScroll: true }); }
+    }
+    renderTotals();
+    if (n > before) haptic(6);
+    if (n === 0 && before) bump($('tabCart'));
+  }
+  // modal ใส่จำนวนก่อนเพิ่มลงตะกร้า
+  async function askQty(code, imgEl) {
+    const p = byCode[code];
+    if (!p) return;
+    let n;
+    if (!hasSwal) {
+      n = parseInt(window.prompt(`จำนวน ${p.name || p.code} (ผืน)`, '1'), 10);
+      if (!(n >= 1)) return;
+    } else {
+      const r = await modal(() => Dlg.fire({
+        title: esc(p.name || p.code),
+        html: `<div class="qd">
+          <p class="qd-price">${baht(p.price)} ต่อผืน</p>
+          <div class="qd-row">
+            <button type="button" class="qd-btn" data-sq="dec" aria-label="ลดจำนวน"><svg><use href="#i-minus"/></svg></button>
+            <div class="qd-num">
+              <input id="sw-qty" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" value="1" aria-label="จำนวน (ผืน)">
+              <span>ผืน</span>
+            </div>
+            <button type="button" class="qd-btn" data-sq="inc" aria-label="เพิ่มจำนวน"><svg><use href="#i-plus"/></svg></button>
+          </div>
+          <p class="qd-total">รวม <b id="sw-total">${baht(p.price)}</b></p>
+        </div>`,
+        showCancelButton: true, confirmButtonText: 'เพิ่มลงตะกร้า', cancelButtonText: 'ยกเลิก',
+        focusConfirm: false, returnFocus: true,
+        didOpen: el => {
+          const i = el.querySelector('#sw-qty'), dec = el.querySelector('[data-sq="dec"]');
+          const paint = () => {
+            const x = parseInt(i.value, 10) || 0;
+            dec.disabled = x <= 1;
+            el.querySelector('#sw-total').textContent = baht(p.price * Math.max(x, 0));
+          };
+          const set = v => { let x = parseInt(v, 10); if (!Number.isFinite(x) || x < 1) x = 1; if (x > MAX_QTY) x = MAX_QTY; i.value = x; Swal.resetValidationMessage(); paint(); };
+          el.querySelectorAll('[data-sq]').forEach(btn => btn.addEventListener('click', () => {
+            set((parseInt(i.value, 10) || 0) + (btn.dataset.sq === 'inc' ? 1 : -1)); haptic(5);
+          }));
+          i.addEventListener('input', () => {
+            const digits = i.value.replace(/\D/g, '');          // รับเฉพาะตัวเลข
+            if (digits !== i.value) i.value = digits;
+            Swal.resetValidationMessage(); paint();
+          });
+          i.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); Swal.clickConfirm(); } });
+          paint();
+          i.focus();   // โฟกัสช่องจำนวนอย่างเดียว ไม่เลือกข้อความเดิม
+          const end = i.value.length;
+          try { i.setSelectionRange(end, end); } catch (e) {}   // เคอร์เซอร์อยู่ท้ายตัวเลข
+        },
+        preConfirm: () => {
+          const x = parseInt(document.getElementById('sw-qty').value, 10);
+          if (!(x >= 1)) { Swal.showValidationMessage('ใส่จำนวนอย่างน้อย 1 ผืน'); return false; }
+          if (x > MAX_QTY) { Swal.showValidationMessage(`สั่งได้สูงสุด ${num(MAX_QTY)} ผืน`); return false; }
+          return x;
+        },
+      }));
+      if (!r.isConfirmed) return;
+      n = r.value;
+    }
+    const from = snapFrom(imgEl);
+    setQty(code, Math.min(qtyOf(code) + n, MAX_QTY), { focus: '[data-step="inc"]' });
+    flyToCart(from, n);
+    if (reduceMotion) toast(`เพิ่ม ${num(n)} ผืนลงตะกร้าแล้ว`);
+  }
+
+  // ===== โยนสินค้าลงตะกร้า: รูปลอยเป็นวิถีโค้งลงไอคอนตะกร้า แล้วตะกร้า "รับ" พร้อม +จำนวน =====
+  function snapFrom(img) {
+    if (!img || !img.isConnected) return null;
+    return { rect: img.getBoundingClientRect(), url: img.currentSrc || img.src };
+  }
+  function flyToCart(from, qty) {
+    const tab = $('tabCart'), target = tab.querySelector('svg');
+    document.body.classList.remove('is-typing');
+    const b = target && target.getBoundingClientRect();
+    if (reduceMotion || !b || !b.width || !document.body.animate) { cartCatch(qty, true); return; }
+    let a = from && from.rect;
+    // ถ้ารูปต้นทางมองไม่เห็น (เลื่อนพ้นจอ) ให้เริ่มจากกลางจอ
+    if (!a || !a.width || a.bottom < 0 || a.top > innerHeight) {
+      const w = Math.min(140, innerWidth * .35);
+      a = { left: innerWidth / 2 - w / 2, top: innerHeight * .4, width: w, height: w * 1.25 };
+    }
+    const size = Math.min(a.width, 150), h = size * 1.25;
+    const x0 = a.left + a.width / 2 - size / 2, y0 = a.top + a.height / 2 - h / 2;
+    const dx = b.left + b.width / 2 - (x0 + size / 2);
+    const dy = b.top + b.height / 2 - (y0 + h / 2);
+    const lift = Math.min(160, Math.max(90, Math.abs(dy) * .45));   // ความสูงของวิถีโค้ง
+
+    const f = document.createElement('div');
+    f.className = 'fly';
+    f.style.cssText = `left:${x0}px;top:${y0}px;width:${size}px;height:${h}px;` +
+      `background-image:url("${(from && from.url) || PLACEHOLDER}")`;
+    document.body.appendChild(f);
+
+    const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    const frames = [];
+    for (let i = 0; i <= 14; i++) {
+      const t = i / 14, e = ease(t);
+      const x = dx * e;
+      const y = dy * (t * t) - lift * 4 * t * (1 - t);          // ขึ้นแล้วตกลง (พาราโบลา)
+      const sc = 1 - .88 * Math.pow(t, 1.4);
+      const rot = -18 * Math.sin(Math.PI * t) + (t > .85 ? 10 * (t - .85) / .15 : 0);
+      frames.push({ transform: `translate(${x}px,${y}px) rotate(${rot}deg) scale(${sc})`, opacity: t > .9 ? 1 - (t - .9) * 6 : 1, offset: t });
+    }
+    const anim = f.animate(frames, { duration: 720, easing: 'linear', fill: 'forwards' });
+    anim.onfinish = () => { f.remove(); cartCatch(qty); };
+  }
+
+  function cartCatch(qty, quiet) {
+    const tab = $('tabCart');
+    haptic([8, 40, 14]);
+    if (quiet) { bump($('cartBadge')); return; }
+    tab.classList.remove('is-catch'); void tab.offsetWidth; tab.classList.add('is-catch');
+    const badge = $('cartBadge');
+    badge.classList.remove('is-pop'); void badge.offsetWidth; badge.classList.add('is-pop');
+    // วงคลื่นรอบตะกร้า
+    const ring = document.createElement('span'); ring.className = 'catch-ring'; tab.appendChild(ring);
+    // ป้าย +จำนวน ลอยขึ้น
+    if (qty) {
+      const plus = document.createElement('span'); plus.className = 'catch-plus';
+      plus.textContent = '+' + num(qty); tab.appendChild(plus);
+      setTimeout(() => plus.remove(), 900);
+    }
+    setTimeout(() => ring.remove(), 700);
+  }
+  function removeLine(code) {
+    const q = qtyOf(code);
+    if (!q) return;
+    setQty(code, 0);
+    haptic(12);
+    toast(`ลบ ${byCode[code] ? (byCode[code].name || code) : code} แล้ว`, {
+      showConfirmButton: true, confirmButtonText: 'เลิกทำ', timer: 4000, timerProgressBar: true,
+    }).then(r => { if (r && r.isConfirmed) { setQty(code, q); if (view === 'cart') renderCart(code); } });
+  }
+
+  // ปุ่ม + − กดค้างเพื่อเพิ่ม/ลดต่อเนื่อง
+  let hold = null, suppressClick = false;
+  function stopHold() { if (hold) { clearTimeout(hold.t); hold.btn && hold.btn.classList.remove('is-holding'); hold = null; } }
+  document.addEventListener('pointerdown', e => {
+    const b = e.target.closest('button[data-step]');
+    if (!b || e.button > 0) return;
+    const code = b.dataset.code, dir = b.dataset.step === 'inc' ? 1 : -1, sel = `[data-step="${b.dataset.step}"]`;
+    let delay = 140, count = 0;
+    const tick = () => {
+      if (!hold) return;
+      suppressClick = true; count++;
+      const n = qtyOf(code) + dir * (count > 15 ? 5 : 1);
+      setQty(code, n, { focus: sel });
+      if (n <= 0 || n >= MAX_QTY) return stopHold();
+      delay = Math.max(50, delay * .88);
+      hold.t = setTimeout(tick, delay);
+    };
+    hold = { btn: b, t: setTimeout(() => { b.classList.add('is-holding'); tick(); }, 420) };
+  });
+  ['pointerup', 'pointercancel', 'blur'].forEach(ev => window.addEventListener(ev, stopHold));
+  document.addEventListener('contextmenu', e => { if (e.target.closest('button[data-step]')) e.preventDefault(); });
+
+  document.addEventListener('click', e => {
+    const t = e.target;
+    let el;
+    if ((el = t.closest('button[data-step]'))) {
+      if (suppressClick) { suppressClick = false; return; }
+      const c = el.dataset.code;
+      setQty(c, qtyOf(c) + (el.dataset.step === 'inc' ? 1 : -1), { focus: `[data-step="${el.dataset.step}"]` });
+    } else if ((el = t.closest('[data-add]'))) {
+      const card = el.closest('.card');
+      askQty(el.dataset.add, card && card.querySelector('.card-img img'));   // เด้ง modal ใส่จำนวน
+    } else if ((el = t.closest('[data-remove]'))) {
+      removeLine(el.dataset.remove);
+    } else if ((el = t.closest('[data-detail]'))) {
+      openDetail(el.dataset.detail);
+    } else if ((el = t.closest('[data-go]'))) {
+      go(el.dataset.go);
+    } else if (t.id === 'clearSearch') {
+      $('q').value = ''; renderGrid(); $('q').focus();
+    } else if (t.id === 'retry') {
+      loadProducts();
+    } else if (t.closest('#editBuyer')) {
+      askProfile();
+    }
+  });
+  document.addEventListener('change', e => {
+    const i = e.target.closest('input[data-qty]');
+    if (i) setQty(i.dataset.qty, i.value, { input: i });
+  });
+  document.addEventListener('focusin', e => {
+    const i = e.target.closest('input[data-qty], #dQty');
+    if (i) setTimeout(() => i.select(), 0);
+    if (e.target.matches('input') && !e.target.closest('.swal2-container')) document.body.classList.add('is-typing');
+  });
+  document.addEventListener('focusout', e => {
+    if (e.target.matches('input')) setTimeout(() => { if (!document.activeElement || !document.activeElement.matches('input')) document.body.classList.remove('is-typing'); }, 50);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.matches('input[data-qty], #dQty')) { e.preventDefault(); e.target.blur(); }
+  });
+  document.addEventListener('error', e => {
+    const img = e.target;
+    if (img.tagName === 'IMG' && img.hasAttribute('data-fallback') && img.src !== PLACEHOLDER) img.src = PLACEHOLDER;
+  }, true);
+  $('q').addEventListener('input', renderGrid);
+
+  $('clearCartBtn').addEventListener('click', async () => {
+    const t = totals();
+    const r = await dialog({
+      icon: 'warning', iconColor: iconColor(), title: 'ล้างตะกร้า?',
+      html: `สินค้า ${num(t.n)} รายการ (${num(t.qty)} ผืน) จะถูกนำออกทั้งหมด`,
+      showCancelButton: true, confirmButtonText: 'ล้างตะกร้า', cancelButtonText: 'ยกเลิก', focusCancel: true,
+      customClass: Object.assign({}, SW_CLASS, { confirmButton: 'btn btn-primary btn-danger' }),
+    });
+    if (!r.isConfirmed) return;
+    Object.keys(cart).forEach(k => delete cart[k]);
+    saveCart(); renderGrid(); renderCart(); renderTotals();
+    toast('ล้างตะกร้าแล้ว');
+  });
+
+  // ================= Detail sheet =================
+  let dCode = null;
+  function setDQty(v) {
+    let n = parseInt(v, 10);
+    if (!Number.isFinite(n) || n < 0) n = 0;
+    if (n > MAX_QTY) n = MAX_QTY;
+    $('dQty').value = n;
+    document.querySelectorAll('#dChips [data-dqty]').forEach(c => c.classList.toggle('is-on', Number(c.dataset.dqty) === n));
+    const p = byCode[dCode], inCart = qtyOf(dCode);
+    const btn = $('dAction');
+    if (n === 0 && inCart) { btn.textContent = 'เอาออกจากตะกร้า'; btn.disabled = false; }
+    else if (n === 0) { btn.textContent = 'เลือกจำนวน'; btn.disabled = true; }
+    else { btn.textContent = `${inCart ? 'อัปเดตตะกร้า' : 'เพิ่มลงตะกร้า'} ${baht(p.price * n)}`; btn.disabled = false; }
+  }
+  function openDetail(code, fromAdd) {
+    const p = byCode[code];
+    if (!p) return;
+    dCode = code;
+    $('dImg').src = p.image || PLACEHOLDER;
+    $('dTitle').textContent = p.name || p.code;
+    $('dSub').textContent = p.name ? p.code : 'ราคาต่อผืน';
+    $('dPrice').innerHTML = `${baht(p.price)}`;
+    const inCart = qtyOf(code);
+    $('dInCart').hidden = !inCart;
+    $('dInCart').textContent = `มีในตะกร้าแล้ว ${num(inCart)} ผืน`;
+    setDQty(inCart || 1);
+    openLayer('detail');
+    if (fromAdd) { const b = $('dAction'); b && b.focus({ preventScroll: true }); }
+  }
+  document.querySelectorAll('[data-dstep]').forEach(b => b.addEventListener('click', () => {
+    setDQty((parseInt($('dQty').value, 10) || 0) + (b.dataset.dstep === 'inc' ? 1 : -1)); haptic(5);
+  }));
+  $('dQty').addEventListener('change', e => setDQty(e.target.value));
+  $('dChips').addEventListener('click', e => {
+    const c = e.target.closest('[data-dqty]');
+    if (c) { setDQty(c.dataset.dqty); haptic(5); }
+  });
+  $('dAction').addEventListener('click', () => {
+    const n = parseInt($('dQty').value, 10) || 0, before = qtyOf(dCode), code = dCode;
+    const from = snapFrom($('dImg'));
+    if (n === 0) { closeLayer(); removeLine(code); return; }
+    setQty(code, n);
+    if (n > before) flyToCart(from, n - before);
+    closeLayer();
+    if (before || reduceMotion) toast(before ? `อัปเดตเป็น ${num(n)} ผืนแล้ว` : `เพิ่ม ${num(n)} ผืนลงตะกร้าแล้ว`);
+  });
+  $('dImgBtn').addEventListener('click', () => openViewer(dCode));
+
+  // ปัดแผงรายละเอียดลงเพื่อปิด
+  (function dragToClose() {
+    const panel = $('detailPanel'), grab = $('detailGrab');
+    let y0 = null, dy = 0;
+    grab.addEventListener('pointerdown', e => { y0 = e.clientY; dy = 0; grab.setPointerCapture(e.pointerId); panel.style.transition = 'none'; });
+    grab.addEventListener('pointermove', e => { if (y0 == null) return; dy = Math.max(0, e.clientY - y0); panel.style.transform = `translateY(${dy}px)`; });
+    const end = () => {
+      if (y0 == null) return;
+      y0 = null; panel.style.transition = 'transform .2s ease';
+      if (dy > 110) { panel.style.transform = 'translateY(100%)'; setTimeout(() => { closeLayer(); panel.style.transform = ''; panel.style.transition = ''; }, 180); }
+      else panel.style.transform = '';
+    };
+    grab.addEventListener('pointerup', end); grab.addEventListener('pointercancel', end);
+  })();
+
+  // ================= Viewer =================
+  function openViewer(code) {
+    const p = byCode[code];
+    if (!p) return;
+    $('viewerImg').src = p.image || PLACEHOLDER;
+    $('viewerImg').alt = 'ผ้าห่ม ' + code;
+    $('viewerTitle').textContent = p.name || code;
+    openLayer('viewer');
+  }
+  $('viewer').addEventListener('click', e => { if (e.target.closest('[data-close-viewer]') && e.target.tagName !== 'IMG') closeLayer(); });
+  $('detail').addEventListener('click', e => { if (e.target.closest('[data-close-detail]')) closeLayer(); });
+
+  // ================= Layers + ปุ่มย้อนกลับของมือถือ =================
+  // ================= Navigation =================
+  // ทุกหน้า แผง และกล่องข้อความ ถูกบันทึกใน history ของเบราว์เซอร์
+  // ปุ่มย้อนกลับบนหัวแอป และปุ่มย้อนกลับของมือถือ/เบราว์เซอร์ จึงทำงานผ่านเส้นทางเดียวกัน (popstate)
+  //   d0 = หน้าสินค้า (หน้าหลัก)   d1 = แท็บอื่น   + แผง/กล่องที่เปิดซ้อนอยู่ด้านบน
+  const layers = [];
+  let lastFocus = null;
+  const NAV = (() => { try { history.replaceState(history.state, ''); return true; } catch (e) { return false; } })();
+  const baseUrl = () => location.href.split('#')[0];
+  const navState = () => (NAV && history.state && history.state.b1001) ? history.state : null;
+  const depthOf = v => (v === 'products' ? 0 : 1);
+  function pushEntry(extra) {
+    if (!NAV) return false;
+    try { history.pushState(Object.assign({ b1001: 1, view, d: depthOf(view) }, extra), '', location.href); return true; }
+    catch (e) { return false; }
+  }
+  let silentPop = null;          // ย้อนกลับที่แอปสั่งเอง (ปิดกล่องข้อความ) ไม่ต้องเปลี่ยนหน้า
+  let dlgClosedByBack = false;
+  function backSilently() {
+    return new Promise(res => {
+      const t = setTimeout(() => { silentPop = null; res(); }, 500);
+      silentPop = () => { clearTimeout(t); res(); };
+      history.back();
+    });
+  }
+  // นับกล่องที่เปิดอยู่เอง (Swal.isVisible() ยังเป็นจริงระหว่างแอนิเมชันปิด ทำให้ปุ่มย้อนกลับถูกกลืน)
+  let openModals = 0;
+  const isModalOpen = () => openModals > 0;
+
+  // เปิดกล่อง SweetAlert2 แบบมีรายการใน history: กดย้อนกลับของเครื่อง = ปิดกล่อง
+  async function modal(fire) {
+    const pushed = pushEntry({ dlg: 1 });
+    dlgClosedByBack = false;
+    openModals++;
+    let r;
+    try { r = await fire(); } finally { openModals--; }
+    if (pushed && !dlgClosedByBack && navState() && navState().dlg) await backSilently();
+    return r;
+  }
+
+  function openLayer(id) {
+    if (!layers.length) lastFocus = document.activeElement;
+    layers.push(id);
+    $(id).hidden = false;
+    document.body.classList.add('is-locked');
+    const f = $(id).querySelector('[data-close-detail], [data-close-viewer]');
+    f && f.focus({ preventScroll: true });
+    pushEntry({ layer: id });
+  }
+  function hideTop() {
+    const id = layers.pop();
+    if (id) $(id).hidden = true;
+    if (!layers.length) {
+      document.body.classList.remove('is-locked');
+      if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+    }
+  }
+  function closeLayer() {
+    if (!layers.length) return;
+    const s = navState();
+    if (s && s.layer) { history.back(); return; }   // popstate จะปิดแผงให้
+    hideTop();
+  }
+
+  window.addEventListener('popstate', e => {
+    if (silentPop) { const f = silentPop; silentPop = null; f(); return; }
+    // 1) มีกล่องข้อความเปิดอยู่ -> ปิดกล่อง (ระหว่างกำลังส่งคำสั่งซื้อ ห้ามปิด)
+    if (isModalOpen()) {
+      if (Swal.isLoading()) { pushEntry({ dlg: 1 }); return; }
+      dlgClosedByBack = true;
+      Swal.close();
+      return;
+    }
+    // 2) มีแผงรายละเอียด/รูปเต็มจอเปิดอยู่ -> ปิดแผงบนสุด
+    if (layers.length) { hideTop(); return; }
+    // 3) เปลี่ยนหน้า
+    const s = e.state && e.state.b1001 ? e.state : null;
+    show(s && s.view ? s.view : hashView());
+  });
+
+  // ================= Router (แท็บ) =================
+  const TITLES = { products: '', cart: 'ตะกร้า', history: 'ประวัติคำสั่งซื้อ', me: 'ฉัน' };
+  const VIEWS = Object.keys(TITLES);
+  function hashView() {
+    const h = (location.hash || '').replace('#', '');
+    return VIEWS.indexOf(h) >= 0 ? h : 'products';
+  }
+  // เปิดแอปครั้งแรก: วางหน้าสินค้าไว้ใต้สุดเสมอ
+  // (เปิดจากลิงก์ #cart หรือทางลัดของแอป แล้วกดย้อนกลับ จะกลับมาหน้าสินค้า ไม่หลุดออกจากแอป)
+  function initNav() {
+    const h = hashView();
+    if (NAV) {
+      try {
+        history.replaceState({ b1001: 1, view: 'products', d: 0 }, '', baseUrl());
+        if (h !== 'products') history.pushState({ b1001: 1, view: h, d: 1 }, '', baseUrl() + '#' + h);
+      } catch (e) {}
+    }
+    show(h);
+  }
+  function go(name) {
+    if (name === view) { window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); return; }
+    if (!NAV) { show(name); return; }
+    const s = navState();
+    try {
+      if (name === 'products') {
+        if (s && s.d === 1 && !s.layer && !s.dlg) { history.back(); return; }   // เหมือนกดย้อนกลับของเครื่อง
+        history.replaceState({ b1001: 1, view: 'products', d: 0 }, '', baseUrl());
+      } else if (view === 'products') {
+        history.pushState({ b1001: 1, view: name, d: 1 }, '', baseUrl() + '#' + name);
+      } else {
+        history.replaceState({ b1001: 1, view: name, d: 1 }, '', baseUrl() + '#' + name);
+      }
+    } catch (e) {}
+    show(name);
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && layers.length && !(window.Swal && Swal.isVisible())) closeLayer();
+    if (e.key === 'Tab' && layers.length) {
+      const box = $(layers[layers.length - 1]);
+      const f = [...box.querySelectorAll('button, input')].filter(x => !x.disabled && x.offsetParent !== null);
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+
+  function show(name) {
+    scrollPos[view] = window.scrollY;
+    view = name;
+    VIEWS.forEach(v => { $('view-' + v).hidden = v !== name; });
+    const sec = $('view-' + name);
+    sec.classList.remove('is-entering'); void sec.offsetWidth; sec.classList.add('is-entering');
+    document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-current', t.dataset.tab === name ? 'page' : 'false'));
+    $('appLogo').hidden = name !== 'products';
+    $('backBtn').hidden = name === 'products';
+    $('pageTitle').hidden = name === 'products';
+    $('pageTitle').textContent = TITLES[name];
+    $('searchRow').hidden = name !== 'products';
+    $('appbarWrap').classList.toggle('split', name === 'products');
+    if (name === 'cart') renderCart();
+    if (name === 'history') { renderHistory(); syncHistory(); }
+    if (name === 'me') renderMe();
+    renderTotals();
+    window.scrollTo(0, scrollPos[name] || 0);
+    document.title = name === 'products' ? 'สั่งผ้าห่ม 1001' : TITLES[name] + ' | สั่งผ้าห่ม 1001';
+  }
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => { go(t.dataset.tab); haptic(4); }));
+  // ปุ่มย้อนกลับบนหัวแอป (สำคัญบน iPhone ที่เปิดแบบแอปเต็มจอ ซึ่งไม่มีปุ่มย้อนกลับของระบบ)
+  // ปุ่มย้อนกลับบนหัวแอป = history.back() แบบเดียวกับปุ่มย้อนกลับของเครื่อง
+  $('backBtn').addEventListener('click', () => { haptic(4); go('products'); });
+
+  // ================= Profile =================
+  function validateProfile(v) {
+    const bad = [];
+    if ((v.full_name || '').length < 2) bad.push('full_name');
+    if (!v.department) bad.push('department');
+    if (v.phone && !/^[0-9+\-\s]{6,20}$/.test(v.phone)) bad.push('phone');
+    return bad;
+  }
+  function saveProfile(v) {
+    Object.assign(profile, v);
+    store.set(K.profile, profile);
+  }
+  async function askProfile() {
+    const field = (name, label, type, extra) => `
+      <div class="field"><label for="sw-${name}">${label}</label>
+        <input id="sw-${name}" ${type ? `type="${type}" inputmode="${type}"` : ''} maxlength="${name === 'phone' ? 20 : 120}" value="${esc(profile[name])}" ${extra || ''}></div>`;
+    const r = await dialog({
+      title: 'ข้อมูลผู้สั่ง',
+      html: `<div class="sw-form">
+        ${field('full_name', 'ชื่อ-นามสกุล', '', 'autocomplete="name"')}
+        ${field('department', 'หน่วยงาน', '', 'autocomplete="organization-title"')}
+        ${field('phone', 'เบอร์โทร <span>(ไม่บังคับ)</span>', 'tel', 'autocomplete="tel"')}
+      </div>`,
+      showCancelButton: true, confirmButtonText: 'บันทึก', cancelButtonText: 'ยกเลิก',
+      didOpen: () => { const i = $(profile.full_name ? 'sw-department' : 'sw-full_name'); i && i.focus(); },
+      preConfirm: () => {
+        const v = { full_name: $('sw-full_name').value.trim(), department: $('sw-department').value.trim(), phone: $('sw-phone').value.trim() };
+        const bad = validateProfile(v);
+        if (bad.length) {
+          Swal.showValidationMessage({ full_name: 'กรอกชื่อ-นามสกุล', department: 'กรอกหน่วยงาน', phone: 'เบอร์โทรไม่ถูกต้อง' }[bad[0]]);
+          return false;
+        }
+        return v;
+      },
+    });
+    if (!hasSwal) {
+      const v = { full_name: (prompt('ชื่อ-นามสกุล', profile.full_name) || '').trim(), department: (prompt('หน่วยงาน', profile.department) || '').trim(), phone: profile.phone };
+      if (validateProfile(v).length) return false;
+      saveProfile(v); if (view === 'cart') renderCart(); return true;
+    }
+    if (!r.isConfirmed) return false;
+    saveProfile(r.value);
+    if (view === 'cart') renderCart();
+    toast('บันทึกข้อมูลผู้สั่งแล้ว');
+    return true;
+  }
+  function renderMe() {
+    const f = $('profileForm');
+    ['full_name', 'department', 'phone'].forEach(k => { f.elements[k].value = profile[k] || ''; f.querySelector(`[data-field="${k}"]`).classList.remove('is-invalid'); });
+    const n = store.get(K.history, []).length;
+    $('histCount').textContent = n ? `${n} รายการ` : '';
+    $('recoverCode').textContent = prettyKey(deviceKey());
+    isPersisted().then(ok => {
+      const el = $('storageState');
+      el.classList.toggle('is-ok', ok);
+      el.textContent = ok
+        ? 'เครื่องนี้เก็บข้อมูลของแอปแบบถาวรแล้ว'
+        : (standalone ? 'เบราว์เซอร์อาจล้างข้อมูลเมื่อพื้นที่ในเครื่องเหลือน้อย เก็บรหัสด้านบนไว้เผื่อกู้คืน'
+                      : 'เบราว์เซอร์อาจล้างข้อมูลเมื่อไม่ได้เปิดแอปนาน ติดตั้งแอปลงหน้าจอหลักเพื่อเก็บได้นานขึ้น และเก็บรหัสด้านบนไว้เผื่อกู้คืน');
+    });
+    $('installState').textContent = standalone ? 'ติดตั้งแล้ว' : '';
+  }
+  $('profileForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target;
+    const v = { full_name: f.elements.full_name.value.trim(), department: f.elements.department.value.trim(), phone: f.elements.phone.value.trim() };
+    f.querySelectorAll('.field').forEach(x => x.classList.remove('is-invalid'));
+    const bad = validateProfile(v);
+    if (bad.length) {
+      bad.forEach(k => f.querySelector(`[data-field="${k}"]`).classList.add('is-invalid'));
+      f.elements[bad[0]].focus();
+      return;
+    }
+    saveProfile(v);
+    document.activeElement && document.activeElement.blur();
+    toast('บันทึกข้อมูลแล้ว');
+  });
+  $('profileForm').addEventListener('input', e => { const fld = e.target.closest('.field'); fld && fld.classList.remove('is-invalid'); });
+
+  // ================= Checkout =================
+  $('checkoutBtn').addEventListener('click', checkout);
+  async function checkout() {
+    const ls = lines();
+    if (!ls.length) return;
+    if (offline) {
+      return dialog({ icon: 'warning', iconColor: iconColor(), title: 'ยังออฟไลน์อยู่', html: 'สินค้าในตะกร้ายังอยู่ครบ ต่ออินเทอร์เน็ตแล้วกดส่งอีกครั้ง', confirmButtonText: 'ตกลง' });
+    }
+    if (!profileOk() && !(await askProfile())) return;
+    const t = totals();
+    const sig = JSON.stringify([ls.map(l => [l.code, l.qty]), profile]);
+    if (!pending || pending.sig !== sig) pending = { id: newId(), sig };
+
+    const r = await dialog({
+      title: 'ยืนยันส่งคำสั่งซื้อ?',
+      html: `<div class="sw-sum">
+        <div><span>ผู้สั่ง</span><b>${esc(profile.full_name)}</b></div>
+        <div><span>หน่วยงาน</span><b>${esc(profile.department)}</b></div>
+        <div><span>สินค้า</span><b>${num(t.n)} รายการ (${num(t.qty)} ผืน)</b></div>
+        <div class="is-total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>
+      </div>`,
+      showCancelButton: true, confirmButtonText: 'ส่งคำสั่งซื้อ', cancelButtonText: 'กลับไปแก้ไข',
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
+      allowEscapeKey: () => !(window.Swal && Swal.isLoading()),
+      preConfirm: async () => {
+        try {
+          return await call('placeOrder', {
+            full_name: profile.full_name, department: profile.department, phone: profile.phone,
+            items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, device_key: deviceKey(),
+          });
+        } catch (err) {
+          if (window.Swal) Swal.showValidationMessage((err && err.message) || 'ส่งคำสั่งซื้อไม่สำเร็จ ลองใหม่อีกครั้ง');
+          return false;
+        }
+      },
+    });
+    let res = r.value;
+    if (!hasSwal && r.isConfirmed) {
+      try { res = await call('placeOrder', { full_name: profile.full_name, department: profile.department, phone: profile.phone, items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, device_key: deviceKey() }); }
+      catch (err) { alert(err.message); return; }
+    }
+    if (!r.isConfirmed || !res) return;
+
+    // ระบบยืนยันแล้วว่าบันทึกลง Google Sheet จึงเก็บเข้าประวัติ
+    pending = null;
+    const hist = store.get(K.history, []).filter(h => h.order_no !== res.order_no);
+    hist.unshift({
+      order_no: res.order_no, created_at: res.created_at || '', status: res.status || 'รอดำเนินการ',
+      full_name: profile.full_name, department: profile.department,
+      total_qty: res.total_qty, total_amount: res.total_amount,
+      items: ls.map(l => ({ code: l.code, name: l.p.name || '', qty: l.qty, unit: l.unit, total: l.total })),
+    });
+    store.set(K.history, hist.slice(0, HISTORY_MAX));
+    requestPersist();
+    Object.keys(cart).forEach(k => delete cart[k]);
+    saveCart(); renderGrid(); renderCart(); renderTotals();
+    haptic([10, 40, 10]);
+
+    const done = await dialog({
+      icon: 'success', iconColor: iconColor(),
+      title: 'ส่งคำสั่งซื้อแล้ว',
+      html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${num(res.total_qty)} ผืน ยอดรวม ${baht(res.total_amount)}`,
+      showDenyButton: true, confirmButtonText: 'ดูประวัติคำสั่งซื้อ', denyButtonText: 'สั่งสินค้าต่อ',
+      reverseButtons: false, customClass: Object.assign({}, SW_CLASS, { popup: 'sw is-stacked' }),
+    });
+    // กดย้อนกลับของเครื่องตอนกล่องนี้เปิด = ปิดกล่องเฉยๆ (1 ครั้ง = 1 ขั้น)
+    if (done.isConfirmed) go('history');
+    else if (done.isDenied) go('products');
+  }
+
+  // ================= History =================
+  const STATUS_CLASS = { 'จัดส่งแล้ว': 'is-done', 'ยกเลิก': 'is-cancel', 'จัดส่งบางส่วน': 'is-partial' };
+  function renderHistory() {
+    const list = store.get(K.history, []);
+    const body = $('historyBody');
+    if (!list.length && syncing) {
+      body.innerHTML = `<div class="state"><p>กำลังโหลดประวัติคำสั่งซื้อ…</p></div>`;
+      return;
+    }
+    if (!list.length) {
+      body.innerHTML = `<div class="empty"><div class="empty-ico">${icon('i-receipt')}</div><h2>ยังไม่มีคำสั่งซื้อ</h2><p>คำสั่งซื้อที่ส่งสำเร็จจะแสดงที่นี่ พร้อมเลขที่และสถานะ</p><button type="button" class="btn btn-primary" data-go="products">ไปเลือกสินค้า</button></div>`;
+      return;
+    }
+    const sync = store.get(K.histSync, 0);
+    const syncTxt = syncing ? 'กำลังอัปเดตจากระบบ…'
+      : sync ? `อัปเดตจากระบบล่าสุด ${new Date(sync).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })} ดึงจอลงเพื่ออัปเดต`
+      : 'ข้อมูลที่บันทึกไว้ในเครื่อง ดึงจอลงเพื่ออัปเดตจากระบบ';
+    body.innerHTML = `<p class="hist-note sync-note${syncFailed ? ' is-stale' : ''}">${num(list.length)} คำสั่งซื้อ ${syncFailed ? 'อัปเดตจากระบบไม่สำเร็จ แสดงข้อมูลล่าสุดที่บันทึกไว้' : syncTxt}</p>` +
+      list.map((h, i) => `
+      <details class="panel hist"${i === 0 ? ' open' : ''}>
+        <summary>
+          <span class="hist-no">${esc(h.order_no)}</span>
+          <span class="hist-total">${baht(h.total_amount)}</span>
+          <span class="hist-meta">${esc(h.created_at)} (${num(h.total_qty)} ผืน)${h.status === 'จัดส่งบางส่วน' && h.active_items ? ` ส่งแล้ว ${num(h.shipped_items)}/${num(h.active_items)} รายการ` : ''}</span>
+          <span class="chip ${STATUS_CLASS[h.status] || ''}">${esc(h.status || 'รอดำเนินการ')}</span>
+        </summary>
+        <div class="hist-body">
+          ${h.items.map(it => `
+            <div class="hist-line${(it.status || h.status) === 'ยกเลิก' ? ' is-cancelled' : ''}">
+              <img src="${esc((byCode[it.code] && byCode[it.code].image) || PLACEHOLDER)}" alt="" data-fallback>
+              <div><span class="hist-name">${esc(it.name || it.code)}</span><small>${num(it.qty)} × ${baht(it.unit)}</small>
+                <span class="chip chip-sm ${STATUS_CLASS[it.status || h.status] || ''}">${esc(it.status || h.status || 'รอดำเนินการ')}</span>
+                ${it.note ? `<p class="item-note"><b>หมายเหตุ</b> ${esc(it.note)}</p>` : ''}</div>
+              <b>${baht(it.total)}</b>
+            </div>`).join('')}
+          <p class="hist-who">${esc(h.full_name)} (${esc(h.department)})</p>
+          <button type="button" class="btn btn-ghost btn-block" data-reorder="${esc(h.order_no)}">สั่งรายการเดิมอีกครั้ง</button>
+        </div>
+      </details>`).join('');
+  }
+  // ดึงประวัติของรหัสเครื่องนี้จาก Google Sheet (ชีตคือข้อมูลจริง) แล้วเก็บไว้ในเครื่องเพื่อเปิดเร็วครั้งหน้า
+  let syncing = false, syncFailed = false;
+  async function syncHistory(manual) {
+    if (syncing) return;
+    if (offline) { syncFailed = !!manual; if (view === 'history') renderHistory(); return; }
+    syncing = true; syncFailed = false;
+    if (view === 'history' && !store.get(K.history, []).length) renderHistory();
+    try {
+      const res = await call('getMyOrders', { device_key: deviceKey() });
+      store.set(K.history, ((res && res.orders) || []).slice(0, HISTORY_MAX));
+      store.set(K.histSync, Date.now());
+    } catch (e) {
+      syncFailed = true;
+    } finally {
+      syncing = false;
+      if (view === 'history') renderHistory();
+      if (view === 'me') renderMe();
+    }
+  }
+  $('historyBody').addEventListener('click', e => {
+    const b = e.target.closest('[data-reorder]');
+    if (!b) return;
+    const h = store.get(K.history, []).find(x => x.order_no === b.dataset.reorder);
+    if (!h) return;
+    const skipped = [];
+    let added = 0;
+    h.items.forEach(it => {
+      if (byCode[it.code]) { cart[it.code] = Math.min(qtyOf(it.code) + it.qty, MAX_QTY); added++; }
+      else skipped.push(it.code);
+    });
+    saveCart(); renderGrid(); renderTotals(); bump($('tabCart'));
+    if (skipped.length) {
+      dialog({ icon: 'info', iconColor: iconColor(), title: 'บางรายการปิดขายแล้ว', html: `ไม่ได้ใส่ตะกร้า: ${skipped.map(esc).join(', ')}`, confirmButtonText: 'ไปที่ตะกร้า' }).then(() => go('cart'));
+    } else {
+      toast(`เพิ่ม ${added} รายการลงตะกร้าแล้ว`);
+      go('cart');
+    }
+  });
+  $('menuHistory').addEventListener('click', () => go('history'));
+  // เลิกเชื่อมประวัติ: สร้างรหัสเครื่องใหม่ (เช่น ใช้มือถือร่วมกัน) ประวัติเดิมยังอยู่ในชีต เรียกคืนได้ด้วยรหัสเดิม
+  $('menuClearHistory').addEventListener('click', async () => {
+    const old = deviceKey();
+    const r = await dialog({
+      icon: 'warning', iconColor: iconColor(), title: 'เลิกเชื่อมประวัติกับเครื่องนี้?',
+      html: `เครื่องนี้จะได้รหัสใหม่และไม่เห็นประวัติเดิม ข้อมูลใน Google Sheet ยังอยู่ครบ<br><br>ถ้าต้องการดูประวัติเดิมอีก ให้จดรหัสนี้ไว้<div class="sw-no sw-code" style="font-size:15px">${prettyKey(old)}</div>`,
+      showCancelButton: true, confirmButtonText: 'เลิกเชื่อม', cancelButtonText: 'ยกเลิก', focusCancel: true,
+      customClass: Object.assign({}, SW_CLASS, { confirmButton: 'btn btn-primary btn-danger' }),
+    });
+    if (!r.isConfirmed) return;
+    store.set(K.device, newDeviceKey());
+    store.set(K.history, []); store.set(K.histSync, 0);
+    renderMe();
+    toast('เลิกเชื่อมประวัติแล้ว');
+  });
+
+  // คัดลอกรหัส / ใช้รหัสจากเครื่องเดิม
+  async function copyText(t) {
+    try { await navigator.clipboard.writeText(t); return true; }
+    catch (e) {
+      const ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch (er) {}
+      ta.remove(); return ok;
+    }
+  }
+  $('copyCode').addEventListener('click', async () => {
+    const ok = await copyText(prettyKey(deviceKey()));
+    toast(ok ? 'คัดลอกรหัสแล้ว เก็บไว้ในที่ปลอดภัย' : 'คัดลอกไม่ได้ กดค้างที่รหัสเพื่อคัดลอกเอง');
+  });
+  $('useCode').addEventListener('click', async () => {
+    const r = await dialog({
+      title: 'ใช้รหัสจากเครื่องเดิม',
+      html: `<p style="margin:0 0 12px">วางรหัส 26 ตัวจากหน้า "ฉัน" ของเครื่องเดิม ประวัติของเครื่องนี้จะเปลี่ยนเป็นของรหัสนั้น</p>
+        <div class="field" style="margin:0"><input id="sw-code" class="sw-code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XX" aria-label="รหัสกู้คืน"></div>`,
+      showCancelButton: true, confirmButtonText: 'ใช้รหัสนี้', cancelButtonText: 'ยกเลิก', focusConfirm: false,
+      didOpen: el => { const i = el.querySelector('#sw-code'); i.focus(); i.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); Swal.clickConfirm(); } }); },
+      preConfirm: () => {
+        const k = normalizeKey(document.getElementById('sw-code').value);
+        if (!validKey(k)) { Swal.showValidationMessage('รหัสไม่ถูกต้อง ต้องมี 26 ตัวอักษร'); return false; }
+        if (k === deviceKey()) { Swal.showValidationMessage('เป็นรหัสของเครื่องนี้อยู่แล้ว'); return false; }
+        return k;
+      },
+    });
+    if (!r.isConfirmed || !r.value) return;
+    store.set(K.device, r.value);
+    store.set(K.history, []); store.set(K.histSync, 0);
+    renderMe();
+    await syncHistory(true);
+    const n = store.get(K.history, []).length;
+    if (syncFailed) toast('บันทึกรหัสแล้ว แต่ดึงประวัติไม่สำเร็จ ลองใหม่ในหน้าประวัติ');
+    else toast(n ? `กู้คืนประวัติแล้ว ${num(n)} คำสั่งซื้อ` : 'ยังไม่พบคำสั่งซื้อของรหัสนี้');
+  });
+
+  // ================= Load products =================
+  async function loadProducts(silent) {
+    if (!silent) skeleton();
+    try {
+      products = (await call('getProducts')) || [];
+      byCode = Object.fromEntries(products.map(p => [p.code, p]));
+      Object.keys(cart).forEach(c => { if (!byCode[c] || !(cart[c] > 0)) delete cart[c]; else cart[c] = Math.min(cart[c], MAX_QTY); });
+      saveCart();
+      renderGrid(); renderTotals();
+      if (view === 'cart') renderCart();
+      if (view === 'history') renderHistory();
+      // อัปเดตประวัติจากชีตแบบเงียบๆ ตอนเปิดแอป: สถานะใหม่และคำสั่งซื้อที่ถูกลบในชีตจะตรงกันเสมอ
+      if (!silent && view !== 'history' && store.get(K.history, []).length) syncHistory();
+    } catch (err) {
+      if (silent && products.length) { toast(err.message || 'อัปเดตสินค้าไม่สำเร็จ'); return; }
+      $('grid').innerHTML = '';
+      $('state').hidden = false;
+      $('state').innerHTML = `<p>${esc((err && err.message) || 'โหลดรายการสินค้าไม่สำเร็จ')}</p><button type="button" class="btn btn-add" id="retry">โหลดอีกครั้ง</button>`;
+    }
+  }
+
+  // ================= Pull to refresh =================
+  (function pullToRefresh() {
+    const ptr = $('ptr');
+    let y0 = null, d = 0, busy = false;
+    const set = (dist) => {
+      const k = Math.min(dist / 80, 1);
+      ptr.style.setProperty('--pull', Math.min(dist, 110) * .7 + 'px');
+      ptr.style.setProperty('--pull-s', .4 + .6 * k);
+      ptr.style.setProperty('--pull-o', k);
+      ptr.style.setProperty('--pull-r', dist * 3 + 'deg');
+    };
+    window.addEventListener('touchstart', e => {
+      if (busy || layers.length || window.scrollY > 0 || (view !== 'products' && view !== 'history')) return;
+      if (window.Swal && Swal.isVisible()) return;
+      y0 = e.touches[0].clientY; d = 0;
+      ptr.style.setProperty('--ptr-top', $('appbar').getBoundingClientRect().bottom + 'px');
+    }, { passive: true });
+    window.addEventListener('touchmove', e => {
+      if (y0 == null) return;
+      d = e.touches[0].clientY - y0;
+      if (d <= 0 || window.scrollY > 0) { set(0); return; }
+      set(d * .6);
+    }, { passive: true });
+    window.addEventListener('touchend', async () => {
+      if (y0 == null) return;
+      y0 = null;
+      if (d * .6 < 80) { set(0); return; }
+      busy = true; haptic(8);
+      ptr.classList.add('is-loading');
+      set(80);
+      try { view === 'history' ? await syncHistory(true) : await loadProducts(true); }
+      finally {
+        ptr.classList.remove('is-loading'); set(0); busy = false;
+        if (!(view === 'history' && syncFailed)) toast(view === 'history' ? 'อัปเดตประวัติแล้ว' : 'อัปเดตรายการสินค้าแล้ว', { timer: 1400 });
+      }
+    });
+  })();
+
+  // ================= PWA =================
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  let installEvt = null;
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; if (!standalone) $('installBtn').hidden = false; });
+  window.addEventListener('appinstalled', () => { $('installBtn').hidden = true; toast('ติดตั้งแอปแล้ว'); requestPersist(); });
+  async function install() {
+    if (standalone) return toast('แอปติดตั้งอยู่แล้ว');
+    if (installEvt) {
+      installEvt.prompt();
+      try { await installEvt.userChoice; } catch (e) {}
+      installEvt = null; $('installBtn').hidden = true;
+      return;
+    }
+    const steps = isIOS
+      ? 'ใน Safari แตะปุ่ม <b>แชร์</b> (สี่เหลี่ยมมีลูกศรขึ้น) แล้วเลือก <b>เพิ่มไปยังหน้าจอโฮม</b>'
+      : 'เปิดเมนูของเบราว์เซอร์ (⋮) แล้วเลือก <b>ติดตั้งแอป</b> หรือ <b>เพิ่มลงในหน้าจอหลัก</b>';
+    dialog({ icon: 'info', iconColor: iconColor(), title: 'ติดตั้งบนหน้าจอหลัก', html: steps + '<br><br>ครั้งต่อไปเปิดจากไอคอน 1001 ได้เลย', confirmButtonText: 'เข้าใจแล้ว' });
+  }
+  $('installBtn').addEventListener('click', install);
+  $('menuInstall').addEventListener('click', install);
+  if (USE_SW && isIOS && !standalone && !store.get(K.iosHint, false)) {
+    setTimeout(() => {
+      store.set(K.iosHint, true);
+      toast('ติดตั้งเป็นแอปได้ แตะเพื่อดูวิธี', { showConfirmButton: true, confirmButtonText: 'ดูวิธี', timer: 6000, position: 'top' })
+        .then(r => { if (r && r.isConfirmed) install(); });
+    }, 2500);
+  }
+  if (USE_SW && 'serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').then(reg => {
+        reg.addEventListener('updatefound', () => {
+          const w = reg.installing;
+          w && w.addEventListener('statechange', () => {
+            if (w.state === 'installed' && navigator.serviceWorker.controller) {
+              toast('มีแอปเวอร์ชันใหม่', { showConfirmButton: true, confirmButtonText: 'โหลดใหม่', timer: 10000, position: 'top' })
+                .then(r => { if (r && r.isConfirmed) location.reload(); });
+            }
+          });
+        });
+      }).catch(() => {});
+    });
+  }
+  function setOffline(v) {
+    offline = v;
+    $('offlineBar').hidden = !v;
+  }
+  window.addEventListener('online', () => { setOffline(false); toast('กลับมาออนไลน์แล้ว'); if (!products.length) loadProducts(); });
+  window.addEventListener('offline', () => setOffline(true));
+
+  // ================= Start =================
+  setOffline(offline);
+  // ต่ออายุ cookie สำรอง (400 วันนับจากการเปิดครั้งล่าสุด)
+  store.set(K.device, deviceKey());
+  if (store.get(K.profile, null)) store.set(K.profile, store.get(K.profile, {}));
+  if (!/firefox/i.test(navigator.userAgent)) requestPersist();   // Chrome/Edge/Safari ตัดสินใจเองโดยไม่ถาม
+  initNav();
+  loadProducts();
+})();
+</script>
+</body>
+</html>
