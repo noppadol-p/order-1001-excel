@@ -16,7 +16,8 @@
 <meta name="apple-mobile-web-app-title" content="1001 สั่งของ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 /* =========================================================
    Tokens: โทนสีจากเว็บ 1001blankets.com
@@ -842,7 +843,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
             <p class="acc-err" id="gsiErr" hidden></p>
             <p class="acc-note">ไม่บังคับ ใช้ดูประวัติคำสั่งซื้อชุดเดียวกันได้ทุกเครื่อง มีบัญชี Google ในมือถืออยู่แล้ว แตะเลือกบัญชีได้เลย ไม่ต้องใส่รหัสผ่าน</p>
             <p class="acc-note" id="iosTip" hidden>บน iPhone: ล็อกอิน Google ใน Safari ไว้ครั้งเดียว ครั้งต่อไปแค่แตะเลือกบัญชี</p>
-            <a class="acc-forgot" href="https://accounts.google.com/signin/recovery" target="_blank" rel="noopener">ลืมรหัสผ่าน Gmail?</a>
+            <a class="acc-forgot" id="accForgot" href="#" target="_blank" rel="noopener">ลืมรหัสผ่าน Gmail?</a>
           </div>
           <div id="accIn" hidden>
             <div class="or-sep"><span>บัญชีที่เชื่อมไว้</span></div>
@@ -880,7 +881,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.3.3</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.3.5</p>
     </div>
   </section>
 </main>
@@ -1933,13 +1934,17 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   // ================= เข้าสู่ระบบด้วย Google (ไม่บังคับ) =================
   // ใช้ได้เมื่อเปิดผ่าน GitHub Pages และตั้งค่า GOOGLE_CLIENT_ID ใน config.js
   const canGoogle = () => !!GOOGLE_CLIENT_ID && !!API_URL && !onAppsScript;
-  let gsiLoading = null, gsiReady = false;   // ล็อกอินเกิดขึ้นเฉพาะเมื่อกดปุ่ม Google เท่านั้น (ไม่เด้งเอง)
+  let gsiLoading = null, gsiReady = false;
+  // ลิงก์ของ Google ประกอบตอนรัน: Apps Script แก้ข้อความที่มีโดเมนหน้าล็อกอินของ Google ในหน้าเว็บ ทำให้โค้ดทั้งก้อนเสีย
+  const GOOGLE_ACCOUNTS = ['https:', '', ['accounts', 'google', 'com'].join('.')].join('/');
+  const GSI_SRC = GOOGLE_ACCOUNTS + '/gsi/client';
+  $('accForgot').href = GOOGLE_ACCOUNTS + '/signin/recovery';   // ล็อกอินเกิดขึ้นเฉพาะเมื่อกดปุ่ม Google เท่านั้น (ไม่เด้งเอง)
   function loadGsi() {
     if (window.google && google.accounts && google.accounts.id) return Promise.resolve();
     if (!gsiLoading) {
       gsiLoading = new Promise((resolve, reject) => {
         const sc = document.createElement('script');
-        sc.src = 'https://accounts.google.com/gsi/client'; sc.async = true;
+        sc.src = GSI_SRC; sc.async = true;
         sc.onload = () => resolve(); sc.onerror = () => { gsiLoading = null; reject(new Error('load')); };
         document.head.appendChild(sc);
       });
