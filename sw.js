@@ -1,5 +1,5 @@
 /* Service worker: ทำให้แอปเปิดเร็วและเปิดได้แม้ออฟไลน์ (ส่งคำสั่งซื้อยังต้องออนไลน์) */
-const VERSION = '1.5.1';
+const VERSION = '1.5.2';
 const SHELL = 'b1001-shell-' + VERSION;
 const RUNTIME = 'b1001-runtime';
 const IMAGES = 'b1001-images';
@@ -37,7 +37,7 @@ self.addEventListener('fetch', e => {
   if (url.searchParams.get('action') === 'products') {
     const key = new Request('./__api_products__');
     e.respondWith(fetch(req).then(res => { if (res.ok) put(RUNTIME, key, res.clone()); return res; })
-      .catch(() => caches.match(key)));
+      .catch(() => caches.match(key).then(hit => (hit ? fromCache(hit) : Response.error()))));
     return;
   }
   if (url.searchParams.get('action') === 'status') return;  // สถานะต้องสดเสมอ
@@ -69,4 +69,11 @@ function put(cacheName, key, res) {
 async function trim(c) {
   const keys = await c.keys();
   for (let i = 0; i < keys.length - MAX_IMAGES; i++) await c.delete(keys[i]);
+}
+
+// คำตอบจากแคช: ติดป้ายบอกแอปว่าเป็นข้อมูลเก่า (ไม่นับเป็นการซิงก์สำเร็จ)
+async function fromCache(res) {
+  const headers = new Headers(res.headers);
+  headers.set('X-From-Cache', '1');
+  return new Response(await res.blob(), { status: res.status, statusText: res.statusText, headers });
 }
