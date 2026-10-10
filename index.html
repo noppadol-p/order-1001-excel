@@ -2510,7 +2510,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   });
 
   // ================= Load products =================
-  async function loadProducts(silent) {
+  // ใช้ request เดียวร่วมกัน ป้องกัน response เก่ากลับมาทับสินค้า/สถานะจาก request ใหม่
+  let productsLoading = null;
+  function loadProducts(silent) {
+    if (productsLoading) return productsLoading;
+    productsLoading = loadProductsOnce(silent).finally(() => { productsLoading = null; });
+    return productsLoading;
+  }
+  async function loadProductsOnce(silent) {
     if (!silent) skeleton();
     netBusy++; renderNet();
     try {
