@@ -2299,7 +2299,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     store.set(K.pendingOrder, pending);                 // ปิดแอประหว่างรอผลแล้วส่งใหม่ ก็ยังได้คำสั่งซื้อเดิม ไม่ซ้ำ
 
     const r = await dialog({
-      title: 'ยืนยันส่งคำสั่งซื้อ?',
+      title: 'ยืนยันสร้างคำสั่งซื้อ?',
       html: `<div class="sw-sum">
         <div><span>ผู้สั่ง</span><b>${esc(profile.full_name)}</b></div>
         <div><span>เบอร์โทร</span><b>${esc(profile.phone)}</b></div>
@@ -2310,7 +2310,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div class="is-total"><span>ยอดชำระ</span><b>${baht(t.net)}</b></div>`
         : `<div class="is-total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>`}
       </div>`,
-      showCancelButton: true, confirmButtonText: 'ส่งคำสั่งซื้อ', cancelButtonText: 'กลับไปแก้ไข',
+      showCancelButton: true, confirmButtonText: 'สร้างคำสั่งซื้อ', cancelButtonText: 'กลับไปแก้ไข',
       showLoaderOnConfirm: true,
       allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
       allowEscapeKey: () => !(window.Swal && Swal.isLoading()),
