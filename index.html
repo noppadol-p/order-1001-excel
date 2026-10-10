@@ -818,7 +818,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <svg aria-hidden="true"><use href="#i-back"/></svg>ย้อนกลับ
       </button>
       <div class="appbar-actions">
-        <button type="button" class="net-pill" id="netPill"><span class="net-ico" id="netIco" aria-hidden="true"></span><span id="netLabel">ออนไลน์</span><span class="net-sub" id="netSub"></span></button>
+        <button type="button" class="net-pill" id="netPill" aria-live="polite"><span class="net-ico" id="netIco" aria-hidden="true"></span><span id="netLabel">ออนไลน์</span><span class="net-sub" id="netSub"></span></button>
         
         <button type="button" class="chip-btn" id="installBtn" hidden>ติดตั้งแอป</button>
         <button type="button" class="text-btn" id="clearCartBtn" hidden>ล้างตะกร้า</button>
@@ -1894,11 +1894,21 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       pushProfile();
     }
   }
-  // ส่งข้อมูลผู้สั่งไปแท็บ ผู้ใช้ ถ้ายังค้าง (แก้ตอนออฟไลน์หรือส่งไม่สำเร็จ): ส่งเมื่อออนไลน์
-  function pushProfile() {
-    if (!store.get(K.profileDirty, false) || offline || !profileOk() || !(API_URL || onAppsScript)) return;
-    call('saveProfile', Object.assign({}, ownerParams(), { full_name: profile.full_name, phone: profile.phone, department: profile.department }))
-      .then(() => store.set(K.profileDirty, false)).catch(() => {});
+  // ส่งทีละ request และวนส่ง revision ล่าสุดต่อ เพื่อไม่ให้ response เก่าล้าง dirty flag ของข้อมูลใหม่
+  let profilePushing = false;
+  async function pushProfile() {
+    if (profilePushing || offline || !profileOk() || !(API_URL || onAppsScript)) return;
+    profilePushing = true;
+    try {
+      while (store.get(K.profileDirty, false) && !offline && profileOk()) {
+        const snapshot = { full_name: profile.full_name, phone: profile.phone, department: profile.department };
+        store.set(K.profileDirty, false);
+        try { await call('saveProfile', Object.assign({}, ownerParams(), snapshot)); }
+        catch (e) { store.set(K.profileDirty, true); break; }
+      }
+    } finally {
+      profilePushing = false;
+    }
   }
   async function askProfile() {
     const field = (name, label, type, extra) => `
@@ -2508,7 +2518,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       products = (await call('getProducts')) || [];
       if (offline) { /* ได้จากแคช ไม่นับเป็นการซิงก์ */ }
       else if (apiFromCache) netErr = true;              // ออนไลน์แต่หลังบ้านตอบไม่ได้: ใช้ข้อมูลเก่าไปก่อน แจ้งว่าซิงก์ไม่สำเร็จ
-      else { store.set(K.productsSync, Date.now()); netErr = false; }
+      else store.set(K.productsSync, Date.now());         // ห้ามล้าง netErr ที่ concurrent history sync อาจเพิ่งตั้งไว้
       byCode = Object.fromEntries(products.map(p => [p.code, p]));
       Object.keys(cart).forEach(c => { if (!byCode[c] || !(cart[c] > 0)) delete cart[c]; else cart[c] = Math.min(cart[c], MAX_QTY); });
       saveCart();
