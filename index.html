@@ -2501,7 +2501,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 
   // ================= Load products =================
   // ใช้ request เดียวร่วมกัน ป้องกัน response เก่ากลับมาทับสินค้า/สถานะจาก request ใหม่
-  let productsLoading = null;
+  let productsLoading = null, productSyncFailed = false;
   function loadProducts(silent) {
     if (productsLoading) return productsLoading;
     productsLoading = loadProductsOnce(silent).finally(() => { productsLoading = null; });
@@ -2509,12 +2509,13 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   }
   async function loadProductsOnce(silent) {
     if (!silent) skeleton();
+    productSyncFailed = false;
     netBusy++; renderNet();
     try {
       apiFromCache = false;
       products = (await call('getProducts')) || [];
       if (offline) { /* ได้จากแคช ไม่นับเป็นการซิงก์ */ }
-      else if (apiFromCache) netErr = true;              // ออนไลน์แต่หลังบ้านตอบไม่ได้: ใช้ข้อมูลเก่าไปก่อน แจ้งว่าซิงก์ไม่สำเร็จ
+      else if (apiFromCache) { productSyncFailed = true; netErr = true; } // ออนไลน์แต่หลังบ้านตอบไม่ได้: ใช้ข้อมูลเก่าไปก่อน
       else store.set(K.productsSync, Date.now());         // ห้ามล้าง netErr ที่ concurrent history sync อาจเพิ่งตั้งไว้
       byCode = Object.fromEntries(products.map(p => [p.code, p]));
       Object.keys(cart).forEach(c => { if (!byCode[c] || !(cart[c] > 0)) delete cart[c]; else cart[c] = Math.min(cart[c], MAX_QTY); });
@@ -2525,7 +2526,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       // อัปเดตประวัติจากชีตแบบเงียบๆ ตอนเปิดแอป: สถานะใหม่และคำสั่งซื้อที่ถูกลบในชีตจะตรงกันเสมอ
       if (!silent && view !== 'history' && store.get(K.history, []).length) syncHistory();
     } catch (err) {
-      if (!offline) netErr = true;
+      if (!offline) { productSyncFailed = true; netErr = true; }
       if (silent && products.length) { toast(err.message || 'อัปเดตสินค้าไม่สำเร็จ'); return; }
       $('grid').innerHTML = '';
       $('state').hidden = false;
@@ -2569,12 +2570,13 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   $('netPill').addEventListener('click', async () => {
     const st = netState(), n = lines().length;
     const prodSync = fmtLong(store.get(K.productsSync, 0)).replace(/^(?!ยัง)/, 'อัปเดต ');
+    const histSync = fmtLong(store.get(K.histSync, 0)).replace(/^(?!ยัง)/, 'อัปเดต ');
     const r = await dialog({
       position: 'bottom', title: 'สถานะการเชื่อมต่อ',
       html: `<div class="net-rows">
         <div><span>การเชื่อมต่อ</span><b class="${st === 'offline' ? 'is-off' : 'is-on'}">${st === 'offline' ? 'Offline' : 'Online'}</b></div>
-        <div><span>สินค้าและราคา</span><b>${netErr && st === 'online' ? 'ซิงก์ไม่สำเร็จ · ' : ''}${esc(prodSync)}</b></div>
-        <div><span>ประวัติคำสั่งซื้อ</span><b>${esc(fmtLong(store.get(K.histSync, 0)).replace(/^(?!ยัง)/, 'อัปเดต '))}</b></div>
+        <div><span>สินค้าและราคา</span><b>${productSyncFailed && st === 'online' ? 'ซิงก์ไม่สำเร็จ · ' : ''}${esc(prodSync)}</b></div>
+        <div><span>ประวัติคำสั่งซื้อ</span><b>${syncFailed && st === 'online' ? 'ซิงก์ไม่สำเร็จ · ' : ''}${esc(histSync)}</b></div>
         <div><span>ตะกร้า</span><b>${n ? `เก็บในเครื่องแล้ว ${num(n)} รายการ` : 'ว่าง'}</b></div>
       </div>
       <p class="net-note">แอปซิงก์ให้เองทุกครั้งที่เปิดแอปและเมื่อกลับมาออนไลน์ ตอนออฟไลน์ยังดูสินค้าและใส่ตะกร้าได้ แต่ส่งคำสั่งซื้อไม่ได้</p>`,
