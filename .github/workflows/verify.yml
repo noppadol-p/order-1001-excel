@@ -1,0 +1,26 @@
+name: Verify
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate application JavaScript
+        shell: bash
+        run: |
+          python3 -c 'from pathlib import Path; import re; text = Path("index.html").read_text(); blocks = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", text, re.S | re.I); assert blocks; Path("${{ runner.temp }}/index-inline.js").write_text("\n;\n".join(blocks))'
+          node --check "${{ runner.temp }}/index-inline.js"
+          node --check sw.js
+      - name: Validate release version
+        run: |
+          python3 -c 'from pathlib import Path; assert "เวอร์ชัน 1.5.2" in Path("index.html").read_text(); assert "const VERSION = '\''1.5.2'\''" in Path("sw.js").read_text()'
