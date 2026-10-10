@@ -147,7 +147,9 @@ svg.i { width: 22px; height: 22px; flex: none; }
 .net-pill .net-ico { display: inline-grid; place-items: center; }
 .net-pill .net-ico svg { width: 15px; height: 15px; }
 .net-pill .net-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
-.net-pill.is-offline { color: color-mix(in srgb, var(--ink) 85%, transparent); }
+.net-pill.is-syncing #netLabel { animation: net-pulse 1.2s ease-in-out infinite; }
+@keyframes net-pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .net-pill.is-syncing #netLabel { animation: none; } }
 .net-pill:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; border-radius: 8px; }
 /* มือถือ: มีปุ่มอื่นอยู่ข้างๆ ให้ซ่อนเวลาเพื่อไม่ให้ล้น */
 @media (max-width: 480px) {
@@ -362,6 +364,15 @@ main { min-height: 60vh; }
 .hist-sum b { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
 .hist-sum .disc b { color: var(--ok); }
 .sw-sum .is-disc { color: var(--ok); }
+/* สต็อก */
+.card-stock { margin: 2px 0 0; font-size: 12.5px; font-weight: 600; color: var(--warn); }
+.btn-add.is-soldout, .btn-add.is-soldout:disabled { background: var(--paper); color: var(--muted); border-color: var(--line); cursor: not-allowed; opacity: 1; }
+/* ยกเลิกคำสั่งซื้อ */
+.btn-cancel-order { margin-top: 8px; color: var(--danger); border-color: color-mix(in srgb, var(--danger) 35%, transparent); }
+.cx-line { margin: 0 0 10px; text-align: left; line-height: 1.55; }
+.cx-line span { color: var(--muted); font-size: 14px; }
+.cx-note { margin: 4px 0 0; font-size: 13.5px; color: var(--muted); text-align: left; }
+.pay-deadline { margin: 8px 0 0; font-size: 13.5px; line-height: 1.5; font-weight: 600; color: var(--warn); }
 
 .checkout {
   position: fixed; left: 0; right: 0; z-index: 28;
@@ -808,7 +819,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <svg aria-hidden="true"><use href="#i-back"/></svg>ย้อนกลับ
       </button>
       <div class="appbar-actions">
-        <button type="button" class="net-pill" id="netPill" aria-live="polite"><span class="net-ico" id="netIco" aria-hidden="true"></span><span id="netLabel">ออนไลน์</span><span class="net-sub" id="netSub"></span></button>
+        <button type="button" class="net-pill" id="netPill"><span id="netLabel">Sync</span><span class="net-sub" id="netSub"></span></button>
         
         <button type="button" class="chip-btn" id="installBtn" hidden>ติดตั้งแอป</button>
         <button type="button" class="text-btn" id="clearCartBtn" hidden>ล้างตะกร้า</button>
@@ -935,7 +946,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.5.4</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.6.0</p>
     </div>
   </section>
 </main>
@@ -1013,7 +1024,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const API_URL = (CFG.API_URL || /*__API_URL__*/'').trim();   // URL /exec ของ Apps Script (โหมด PWA)
   const USE_SW = true;
   const MAX_QTY = 9999;
-  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', session: 'b1001:session', coupon: 'b1001:coupon', productsSync: 'b1001:products-sync', pendingOrder: 'b1001:pending-order', pendingSlip: 'b1001:pending-slip', profileDirty: 'b1001:profile-dirty', iosHint: 'b1001:ios-hint' };
+  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', session: 'b1001:session', coupon: 'b1001:coupon', productsSync: 'b1001:products-sync', pendingOrder: 'b1001:pending-order', pendingSlip: 'b1001:pending-slip', profileDirty: 'b1001:profile-dirty', cancelSeen: 'b1001:cancel-seen', iosHint: 'b1001:ios-hint' };
   const GOOGLE_CLIENT_ID = String(CFG.GOOGLE_CLIENT_ID || '').trim();
   const HISTORY_MAX = 50;
   const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
@@ -1165,7 +1176,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     let data = null;
     try { data = await res.json(); } catch (e) {}
     if (!data) throw new Error('ระบบตอบกลับไม่ถูกต้อง ลองใหม่อีกครั้ง');
-    if (!data.ok) throw new Error(data.error || 'ทำรายการไม่สำเร็จ');
+    if (!data.ok) throw new Error(String(data.error || 'ทำรายการไม่สำเร็จ').replace(/^MAINTENANCE:\s*/, ''));
     return data.result;
   }
   function demo(fn, arg) {
@@ -1182,6 +1193,15 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       o.payment_status = 'รอตรวจสอบสลิป';
       store.set('b1001:demo-orders', all);
       return wait({ order_no: o.order_no, status: 'รอตรวจสอบ', amount: arg.amount, order_total: o.total_amount });
+    }
+    if (fn === 'checkCart') return wait({ lines: [], short: [], missing: [], coupon: null, coupon_error: '' });
+    if (fn === 'cancelOrder') {
+      const list = store.get('b1001:demo-orders', []), o = list.find(x => x.order_no === arg.order_no);
+      if (!o) return Promise.reject(new Error('คำสั่งซื้อนี้ไม่ได้ส่งจากเครื่องนี้'));
+      o.status = 'ยกเลิก'; (o.items || []).forEach(it => { it.status = 'ยกเลิก'; });
+      o.note = (o.note ? o.note + ' / ' : '') + (arg.reason === 'stock' ? 'ยกเลิกอัตโนมัติ: สินค้าไม่พอ' : 'ผู้สั่งยกเลิกเอง');
+      store.set('b1001:demo-orders', list);
+      return wait({ order_no: o.order_no, status: 'ยกเลิก' });
     }
     if (fn === 'checkCoupon') {
       const code = String(arg.code || '').trim().toUpperCase();
@@ -1281,11 +1301,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const stepper = (code, q) => `
     <div class="stepper">
       <button type="button" data-step="dec" data-code="${esc(code)}" aria-label="ลดจำนวน ${esc(code)}">${icon('i-minus')}</button>
-      <input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="${MAX_QTY}" value="${q}" data-qty="${esc(code)}" aria-label="จำนวน ${esc(code)}">
+      <input type="number" inputmode="numeric" pattern="[0-9]*" min="0" max="${maxFor(code)}" value="${q}" data-qty="${esc(code)}" aria-label="จำนวน ${esc(code)}">
       <button type="button" data-step="inc" data-code="${esc(code)}" aria-label="เพิ่มจำนวน ${esc(code)}">${icon('i-plus')}</button>
     </div>`;
+  // จำนวนสูงสุดที่ใส่ตะกร้าได้: ตามยอดคงเหลือ (stock ว่าง = ไม่จำกัด)
+  const stockOf = code => { const p = byCode[code]; return p && typeof p.stock === 'number' ? p.stock : null; };
+  const maxFor = code => { const s = stockOf(code); return s === null ? MAX_QTY : Math.min(MAX_QTY, s); };
   function cardInner(p) {
-    const q = qtyOf(p.code);
+    const q = qtyOf(p.code), st = stockOf(p.code);
     return `
       <button type="button" class="card-img" data-detail="${esc(p.code)}" aria-label="ดูรายละเอียด ${esc(p.code)}">
         <img src="${esc(p.image || PLACEHOLDER)}" alt="" loading="lazy" decoding="async" data-fallback>
@@ -1295,7 +1318,9 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <h2 class="card-name">${esc(p.name || p.code)}</h2>
         ${p.name ? `<p class="card-code">${esc(p.code)}</p>` : ''}
         <div class="card-price"><b>${baht(p.price)}</b><span>/ผืน</span></div>
-        <div class="card-act">${q ? stepper(p.code, q)
+        ${st !== null && st > 0 && st <= 5 ? `<p class="card-stock">เหลือ ${num(st)} ผืน</p>` : ''}
+        <div class="card-act">${st === 0 ? '<button type="button" class="btn btn-add btn-block is-soldout" disabled>สินค้าหมด</button>'
+          : q ? stepper(p.code, q)
           : `<button type="button" class="btn btn-add btn-block" data-add="${esc(p.code)}">${icon('i-plus')}เพิ่มลงตะกร้า</button>`}</div>
       </div>`;
   }
@@ -1366,7 +1391,10 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     opt = opt || {};
     let n = parseInt(v, 10);
     if (!Number.isFinite(n) || n < 0) n = 0;
-    if (n > MAX_QTY) { n = MAX_QTY; toast(`สั่งได้สูงสุด ${num(MAX_QTY)} ผืนต่อรายการ`); }
+    if (n > maxFor(code)) {
+      n = maxFor(code);
+      toast(stockOf(code) !== null && stockOf(code) < MAX_QTY ? `${code} เหลือ ${num(stockOf(code))} ผืน` : `สั่งได้สูงสุด ${num(MAX_QTY)} ผืนต่อรายการ`);
+    }
     const before = qtyOf(code);
     if (n === before) { if (opt.input) opt.input.value = n || ''; return; }
     if (n === 0) delete cart[code]; else cart[code] = n;
@@ -1431,6 +1459,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           const x = parseInt(document.getElementById('sw-qty').value, 10);
           if (!(x >= 1)) { Swal.showValidationMessage('ใส่จำนวนอย่างน้อย 1 ผืน'); return false; }
           if (x > MAX_QTY) { Swal.showValidationMessage(`สั่งได้สูงสุด ${num(MAX_QTY)} ผืน`); return false; }
+          if (qtyOf(code) + x > maxFor(code)) {
+            const room = maxFor(code) - qtyOf(code);
+            Swal.showValidationMessage(room > 0 ? `เหลือ ${num(stockOf(code))} ผืน${qtyOf(code) ? ` (ในตะกร้าแล้ว ${num(qtyOf(code))})` : ''} เพิ่มได้อีก ${num(room)} ผืน` : `ใส่ตะกร้าครบยอดคงเหลือแล้ว (${num(stockOf(code))} ผืน)`);
+            return false;
+          }
           return x;
         },
       }));
@@ -1438,7 +1471,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       n = r.value;
     }
     const from = snapFrom(imgEl);
-    setQty(code, Math.min(qtyOf(code) + n, MAX_QTY), { focus: '[data-step="inc"]' });
+    setQty(code, Math.min(qtyOf(code) + n, maxFor(code)), { focus: '[data-step="inc"]' });
     flyToCart(from, n);
     if (reduceMotion) toast(`เพิ่ม ${num(n)} ผืนลงตะกร้าแล้ว`);
   }
@@ -1646,7 +1679,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   function setDQty(v) {
     let n = parseInt(v, 10);
     if (!Number.isFinite(n) || n < 0) n = 0;
-    if (n > MAX_QTY) n = MAX_QTY;
+    if (n > maxFor(dCode)) n = maxFor(dCode);
     $('dQty').value = n;
     document.querySelectorAll('#dChips [data-dqty]').forEach(c => c.classList.toggle('is-on', Number(c.dataset.dqty) === n));
     const p = byCode[dCode], inCart = qtyOf(dCode);
@@ -1987,6 +2020,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const PAY_CLASS = { 'ยังไม่แจ้งโอน': 'is-partial', 'รอตรวจสอบสลิป': '', 'ชำระแล้ว': 'is-done', 'ชำระบางส่วน': 'is-partial', 'สลิปไม่ถูกต้อง': 'is-cancel' };
   const payStatus = h => (h.status === 'ยกเลิก' ? '' : (h.payment_status || 'ยังไม่แจ้งโอน'));
   const payDue = h => Math.max(0, Math.round(((h.total_amount || 0) - (h.paid_amount || 0)) * 100) / 100);
+  // ยกเลิกเองได้: ยังไม่แจ้งโอน (ไม่มีสลิป) และยังไม่จัดส่ง/ยกเลิก
+  const canCancel = h => (h.status === 'รอดำเนินการ' || h.status === 'เตรียมส่งของ') && !(h.payments || []).length;
+  const seenAdd = (key, no) => { const a = store.get(key, []); if (a.indexOf(no) < 0) { a.push(no); store.set(key, a.slice(-300)); } };
+  const fmtDeadline = ts => { const d = new Date(ts), p = n => String(n).padStart(2, '0'); return `${p(d.getDate())}/${p(d.getMonth() + 1)} ${p(d.getHours())}:${p(d.getMinutes())} น.`; };
+  const fmtLeft = ts => { const m = Math.max(0, Math.round((ts - Date.now()) / 60000)); return m >= 60 ? `${Math.floor(m / 60)} ชม. ${m % 60} นาที` : `${m} นาที`; };
   function payBox(h) {
     const st = payStatus(h);
     if (!st) return '';
@@ -2001,6 +2039,9 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       ${['ยังไม่แจ้งโอน', 'สลิปไม่ถูกต้อง', 'ชำระบางส่วน'].indexOf(st) >= 0
         ? `<button type="button" class="btn btn-primary btn-block" data-pay="${esc(h.order_no)}">${label}</button>` : ''}
       ${st === 'รอตรวจสอบสลิป' ? '<p class="pay-line">ส่งสลิปแล้ว รอผู้ดูแลตรวจสอบ</p>' : ''}
+      ${st === 'ยังไม่แจ้งโอน' && h.expires_at ? (h.expires_at > Date.now()
+        ? `<p class="pay-deadline">แจ้งโอนก่อน ${esc(fmtDeadline(h.expires_at))} (เหลือ ${esc(fmtLeft(h.expires_at))}) ไม่อย่างนั้นระบบจะยกเลิกให้</p>`
+        : '<p class="pay-deadline">เลยเวลาแจ้งโอนแล้ว ระบบจะยกเลิกคำสั่งซื้อนี้เร็วๆ นี้</p>') : ''}
     </div>`;
   }
 
@@ -2273,6 +2314,42 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 
   // ================= Checkout =================
   $('checkoutBtn').addEventListener('click', checkout);
+  // ตรวจตะกร้ากับหลังบ้านก่อนเปิดกล่องสรุป: สต็อก, สินค้าที่ปิดขาย, คูปอง (ตรวจซ้ำอีกครั้งตอนส่งจริงเสมอ)
+  async function precheckCart(ls) {
+    const btn = $('checkoutBtn'), label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'กำลังตรวจสินค้า…';
+    let res = null;
+    try {
+      const c = coupon();
+      res = await call('checkCart', { items: ls.map(l => ({ code: l.code, qty: l.qty })), coupon: c ? c.code : '' });
+    } catch (e) {
+      if (/^ระบบปิดปรับปรุง/.test(String(e && e.message))) { dialog({ icon: 'info', iconColor: iconColor(), title: 'ระบบปิดปรับปรุงชั่วคราว', html: esc(e.message), confirmButtonText: 'ตกลง' }); return false; }
+      return true;                                     // ตรวจล่วงหน้าไม่ได้ (เน็ตช้า): ไปต่อ หลังบ้านตรวจตอนส่งจริงอยู่แล้ว
+    } finally {
+      btn.disabled = false; btn.textContent = label;
+    }
+    if (!res) return true;
+    if (res.coupon_error && coupon()) {
+      store.set(K.coupon, null); renderCart(); renderTotals();
+      await dialog({ icon: 'warning', iconColor: iconColor(), title: 'คูปองใช้ไม่ได้แล้ว', html: `${esc(res.coupon_error)}<br>เอาคูปองออกจากตะกร้าแล้ว`, confirmButtonText: 'ตกลง' });
+      return false;
+    }
+    const short = res.short || [], missing = res.missing || [];
+    if (!short.length && !missing.length) return true;
+    const r = await dialog({
+      icon: 'warning', iconColor: iconColor(), title: 'สินค้าคงเหลือไม่พอ',
+      html: short.map(x => `<p class="cx-line"><b>${esc(x.code)}</b> สั่ง ${num(x.qty)} ผืน ${x.available ? `เหลือ ${num(x.available)} ผืน` : 'สินค้าหมด'}</p>`).join('')
+        + missing.map(c => `<p class="cx-line"><b>${esc(c)}</b> ปิดขายแล้ว</p>`).join(''),
+      showCancelButton: true, confirmButtonText: 'ปรับตะกร้าให้', cancelButtonText: 'กลับไปแก้เอง',
+    });
+    if (r.isConfirmed) {
+      short.forEach(x => { if (x.available > 0) cart[x.code] = x.available; else delete cart[x.code]; });
+      missing.forEach(c => { delete cart[c]; });
+      saveCart(); renderGrid(); renderCart(); renderTotals();
+      toast('ปรับตะกร้าตามสินค้าคงเหลือแล้ว ตรวจแล้วกดสร้างคำสั่งซื้ออีกครั้ง');
+    }
+    return false;
+  }
   async function checkout() {
     const ls = lines();
     if (!ls.length) return;
@@ -2280,6 +2357,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       return dialog({ icon: 'warning', iconColor: iconColor(), title: 'ยังออฟไลน์อยู่', html: 'สินค้าในตะกร้ายังอยู่ครบ ต่ออินเทอร์เน็ตแล้วกดสร้างคำสั่งซื้ออีกครั้ง', confirmButtonText: 'ตกลง' });
     }
     if (!profileOk() && !(await askProfile())) return;
+    if (!(await precheckCart(ls))) return;
     const t = priced();
     const couponCode = t.coupon ? t.coupon.code : '';
     const sig = JSON.stringify([ls.map(l => [l.code, l.qty]), profile, couponCode]);
@@ -2330,7 +2408,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       order_no: res.order_no, created_at: res.created_at || '', status: res.status || 'รอดำเนินการ',
       full_name: profile.full_name, department: profile.department,
       total_qty: res.total_qty, total_amount: res.total_amount,
-      subtotal: res.subtotal, coupon: res.coupon || '', discount: res.discount || 0,
+      subtotal: res.subtotal, coupon: res.coupon || '', discount: res.discount || 0, expires_at: res.expires_at || 0,
       items: ls.map(l => ({ code: l.code, name: l.p.name || '', qty: l.qty, unit: l.unit, total: l.total })),
     });
     store.set(K.history, hist.slice(0, HISTORY_MAX));
@@ -2343,7 +2421,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const done = await dialog({
       icon: 'success', iconColor: iconColor(),
       title: 'ส่งคำสั่งซื้อแล้ว',
-      html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${num(res.total_qty)} ผืน ${res.discount ? `ยอดชำระ ${baht(res.total_amount)} (ลด ${baht(res.discount)})` : `ยอดรวม ${baht(res.total_amount)}`}`,
+      html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${num(res.total_qty)} ผืน ${res.discount ? `ยอดชำระ ${baht(res.total_amount)} (ลด ${baht(res.discount)})` : `ยอดรวม ${baht(res.total_amount)}`}`
+        + (res.expires_at ? `<p class="pay-deadline">กรุณาแจ้งโอนก่อน ${esc(fmtDeadline(res.expires_at))} ไม่อย่างนั้นระบบจะยกเลิกให้อัตโนมัติ</p>` : ''),
       showDenyButton: true, confirmButtonText: 'ดูประวัติคำสั่งซื้อ', denyButtonText: 'สั่งสินค้าต่อ',
       showCancelButton: true, cancelButtonText: 'แจ้งโอนเงินตอนนี้',
       reverseButtons: false, customClass: Object.assign({}, SW_CLASS, { popup: 'sw is-stacked' }),
@@ -2398,6 +2477,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
             <div class="disc"><span>ส่วนลดคูปอง (${esc(h.coupon)})</span><b>−${baht(h.discount)}</b></div>
             <div><span>ยอดชำระ</span><b>${baht(h.total_amount)}</b></div></div>` : ''}
           ${payBox(h)}
+          ${canCancel(h) ? `<button type="button" class="btn btn-ghost btn-block btn-cancel-order" data-cancel="${esc(h.order_no)}">ยกเลิกคำสั่งซื้อ</button>` : ''}
           <p class="hist-who">${esc(h.full_name)}${h.department ? ` (${esc(h.department)})` : ''}</p>
           <button type="button" class="btn btn-ghost btn-block" data-reorder="${esc(h.order_no)}">สั่งรายการเดิมอีกครั้ง</button>
         </div>
@@ -2411,10 +2491,13 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     syncing = true; syncFailed = false;
     netBusy++; renderNet();
     if (view === 'history' && !store.get(K.history, []).length) renderHistory();
+    const prevStatus = {};
+    store.get(K.history, []).forEach(h => { prevStatus[h.order_no] = h.status; });
     try {
       const res = await call('getMyOrders', ownerParams());
       store.set(K.history, ((res && res.orders) || []).slice(0, HISTORY_MAX));
       store.set(K.histSync, Date.now());
+      setTimeout(() => afterSync(prevStatus), 0);
     } catch (e) {
       syncFailed = true;
       if (!offline && !/เข้าสู่ระบบ/.test(String(e && e.message))) netErr = true;
@@ -2425,6 +2508,51 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       if (view === 'me') renderMe();
     }
   }
+  // หลังซิงก์ประวัติ: แจ้งผู้สั่ง 1 ครั้ง เมื่อคำสั่งซื้อถูกยกเลิกโดยผู้ดูแล (ในชีต) หรือโดยระบบ (หมดเวลาแจ้งโอน / สินค้าไม่พอ)
+  let afterSyncBusy = false;
+  const cancelBy = note => (/ยกเลิกอัตโนมัติ/.test(note || '') ? 'ยกเลิกโดยระบบ' : 'ยกเลิกโดยผู้ดูแล');
+  const lastReason = note => String(note || '').split(' / ').pop();
+  async function afterSync(prevStatus) {
+    if (afterSyncBusy || offline || (window.Swal && Swal.isVisible())) return;   // มีกล่องเปิดอยู่: รอซิงก์ครั้งถัดไป
+    afterSyncBusy = true;
+    try {
+      const hist = store.get(K.history, []), seen = store.get(K.cancelSeen, []);
+      const gone = hist.filter(h => h.status === 'ยกเลิก' && prevStatus[h.order_no] && prevStatus[h.order_no] !== 'ยกเลิก' && seen.indexOf(h.order_no) < 0);
+      if (!gone.length) return;
+      gone.forEach(h => seenAdd(K.cancelSeen, h.order_no));
+      await dialog({
+        icon: 'info', iconColor: iconColor(), title: 'คำสั่งซื้อถูกยกเลิก',
+        html: gone.map(h => `<p class="cx-line"><b>${esc(h.order_no)}</b> ${cancelBy(h.note)}${h.note ? `<br><span>${esc(lastReason(h.note))}</span>` : ''}</p>`).join('')
+          + '<p class="cx-note">ถ้ายังต้องการสินค้า สั่งใหม่ได้เลย</p>',
+        confirmButtonText: 'ตกลง',
+      });
+    } finally {
+      afterSyncBusy = false;
+    }
+  }
+  $('historyBody').addEventListener('click', async e => {
+    const c = e.target.closest('[data-cancel]');
+    if (!c) return;
+    const no = c.dataset.cancel;
+    if (offline) return dialog({ icon: 'warning', iconColor: iconColor(), title: 'ยังออฟไลน์อยู่', html: 'ต่ออินเทอร์เน็ตแล้วลองยกเลิกอีกครั้ง', confirmButtonText: 'ตกลง' });
+    const r = await dialog({
+      icon: 'warning', iconColor: iconColor(), title: 'ยกเลิกคำสั่งซื้อ?',
+      html: `<b>${esc(no)}</b><br>ยกเลิกแล้วกู้คืนไม่ได้ ถ้าต้องการสินค้าอีก สั่งใหม่ได้ตลอด`,
+      showCancelButton: true, confirmButtonText: 'ยกเลิกคำสั่งซื้อ', cancelButtonText: 'ไม่ยกเลิก', focusCancel: true,
+      showLoaderOnConfirm: true, allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
+      customClass: Object.assign({}, SW_CLASS, { confirmButton: 'btn btn-primary btn-danger' }),
+      preConfirm: async () => {
+        try { return await call('cancelOrder', Object.assign({}, ownerParams(), { order_no: no, reason: 'user' })); }
+        catch (err) { Swal.showValidationMessage((err && err.message) || 'ยกเลิกไม่สำเร็จ ลองใหม่อีกครั้ง'); return false; }
+      },
+    });
+    if (!r.isConfirmed || !r.value) return;
+    seenAdd(K.cancelSeen, no);
+    store.set(K.history, store.get(K.history, []).map(h => (h.order_no === no ? Object.assign({}, h, { status: 'ยกเลิก', payment_status: '' }) : h)));
+    renderHistory();
+    toast(`ยกเลิก ${no} แล้ว`);
+    syncHistory(true);
+  });
   $('historyBody').addEventListener('click', e => {
     const b = e.target.closest('[data-reorder]');
     if (!b) return;
@@ -2433,7 +2561,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const skipped = [];
     let added = 0;
     h.items.forEach(it => {
-      if (byCode[it.code]) { cart[it.code] = Math.min(qtyOf(it.code) + it.qty, MAX_QTY); added++; }
+      if (byCode[it.code] && maxFor(it.code) > 0) { cart[it.code] = Math.min(qtyOf(it.code) + it.qty, maxFor(it.code)); added++; }
       else skipped.push(it.code);
     });
     saveCart(); renderGrid(); renderTotals(); bump($('tabCart'));
@@ -2501,7 +2629,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 
   // ================= Load products =================
   // ใช้ request เดียวร่วมกัน ป้องกัน response เก่ากลับมาทับสินค้า/สถานะจาก request ใหม่
-  let productsLoading = null, productSyncFailed = false;
+  let productsLoading = null;
   function loadProducts(silent) {
     if (productsLoading) return productsLoading;
     productsLoading = loadProductsOnce(silent).finally(() => { productsLoading = null; });
@@ -2509,16 +2637,21 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   }
   async function loadProductsOnce(silent) {
     if (!silent) skeleton();
-    productSyncFailed = false;
     netBusy++; renderNet();
     try {
       apiFromCache = false;
       products = (await call('getProducts')) || [];
       if (offline) { /* ได้จากแคช ไม่นับเป็นการซิงก์ */ }
-      else if (apiFromCache) { productSyncFailed = true; netErr = true; } // ออนไลน์แต่หลังบ้านตอบไม่ได้: ใช้ข้อมูลเก่าไปก่อน
+      else if (apiFromCache) netErr = true;              // ออนไลน์แต่หลังบ้านตอบไม่ได้: ใช้ข้อมูลเก่าไปก่อน แจ้งว่าซิงก์ไม่สำเร็จ
       else store.set(K.productsSync, Date.now());         // ห้ามล้าง netErr ที่ concurrent history sync อาจเพิ่งตั้งไว้
       byCode = Object.fromEntries(products.map(p => [p.code, p]));
-      Object.keys(cart).forEach(c => { if (!byCode[c] || !(cart[c] > 0)) delete cart[c]; else cart[c] = Math.min(cart[c], MAX_QTY); });
+      const trimmed = [];
+      Object.keys(cart).forEach(c => {
+        if (!byCode[c] || !(cart[c] > 0)) { delete cart[c]; return; }
+        const m = maxFor(c);
+        if (cart[c] > m) { trimmed.push(m ? `${c} เหลือ ${num(m)}` : `${c} หมด`); if (m) cart[c] = m; else delete cart[c]; }
+      });
+      if (trimmed.length) toast(`ปรับตะกร้าตามสินค้าคงเหลือ: ${trimmed.join(', ')}`);
       saveCart();
       renderGrid(); renderTotals();
       if (view === 'cart') renderCart();
@@ -2526,7 +2659,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       // อัปเดตประวัติจากชีตแบบเงียบๆ ตอนเปิดแอป: สถานะใหม่และคำสั่งซื้อที่ถูกลบในชีตจะตรงกันเสมอ
       if (!silent && view !== 'history' && store.get(K.history, []).length) syncHistory();
     } catch (err) {
-      if (!offline) { productSyncFailed = true; netErr = true; }
+      if (!offline) netErr = true;
       if (silent && products.length) { toast(err.message || 'อัปเดตสินค้าไม่สำเร็จ'); return; }
       $('grid').innerHTML = '';
       $('state').hidden = false;
@@ -2549,17 +2682,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     offline: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M16.7 16.7A4 4 0 0 1 17 17H7a5 5 0 0 1-1.6-9.7M10 5.3A7 7 0 0 1 19 11a4 4 0 0 1 1.6 4.6"/></svg>',
     error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></svg>',
   };
-  // ป้ายใน header แสดงแค่ Online / Offline (การซิงก์ดูได้ในแผงรายละเอียด)
+  // ป้ายใน header: คำว่า Sync (กะพริบจางๆ ระหว่างกำลังซิงก์)  กดเพื่อดูสถานะการเชื่อมต่อ
   const netState = () => (offline ? 'offline' : 'online');
   function renderNet() {
     const pill = $('netPill');
     if (!pill) return;
-    const st = netState(), label = st === 'offline' ? 'Offline' : 'Online';
-    if (pill.dataset.state !== st) { pill.dataset.state = st; $('netIco').innerHTML = NET_ICON[st]; }
-    pill.className = 'net-pill is-' + st;
-    $('netLabel').textContent = label;
-    $('netSub').textContent = '';
-    pill.setAttribute('aria-label', `สถานะการเชื่อมต่อ: ${label} แตะเพื่อดูรายละเอียด`);
+    if (!pill.dataset.init) { pill.dataset.init = '1'; $('netLabel').textContent = 'Sync'; $('netSub').textContent = ''; }
+    pill.className = 'net-pill' + (netBusy > 0 ? ' is-syncing' : '');
+    pill.setAttribute('aria-label', netBusy > 0 ? 'กำลังซิงก์ข้อมูล แตะเพื่อดูสถานะการเชื่อมต่อ' : 'Sync แตะเพื่อดูสถานะการเชื่อมต่อ');
   }
   async function syncNow(quiet) {
     if (offline) { if (!quiet) toast('ยังออฟไลน์อยู่ ต่ออินเทอร์เน็ตแล้วลองใหม่'); return; }
@@ -2570,18 +2700,16 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   $('netPill').addEventListener('click', async () => {
     const st = netState(), n = lines().length;
     const prodSync = fmtLong(store.get(K.productsSync, 0)).replace(/^(?!ยัง)/, 'อัปเดต ');
-    const histSync = fmtLong(store.get(K.histSync, 0)).replace(/^(?!ยัง)/, 'อัปเดต ');
     const r = await dialog({
-      position: 'bottom', title: 'สถานะการเชื่อมต่อ',
+      title: 'สถานะการเชื่อมต่อ',
       html: `<div class="net-rows">
         <div><span>การเชื่อมต่อ</span><b class="${st === 'offline' ? 'is-off' : 'is-on'}">${st === 'offline' ? 'Offline' : 'Online'}</b></div>
-        <div><span>สินค้าและราคา</span><b>${productSyncFailed && st === 'online' ? 'ซิงก์ไม่สำเร็จ · ' : ''}${esc(prodSync)}</b></div>
-        <div><span>ประวัติคำสั่งซื้อ</span><b>${syncFailed && st === 'online' ? 'ซิงก์ไม่สำเร็จ · ' : ''}${esc(histSync)}</b></div>
+        <div><span>สินค้าและราคา</span><b>${netErr && st === 'online' ? 'ซิงก์ไม่สำเร็จ · ' : ''}${esc(prodSync)}</b></div>
+        <div><span>ประวัติคำสั่งซื้อ</span><b>${esc(fmtLong(store.get(K.histSync, 0)).replace(/^(?!ยัง)/, 'อัปเดต '))}</b></div>
         <div><span>ตะกร้า</span><b>${n ? `เก็บในเครื่องแล้ว ${num(n)} รายการ` : 'ว่าง'}</b></div>
       </div>
       <p class="net-note">แอปซิงก์ให้เองทุกครั้งที่เปิดแอปและเมื่อกลับมาออนไลน์ ตอนออฟไลน์ยังดูสินค้าและใส่ตะกร้าได้ แต่ส่งคำสั่งซื้อไม่ได้</p>`,
       showCancelButton: true, confirmButtonText: 'ซิงก์ตอนนี้', cancelButtonText: 'ปิด',
-      customClass: Object.assign({}, SW_CLASS, { popup: 'sw sw-sheet' }),
     });
     if (r.isConfirmed) syncNow();
   });
