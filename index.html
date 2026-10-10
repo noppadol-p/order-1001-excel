@@ -142,11 +142,13 @@ svg.i { width: 22px; height: 22px; flex: none; }
 .appbar-actions { margin-left: auto; display: flex; align-items: center; gap: 6px; }
 /* ป้ายสถานะออนไลน์/ซิงก์ */
 .net-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 4px; border: 0; background: none;
-  font-family: var(--font); font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; flex: none; color: var(--muted); }
+  font-family: var(--font); font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; flex: 0 1 auto; color: var(--muted); }
 .net-pill .net-sub:empty { display: none; }
 .net-pill .net-ico { display: inline-grid; place-items: center; }
 .net-pill .net-ico svg { width: 15px; height: 15px; }
 .net-pill .net-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+#netLabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.net-pill.is-offline { color: color-mix(in srgb, var(--ink) 85%, transparent); }
 .net-pill.is-syncing #netLabel { animation: net-pulse 1.2s ease-in-out infinite; }
 @keyframes net-pulse { 50% { opacity: .35; } }
 @media (prefers-reduced-motion: reduce) { .net-pill.is-syncing #netLabel { animation: none; } }
@@ -819,7 +821,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <svg aria-hidden="true"><use href="#i-back"/></svg>ย้อนกลับ
       </button>
       <div class="appbar-actions">
-        <button type="button" class="net-pill" id="netPill"><span id="netLabel">Sync</span><span class="net-sub" id="netSub"></span></button>
+        <button type="button" class="net-pill" id="netPill"><span id="netLabel">อัปเดต</span><span class="net-sub" id="netSub"></span></button>
         
         <button type="button" class="chip-btn" id="installBtn" hidden>ติดตั้งแอป</button>
         <button type="button" class="text-btn" id="clearCartBtn" hidden>ล้างตะกร้า</button>
@@ -946,7 +948,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.6.0</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.6.1</p>
     </div>
   </section>
 </main>
@@ -2682,14 +2684,18 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     offline: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M16.7 16.7A4 4 0 0 1 17 17H7a5 5 0 0 1-1.6-9.7M10 5.3A7 7 0 0 1 19 11a4 4 0 0 1 1.6 4.6"/></svg>',
     error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></svg>',
   };
-  // ป้ายใน header: คำว่า Sync (กะพริบจางๆ ระหว่างกำลังซิงก์)  กดเพื่อดูสถานะการเชื่อมต่อ
+  // ป้ายใน header: บอกความสดของข้อมูล  อัปเดต 10:42 / กำลังอัปเดต… / ออฟไลน์ · 10:42  กดเพื่อดูสถานะการเชื่อมต่อ
   const netState = () => (offline ? 'offline' : 'online');
   function renderNet() {
     const pill = $('netPill');
     if (!pill) return;
-    if (!pill.dataset.init) { pill.dataset.init = '1'; $('netLabel').textContent = 'Sync'; $('netSub').textContent = ''; }
-    pill.className = 'net-pill' + (netBusy > 0 ? ' is-syncing' : '');
-    pill.setAttribute('aria-label', netBusy > 0 ? 'กำลังซิงก์ข้อมูล แตะเพื่อดูสถานะการเชื่อมต่อ' : 'Sync แตะเพื่อดูสถานะการเชื่อมต่อ');
+    const last = store.get(K.productsSync, 0), t = last ? fmtShort(last) : '';
+    const busy = netBusy > 0 && !offline;
+    const label = offline ? (t ? `ออฟไลน์ · ${t}` : 'ออฟไลน์') : busy ? 'กำลังอัปเดต…' : (t ? `อัปเดต ${t}` : 'อัปเดต');
+    $('netLabel').textContent = label;
+    $('netSub').textContent = '';
+    pill.className = 'net-pill' + (busy ? ' is-syncing' : '') + (offline ? ' is-offline' : '');
+    pill.setAttribute('aria-label', `${label} แตะเพื่อดูสถานะการเชื่อมต่อ`);
   }
   async function syncNow(quiet) {
     if (offline) { if (!quiet) toast('ยังออฟไลน์อยู่ ต่ออินเทอร์เน็ตแล้วลองใหม่'); return; }
