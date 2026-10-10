@@ -948,7 +948,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.6.1</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.6.2</p>
     </div>
   </section>
 </main>
@@ -1615,6 +1615,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   $('q').addEventListener('input', renderGrid);
 
   // ================= คูปองส่วนลด =================
+  const cleanCode = v => String(v || '').toUpperCase().replace(/[^A-Z0-9-]/g, '');
   async function openCoupon() {
     const cur = coupon();
     const r = await dialog({
@@ -1622,18 +1623,32 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       html: `<div class="sw-cpn-ico"><svg aria-hidden="true"><use href="#i-ticket"/></svg></div>
         <p class="sw-cpn-note">ใส่โค้ดเพื่อรับส่วนลดท้ายบิลของคำสั่งซื้อนี้</p>
         <div class="sw-form"><div class="field"><label for="sw-coupon">โค้ดส่วนลด</label>
-        <input id="sw-coupon" maxlength="40" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" value="${esc(cur ? cur.code : '')}"></div></div>`,
+        <input id="sw-coupon" type="text" inputmode="text" pattern="[A-Za-z0-9\\-]*" placeholder="ตัวอย่าง: ABC-123" maxlength="40" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" value="${esc(cleanCode(cur ? cur.code : ''))}"></div></div>`,
       showCancelButton: true, confirmButtonText: 'ใช้โค้ด', cancelButtonText: 'ยกเลิก', focusConfirm: false,
       showLoaderOnConfirm: true,
       allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
-      didOpen: el => {
+      didOpen: el => {                                   // ไม่โฟกัสช่องเอง (คีย์บอร์ดไม่เด้งจนกว่าจะแตะช่อง)
         const i = el.querySelector('#sw-coupon');
-        i.addEventListener('input', () => { i.classList.remove('is-invalid'); Swal.resetValidationMessage(); });
-        setTimeout(() => i.focus(), 60);
+        el.tabIndex = -1;                                // popup มี role/ชื่อจาก SweetAlert2 และไม่ทำให้คีย์บอร์ดมือถือเด้ง
+        el.focus({ preventScroll: true });
+        let composing = false;
+        const normalize = () => {
+          const v = cleanCode(i.value);                  // ตัวพิมพ์ใหญ่ เหลือเฉพาะ A–Z 0–9 และ -
+          if (v !== i.value) i.value = v;
+          i.classList.remove('is-invalid'); Swal.resetValidationMessage();
+        };
+        i.addEventListener('compositionstart', () => { composing = true; });
+        i.addEventListener('compositionend', () => { composing = false; normalize(); });
+        i.addEventListener('input', e => { if (!composing && !e.isComposing) normalize(); });
+        i.addEventListener('blur', normalize);
+        i.addEventListener('keydown', e => {             // Enter / "เสร็จ" บนคีย์บอร์ดมือถือ = กด "ใช้โค้ด"
+          if (e.key === 'Enter' && !e.isComposing && !Swal.isLoading()) { e.preventDefault(); Swal.clickConfirm(); }
+        });
       },
       preConfirm: async () => {
         const i = document.getElementById('sw-coupon');
-        const code = i.value.trim().toUpperCase();
+        const code = cleanCode(i.value);
+        i.value = code;
         const fail = m => { i.classList.add('is-invalid'); Swal.showValidationMessage(m); return false; };
         if (!code) return fail('กรอกโค้ดส่วนลด');
         if (offline) return fail('ยังออฟไลน์อยู่ ต่ออินเทอร์เน็ตแล้วลองใหม่');
