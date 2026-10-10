@@ -159,6 +159,7 @@ svg.i { width: 22px; height: 22px; flex: none; }
   .appbar-actions:has(#clearCartBtn:not([hidden])) .pill, .appbar-actions:has(#installBtn:not([hidden])) .pill { display: none; }
 }
 @media (max-width: 359px) { .net-pill .net-sub, .appbar-actions .pill { display: none; } }   /* จอแคบมาก: แสดงแค่สถานะ */
+@media (max-width: 400px) { .appbar-actions .pill { display: none; } }   /* ป้ายโหมดตัวอย่างไม่แย่งที่บนจอแคบ */
 /* แผงรายละเอียดสถานะ (ล่างจอ) */
 .swal2-container.swal2-bottom:has(> .sw-sheet) { padding: 0; pointer-events: auto; }
 .swal2-container.swal2-bottom.swal2-backdrop-show:has(> .sw-sheet) { background: var(--scrim) !important; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
@@ -948,7 +949,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.6.2</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.6.3</p>
     </div>
   </section>
 </main>
@@ -1024,6 +1025,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const DEMO_PRODUCTS = null;
   const CFG = window.APP_CONFIG || {};
   const API_URL = (CFG.API_URL || /*__API_URL__*/'').trim();   // URL /exec ของ Apps Script (โหมด PWA)
+  // ห้ามมีข้อความ "/" ตามด้วย "*" ในโค้ด: Apps Script ลบช่วงนั้นถึง "*" "/" ตัวถัดไปเหมือนคอมเมนต์ โค้ดจะหายทั้งก้อน
+  const IMG_ACCEPT = 'image/' + '*';
   const USE_SW = true;
   const MAX_QTY = 9999;
   const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', session: 'b1001:session', coupon: 'b1001:coupon', productsSync: 'b1001:products-sync', pendingOrder: 'b1001:pending-order', pendingSlip: 'b1001:pending-slip', profileDirty: 'b1001:profile-dirty', cancelSeen: 'b1001:cancel-seen', iosHint: 'b1001:ios-hint' };
@@ -2110,7 +2113,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           ${bank.note ? `<p class="bank-note">${esc(bank.note)}</p>` : ''}
         </div>` : ''}
         <p class="slip-step"><b>โอนเงินแล้ว</b> แนบสลิปเป็นหลักฐาน</p>
-        <label class="slip-pick" id="slipPick"><input type="file" id="slipFile" accept="image/*"><span id="slipPh">แตะเพื่อแนบรูปสลิป<br><small>ถ่ายรูปหรือเลือกจากคลังภาพ</small></span></label>
+        <label class="slip-pick" id="slipPick"><input type="file" id="slipFile" accept="${IMG_ACCEPT}"><span id="slipPh">แตะเพื่อแนบรูปสลิป<br><small>ถ่ายรูปหรือเลือกจากคลังภาพ</small></span></label>
         <div class="field"><label for="sw-amt">ยอดที่โอน (บาท)</label><input id="sw-amt" type="text" inputmode="decimal" value="${due}"></div>
         <div class="field"><label for="sw-time">วันเวลาที่โอน</label><input id="sw-time" type="datetime-local" value="${nowLocal}" max="${nowLocal}"></div>
         <div class="field"><label for="sw-pnote">หมายเหตุ <span>(ไม่บังคับ)</span></label><input id="sw-pnote" maxlength="300" placeholder="เช่น โอนจากบัญชีของภรรยา"></div>
@@ -2658,7 +2661,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     try {
       apiFromCache = false;
       products = (await call('getProducts')) || [];
-      if (offline) { /* ได้จากแคช ไม่นับเป็นการซิงก์ */ }
+      if (offline) { }                                  // ได้จากแคช ไม่นับเป็นการซิงก์
       else if (apiFromCache) netErr = true;              // ออนไลน์แต่หลังบ้านตอบไม่ได้: ใช้ข้อมูลเก่าไปก่อน แจ้งว่าซิงก์ไม่สำเร็จ
       else store.set(K.productsSync, Date.now());         // ห้ามล้าง netErr ที่ concurrent history sync อาจเพิ่งตั้งไว้
       byCode = Object.fromEntries(products.map(p => [p.code, p]));
