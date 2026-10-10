@@ -152,8 +152,9 @@ svg.i { width: 22px; height: 22px; flex: none; }
 .net-pill .net-ico { display: inline-grid; place-items: center; }
 .net-pill .net-ico svg { width: 15px; height: 15px; }
 .net-pill .net-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-.net-pill.is-online { background: var(--ok-wash); color: var(--ok); border-color: color-mix(in srgb, var(--ok) 22%, transparent); }
-.net-pill.is-syncing { background: var(--accent-wash); color: var(--accent-text); border-color: color-mix(in srgb, var(--accent-text) 20%, transparent); }
+/* ปกติ (ออนไลน์/กำลังซิงก์): เรียบ กลืนกับ header เหลือสีเขียวแค่จุด  ผิดปกติ (ออฟไลน์/ซิงก์ไม่สำเร็จ): เด่น */
+.net-pill.is-online, .net-pill.is-syncing { background: color-mix(in srgb, var(--surface) 45%, transparent); color: var(--muted); border-color: color-mix(in srgb, var(--ink) 10%, transparent); font-weight: 500; }
+.net-pill.is-online .net-dot { width: 7px; height: 7px; background: var(--ok); }
 .net-pill.is-offline { background: var(--paper); color: var(--ink); border-color: var(--line-strong); }
 .net-pill.is-error { background: var(--warn-wash); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 25%, transparent); }
 .net-pill.is-syncing .net-ico svg { animation: net-spin .9s linear infinite; }
@@ -862,7 +863,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       <div class="empty" id="cartEmpty" hidden>
         <div class="empty-ico"><svg><use href="#i-bag"/></svg></div>
         <h2>ตะกร้ายังว่าง</h2>
-        <p>เลือกผ้าห่มที่ต้องการ แล้วกลับมาส่งคำสั่งซื้อที่นี่</p>
+        <p>เลือกผ้าห่มที่ต้องการ แล้วกลับมาสร้างคำสั่งซื้อที่นี่</p>
         <button type="button" class="btn btn-primary" data-go="products">ไปเลือกสินค้า</button>
       </div>
     </div>
@@ -945,7 +946,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.5.2</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.5.3</p>
     </div>
   </section>
 </main>
@@ -953,7 +954,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 <div class="checkout" id="checkout" hidden>
   <div class="wrap">
     <div class="checkout-sum"><small id="coCount">0 ผืน</small><b id="coTotal">฿0</b></div>
-    <button type="button" class="btn btn-primary btn-lg" id="checkoutBtn">ส่งคำสั่งซื้อ</button>
+    <button type="button" class="btn btn-primary btn-lg" id="checkoutBtn">สร้างคำสั่งซื้อ</button>
   </div>
 </div>
 
@@ -1272,7 +1273,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const deviceInfo = () => parseUA(navigator.userAgent,
     window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true, uaHints);
 
-  // คูปองท้ายบิล: แอปคิดเพื่อแสดงผล หลังบ้านตรวจโค้ดและคิดส่วนลดจริงอีกครั้งตอนส่งคำสั่งซื้อ
+  // คูปองท้ายบิล: แอปคิดเพื่อแสดงผล หลังบ้านตรวจโค้ดและคิดส่วนลดจริงอีกครั้งตอนสร้างคำสั่งซื้อ
   const coupon = () => store.get(K.coupon, null);
   const priced = () => {
     const t = totals(), c = coupon();
@@ -1346,7 +1347,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       <div class="buyer-ico">${icon('i-user')}</div>
       <div class="buyer-txt">${profileOk()
         ? `<b>${esc(profile.full_name)}</b><span>โทร ${esc(profile.phone)}${profile.department ? ', ' + esc(profile.department) : ''}</span>`
-        : `<b>${profile.full_name ? esc(profile.full_name) : 'ยังไม่ได้ระบุผู้สั่ง'}</b><span class="warn">${profile.full_name ? 'กรอกเบอร์โทรก่อนส่งคำสั่งซื้อ' : 'กรอกชื่อและเบอร์โทรก่อนส่งคำสั่งซื้อ'}</span>`}</div>
+        : `<b>${profile.full_name ? esc(profile.full_name) : 'ยังไม่ได้ระบุผู้สั่ง'}</b><span class="warn">${profile.full_name ? 'กรอกเบอร์โทรก่อนสร้างคำสั่งซื้อ' : 'กรอกชื่อและเบอร์โทรก่อนสร้างคำสั่งซื้อ'}</span>`}</div>
       <button type="button" class="chip-btn" id="editBuyer">${profileOk() ? 'แก้ไข' : 'กรอกข้อมูล'}</button>`;
     const pr = priced();
     $('couponBtnText').textContent = pr.coupon ? 'เปลี่ยนโค้ด' : 'ส่วนลดคูปอง';
@@ -1792,7 +1793,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 
   window.addEventListener('popstate', e => {
     if (silentPop) { const f = silentPop; silentPop = null; f(); return; }
-    // 1) มีกล่องข้อความเปิดอยู่ -> ปิดกล่อง (ระหว่างกำลังส่งคำสั่งซื้อ ห้ามปิด)
+    // 1) มีกล่องข้อความเปิดอยู่ -> ปิดกล่อง (ระหว่างกำลังสร้างคำสั่งซื้อ ห้ามปิด)
     if (isModalOpen()) {
       if (Swal.isLoading()) { pushEntry({ dlg: 1 }); return; }
       dlgClosedByBack = true;
@@ -2287,7 +2288,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const ls = lines();
     if (!ls.length) return;
     if (offline) {
-      return dialog({ icon: 'warning', iconColor: iconColor(), title: 'ยังออฟไลน์อยู่', html: 'สินค้าในตะกร้ายังอยู่ครบ ต่ออินเทอร์เน็ตแล้วกดส่งอีกครั้ง', confirmButtonText: 'ตกลง' });
+      return dialog({ icon: 'warning', iconColor: iconColor(), title: 'ยังออฟไลน์อยู่', html: 'สินค้าในตะกร้ายังอยู่ครบ ต่ออินเทอร์เน็ตแล้วกดสร้างคำสั่งซื้ออีกครั้ง', confirmButtonText: 'ตกลง' });
     }
     if (!profileOk() && !(await askProfile())) return;
     const t = priced();
@@ -2298,7 +2299,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     store.set(K.pendingOrder, pending);                 // ปิดแอประหว่างรอผลแล้วส่งใหม่ ก็ยังได้คำสั่งซื้อเดิม ไม่ซ้ำ
 
     const r = await dialog({
-      title: 'ยืนยันส่งคำสั่งซื้อ?',
+      title: 'ยืนยันสร้างคำสั่งซื้อ?',
       html: `<div class="sw-sum">
         <div><span>ผู้สั่ง</span><b>${esc(profile.full_name)}</b></div>
         <div><span>เบอร์โทร</span><b>${esc(profile.phone)}</b></div>
@@ -2309,7 +2310,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div class="is-total"><span>ยอดชำระ</span><b>${baht(t.net)}</b></div>`
         : `<div class="is-total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>`}
       </div>`,
-      showCancelButton: true, confirmButtonText: 'ส่งคำสั่งซื้อ', cancelButtonText: 'กลับไปแก้ไข',
+      showCancelButton: true, confirmButtonText: 'สร้างคำสั่งซื้อ', cancelButtonText: 'กลับไปแก้ไข',
       showLoaderOnConfirm: true,
       allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
       allowEscapeKey: () => !(window.Swal && Swal.isLoading()),
