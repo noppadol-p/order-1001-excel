@@ -841,7 +841,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 .sw-ship small { color: var(--muted); line-height: 1.5; }
 .sw-dlv { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
 /* ฟอร์มที่อยู่ */
-.sw-addr { max-height: 92vh; overflow-y: auto; }
+.swal2-popup.sw.sw-addr { width: min(560px, 100%); max-height: 92vh; overflow-y: auto; padding: 22px 16px 18px; }   /* ฟอร์มที่อยู่: กว้างกว่ากล่องทั่วไป */
+.swal2-container:has(.sw-addr) { padding-left: 8px; padding-right: 8px; }
 .af { display: flex; flex-direction: column; gap: 12px; text-align: left; }
 .af-f { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500; min-width: 0; }
 .af-f small { font-weight: 400; color: var(--muted); }
@@ -861,6 +862,9 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 .af-def { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 15px; }
 .af-def input { width: 20px; height: 20px; accent-color: var(--accent, #9A6A45); }
 @media (max-width: 359px) { .af-2 { grid-template-columns: 1fr; } .dlv-opts { flex-direction: column; } }
+/* วงโฟกัสไม่ถูกตัด: พื้นที่เนื้อหาของกล่องตัดสิ่งที่ล้น จึงเว้นที่ด้านใน 4px แล้วดึงขอบกลับ (ตำแหน่งช่องกรอกเท่าเดิม) */
+.swal2-popup.sw .swal2-html-container { padding-left: 4px; padding-right: 4px; margin-left: -4px; margin-right: -4px; }
+.af-f input:focus, .af-f textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
 </style>
 </head>
 <body>
@@ -1030,7 +1034,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.8.0</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.8.2</p>
     </div>
   </section>
 </main>
@@ -2740,9 +2744,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div class="af-2">${fld('af-name', 'ชื่อผู้รับ', cur.name, 'maxlength="80" autocomplete="name"')}${fld('af-phone', 'เบอร์โทรผู้รับ', cur.phone, 'type="tel" inputmode="tel" maxlength="20" autocomplete="tel"')}</div>
         <button type="button" class="link-btn af-me" id="af-me">ใช้ชื่อและเบอร์โทรจากข้อมูลผู้สั่ง</button>
         <label class="af-f" for="af-line"><span>ที่อยู่</span><textarea id="af-line" rows="2" maxlength="200" placeholder="บ้านเลขที่ หมู่บ้าน ซอย ถนน">${esc(cur.line || '')}</textarea></label>
-        ${fld('af-zip', 'รหัสไปรษณีย์', cur.zip, 'inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="5 หลัก"')}
+        <div class="af-2">${fld('af-zip', 'รหัสไปรษณีย์', cur.zip, 'inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="5 หลัก"')}${fld('af-sub', 'แขวง / ตำบล', cur.sub, 'maxlength="60"')}</div>
         <div class="af-zipopts" id="af-zipopts" aria-live="polite"></div>
-        ${fld('af-sub', 'แขวง / ตำบล', cur.sub, 'maxlength="60"')}
         <div class="af-2">${fld('af-dist', 'เขต / อำเภอ', cur.dist, 'maxlength="60"')}${fld('af-prov', 'จังหวัด', cur.prov, 'maxlength="60"')}</div>
         ${fld('af-note', 'หมายเหตุสำหรับผู้ส่ง <small>(ไม่บังคับ)</small>', cur.note, 'maxlength="120" placeholder="เช่น ฝากไว้ที่ป้อม รปภ."')}
         <label class="af-def"><input type="checkbox" id="af-def" ${cur.is_default || !addrList().length ? 'checked' : ''} ${cur.is_default ? 'disabled' : ''}>ตั้งเป็นที่อยู่ค่าเริ่มต้น</label>
