@@ -790,7 +790,6 @@ body.is-typing .tabbar, body.is-typing .checkout { display: none; }
 .swal2-container.swal2-top { padding-top: calc(var(--safe-t) + 8px); }
 .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab-h) + var(--safe-b) + 10px); }
 body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab-h) + 76px + var(--safe-b) + 10px); }
-.sw-cpn-ico:focus { outline: none; }
 /* รายละเอียดย่อ */
 .card-desc { margin: 2px 0 4px; font-size: 13px; line-height: 1.45; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .detail-desc { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
@@ -1256,7 +1255,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   // หน่วยขาย (ผืน / พับ / กล่อง …) และจำนวนรวมแยกตามหน่วย เช่น "3 ผืน · 2 กล่อง" (คนละหน่วยบวกกันไม่ได้)
   const uomOf = code => (byCode[code] && byCode[code].uom) || 'ผืน';
   function qtyText(list) {
-    const by = {}, order = [];
+    const by = Object.create(null), order = [];
     list.forEach(x => { const u = x.uom || 'ผืน'; if (!(u in by)) { by[u] = 0; order.push(u); } by[u] += Number(x.qty) || 0; });
     return order.map(u => `${num(by[u])} ${u}`).join(' · ') || '0';
   }
@@ -1412,7 +1411,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (!Number.isFinite(n) || n < 0) n = 0;
     if (n > maxFor(code)) {
       n = maxFor(code);
-      toast(stockOf(code) !== null && stockOf(code) < MAX_QTY ? `${code} เหลือ ${num(stockOf(code))} ${uomOf(code)}` : `สั่งได้สูงสุด ${num(MAX_QTY)} ${uomOf(code)}ต่อรายการ`);
+      toast(stockOf(code) !== null && stockOf(code) < MAX_QTY ? `${esc(code)} เหลือ ${num(stockOf(code))} ${esc(uomOf(code))}` : `สั่งได้สูงสุด ${num(MAX_QTY)} ${esc(uomOf(code))}ต่อรายการ`);
     }
     const before = qtyOf(code);
     if (n === before) { if (opt.input) opt.input.value = n || ''; return; }
@@ -1476,11 +1475,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         },
         preConfirm: () => {
           const x = parseInt(document.getElementById('sw-qty').value, 10);
-          if (!(x >= 1)) { Swal.showValidationMessage(`ใส่จำนวนอย่างน้อย 1 ${uomOf(code)}`); return false; }
-          if (x > MAX_QTY) { Swal.showValidationMessage(`สั่งได้สูงสุด ${num(MAX_QTY)} ${uomOf(code)}`); return false; }
+          if (!(x >= 1)) { Swal.showValidationMessage(`ใส่จำนวนอย่างน้อย 1 ${esc(uomOf(code))}`); return false; }
+          if (x > MAX_QTY) { Swal.showValidationMessage(`สั่งได้สูงสุด ${num(MAX_QTY)} ${esc(uomOf(code))}`); return false; }
           if (qtyOf(code) + x > maxFor(code)) {
             const room = maxFor(code) - qtyOf(code);
-            Swal.showValidationMessage(room > 0 ? `เหลือ ${num(stockOf(code))} ${uomOf(code)}${qtyOf(code) ? ` (ในตะกร้าแล้ว ${num(qtyOf(code))})` : ''} เพิ่มได้อีก ${num(room)} ผืน` : `ใส่ตะกร้าครบยอดคงเหลือแล้ว (${num(stockOf(code))} ผืน)`);
+            Swal.showValidationMessage(room > 0 ? `เหลือ ${num(stockOf(code))} ${esc(uomOf(code))}${qtyOf(code) ? ` (ในตะกร้าแล้ว ${num(qtyOf(code))})` : ''} เพิ่มได้อีก ${num(room)} ${esc(uomOf(code))}` : `ใส่ตะกร้าครบยอดคงเหลือแล้ว (${num(stockOf(code))} ${esc(uomOf(code))})`);
             return false;
           }
           return x;
@@ -1492,7 +1491,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const from = snapFrom(imgEl);
     setQty(code, Math.min(qtyOf(code) + n, maxFor(code)), { focus: '[data-step="inc"]' });
     flyToCart(from, n);
-    if (reduceMotion) toast(`เพิ่ม ${num(n)} ${uomOf(code)}ลงตะกร้าแล้ว`);
+    if (reduceMotion) toast(`เพิ่ม ${num(n)} ${esc(uomOf(code))}ลงตะกร้าแล้ว`);
   }
 
   // ===== โยนสินค้าลงตะกร้า: รูปลอยเป็นวิถีโค้งลงไอคอนตะกร้า แล้วตะกร้า "รับ" พร้อม +จำนวน =====
@@ -1637,8 +1636,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const cur = coupon();
     const r = await dialog({
       title: 'ส่วนลดคูปอง',
-      // ไอคอนรับโฟกัสแรกแทนช่องกรอก (SweetAlert2 โฟกัสช่องแรกเองถ้าไม่มี autofocus) คีย์บอร์ดจึงไม่เด้งจนกว่าจะแตะช่อง
-      html: `<div class="sw-cpn-ico" tabindex="-1" autofocus><svg aria-hidden="true"><use href="#i-ticket"/></svg></div>
+      html: `<div class="sw-cpn-ico"><svg aria-hidden="true"><use href="#i-ticket"/></svg></div>
         <p class="sw-cpn-note">ใส่โค้ดเพื่อรับส่วนลดท้ายบิลของคำสั่งซื้อนี้</p>
         <div class="sw-form"><div class="field"><label for="sw-coupon">โค้ดส่วนลด</label>
         <input id="sw-coupon" type="text" inputmode="text" pattern="[A-Za-z0-9\\-]*" placeholder="ตัวอย่าง: ABC-123" maxlength="40" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" value="${esc(cleanCode(cur ? cur.code : ''))}"></div></div>`,
@@ -1647,11 +1645,18 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
       didOpen: el => {                                   // ไม่โฟกัสช่องเอง (คีย์บอร์ดไม่เด้งจนกว่าจะแตะช่อง)
         const i = el.querySelector('#sw-coupon');
-        i.addEventListener('input', () => {
+        el.tabIndex = -1;                                // popup มี role/ชื่อจาก SweetAlert2 และไม่ทำให้คีย์บอร์ดมือถือเด้ง
+        el.focus({ preventScroll: true });
+        let composing = false;
+        const normalize = () => {
           const v = cleanCode(i.value);                  // ตัวพิมพ์ใหญ่ เหลือเฉพาะ A–Z 0–9 และ -
           if (v !== i.value) i.value = v;
           i.classList.remove('is-invalid'); Swal.resetValidationMessage();
-        });
+        };
+        i.addEventListener('compositionstart', () => { composing = true; });
+        i.addEventListener('compositionend', () => { composing = false; normalize(); });
+        i.addEventListener('input', e => { if (!composing && !e.isComposing) normalize(); });
+        i.addEventListener('blur', normalize);
         i.addEventListener('keydown', e => {             // Enter / "เสร็จ" บนคีย์บอร์ดมือถือ = กด "ใช้โค้ด"
           if (e.key === 'Enter' && !e.isComposing && !Swal.isLoading()) { e.preventDefault(); Swal.clickConfirm(); }
         });
@@ -1659,6 +1664,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       preConfirm: async () => {
         const i = document.getElementById('sw-coupon');
         const code = cleanCode(i.value);
+        i.value = code;
         const fail = m => { i.classList.add('is-invalid'); Swal.showValidationMessage(m); return false; };
         if (!code) return fail('กรอกโค้ดส่วนลด');
         if (offline) return fail('ยังออฟไลน์อยู่ ต่ออินเทอร์เน็ตแล้วลองใหม่');
@@ -1747,7 +1753,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     setQty(code, n);
     if (n > before) flyToCart(from, n - before);
     closeLayer();
-    if (before || reduceMotion) toast(before ? `อัปเดตเป็น ${num(n)} ${uomOf(dCode)}แล้ว` : `เพิ่ม ${num(n)} ${uomOf(dCode)}ลงตะกร้าแล้ว`);
+    if (before || reduceMotion) toast(before ? `อัปเดตเป็น ${num(n)} ${esc(uomOf(code))}แล้ว` : `เพิ่ม ${num(n)} ${esc(uomOf(code))}ลงตะกร้าแล้ว`);
   });
   $('dImgBtn').addEventListener('click', () => openViewer(dCode));
 
@@ -1946,11 +1952,21 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       pushProfile();
     }
   }
-  // ส่งข้อมูลผู้สั่งไปแท็บ ผู้ใช้ ถ้ายังค้าง (แก้ตอนออฟไลน์หรือส่งไม่สำเร็จ): ส่งเมื่อออนไลน์
-  function pushProfile() {
-    if (!store.get(K.profileDirty, false) || offline || !profileOk() || !(API_URL || onAppsScript)) return;
-    call('saveProfile', Object.assign({}, ownerParams(), { full_name: profile.full_name, phone: profile.phone, department: profile.department }))
-      .then(() => store.set(K.profileDirty, false)).catch(() => {});
+  // ส่งทีละ request และวนส่ง revision ล่าสุดต่อ เพื่อไม่ให้ response เก่าล้าง dirty flag ของข้อมูลใหม่
+  let profilePushing = false;
+  async function pushProfile() {
+    if (profilePushing || offline || !profileOk() || !(API_URL || onAppsScript)) return;
+    profilePushing = true;
+    try {
+      while (store.get(K.profileDirty, false) && !offline && profileOk()) {
+        const snapshot = { full_name: profile.full_name, phone: profile.phone, department: profile.department };
+        store.set(K.profileDirty, false);
+        try { await call('saveProfile', Object.assign({}, ownerParams(), snapshot)); }
+        catch (e) { store.set(K.profileDirty, true); break; }
+      }
+    } finally {
+      profilePushing = false;
+    }
   }
   async function askProfile() {
     const field = (name, label, type, extra) => `
@@ -2648,7 +2664,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   });
 
   // ================= Load products =================
-  async function loadProducts(silent) {
+  // ใช้ request เดียวร่วมกัน ป้องกัน response เก่ากลับมาทับสินค้า/สถานะจาก request ใหม่
+  let productsLoading = null;
+  function loadProducts(silent) {
+    if (productsLoading) return productsLoading;
+    productsLoading = loadProductsOnce(silent).finally(() => { productsLoading = null; });
+    return productsLoading;
+  }
+  async function loadProductsOnce(silent) {
     if (!silent) skeleton();
     netBusy++; renderNet();
     try {
@@ -2656,7 +2679,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       products = (await call('getProducts')) || [];
       if (offline) { }                                  // ได้จากแคช ไม่นับเป็นการซิงก์
       else if (apiFromCache) netErr = true;              // ออนไลน์แต่หลังบ้านตอบไม่ได้: ใช้ข้อมูลเก่าไปก่อน แจ้งว่าซิงก์ไม่สำเร็จ
-      else { store.set(K.productsSync, Date.now()); netErr = false; }
+      else store.set(K.productsSync, Date.now());         // ห้ามล้าง netErr ที่ concurrent history sync อาจเพิ่งตั้งไว้
       byCode = Object.fromEntries(products.map(p => [p.code, p]));
       const trimmed = [];
       Object.keys(cart).forEach(c => {
