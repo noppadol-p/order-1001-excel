@@ -158,8 +158,8 @@ svg.i { width: 22px; height: 22px; flex: none; }
   .appbar-actions:has(#installBtn:not([hidden])) .net-sub, .appbar-actions:has(#clearCartBtn:not([hidden])) .net-sub, .appbar-actions:has(.pill) .net-sub { display: none; }
   .appbar-actions:has(#clearCartBtn:not([hidden])) .pill, .appbar-actions:has(#installBtn:not([hidden])) .pill { display: none; }
 }
-@media (max-width: 359px) { .net-pill .net-sub, .appbar-actions .pill { display: none; } }   /* จอแคบมาก: แสดงแค่สถานะ */
-@media (max-width: 400px) { .appbar-actions .pill { display: none; } }   /* ป้ายโหมดตัวอย่างไม่แย่งที่บนจอแคบ */
+@media (max-width: 359px) { .net-pill .net-sub, .appbar-actions .pill { display: none; } }
+@media (max-width: 400px) { .appbar-actions .pill { display: none; } }   /* ป้ายโหมดตัวอย่าง (เฉพาะหน้าตัวอย่าง) ไม่แย่งที่บนจอแคบ */   /* จอแคบมาก: แสดงแค่สถานะ */
 /* แผงรายละเอียดสถานะ (ล่างจอ) */
 .swal2-container.swal2-bottom:has(> .sw-sheet) { padding: 0; pointer-events: auto; }
 .swal2-container.swal2-bottom.swal2-backdrop-show:has(> .sw-sheet) { background: var(--scrim) !important; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
@@ -790,6 +790,10 @@ body.is-typing .tabbar, body.is-typing .checkout { display: none; }
 .swal2-container.swal2-top { padding-top: calc(var(--safe-t) + 8px); }
 .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab-h) + var(--safe-b) + 10px); }
 body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab-h) + 76px + var(--safe-b) + 10px); }
+/* รายละเอียดย่อ */
+.card-desc { margin: 2px 0 4px; font-size: 13px; line-height: 1.45; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.detail-desc { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
+#dPrice small { font-size: 14px; font-weight: 500; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -949,14 +953,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.6.3</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.7.0</p>
     </div>
   </section>
 </main>
 
 <div class="checkout" id="checkout" hidden>
   <div class="wrap">
-    <div class="checkout-sum"><small id="coCount">0 ผืน</small><b id="coTotal">฿0</b></div>
+    <div class="checkout-sum"><small id="coCount">0 รายการ</small><b id="coTotal">฿0</b></div>
     <button type="button" class="btn btn-primary btn-lg" id="checkoutBtn">สร้างคำสั่งซื้อ</button>
   </div>
 </div>
@@ -978,11 +982,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     <div class="sheet-body">
       <button type="button" class="detail-img" id="dImgBtn" aria-label="ดูรูปเต็มจอ"><img id="dImg" alt=""></button>
       <div class="detail-head">
-        <div><h2 id="dTitle"></h2><p id="dSub"></p></div>
+        <div><h2 id="dTitle"></h2><p id="dSub"></p><p class="detail-desc" id="dDesc" hidden></p></div>
         <div class="detail-price" id="dPrice"></div>
       </div>
       <div class="detail-qty">
-        <label for="dQty">จำนวน (ผืน)</label>
+        <label for="dQty" id="dQtyLabel">จำนวน</label>
         <div class="stepper lg">
           <button type="button" data-dstep="dec" aria-label="ลดจำนวน"><svg><use href="#i-minus"/></svg></button>
           <input id="dQty" type="number" inputmode="numeric" pattern="[0-9]*" min="0" value="1">
@@ -1248,6 +1252,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       .map(code => { const p = byCode[code], qty = cart[code]; return { p, code, qty, unit: p.price, total: p.price * qty }; });
   }
   const totals = () => lines().reduce((t, l) => ({ n: t.n + 1, qty: t.qty + l.qty, amt: t.amt + l.total }), { n: 0, qty: 0, amt: 0 });
+  // หน่วยขาย (ผืน / พับ / กล่อง …) และจำนวนรวมแยกตามหน่วย เช่น "3 ผืน · 2 กล่อง" (คนละหน่วยบวกกันไม่ได้)
+  const uomOf = code => (byCode[code] && byCode[code].uom) || 'ผืน';
+  function qtyText(list) {
+    const by = Object.create(null), order = [];
+    list.forEach(x => { const u = x.uom || 'ผืน'; if (!(u in by)) { by[u] = 0; order.push(u); } by[u] += Number(x.qty) || 0; });
+    return order.map(u => `${num(by[u])} ${u}`).join(' · ') || '0';
+  }
+  const cartQtyText = () => qtyText(lines().map(l => ({ qty: l.qty, uom: uomOf(l.code) })));
   // ระบบปฏิบัติการและเบราว์เซอร์ของผู้สั่ง (บันทึกลงแท็บ Orders เพื่อดูภาพรวมและช่วยแก้ปัญหา)
   function parseUA(ua, installed, hi) {
     ua = String(ua || ''); hi = hi || {};
@@ -1321,9 +1333,10 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       </button>
       <div class="card-body">
         <h2 class="card-name">${esc(p.name || p.code)}</h2>
+        ${p.desc ? `<p class="card-desc">${esc(p.desc)}</p>` : ''}
         ${p.name ? `<p class="card-code">${esc(p.code)}</p>` : ''}
-        <div class="card-price"><b>${baht(p.price)}</b><span>/ผืน</span></div>
-        ${st !== null && st > 0 && st <= 5 ? `<p class="card-stock">เหลือ ${num(st)} ผืน</p>` : ''}
+        <div class="card-price"><b>${baht(p.price)}</b><span>/${esc(uomOf(p.code))}</span></div>
+        ${st !== null && st > 0 && st <= 5 ? `<p class="card-stock">เหลือ ${num(st)} ${esc(uomOf(p.code))}</p>` : ''}
         <div class="card-act">${st === 0 ? '<button type="button" class="btn btn-add btn-block is-soldout" disabled>สินค้าหมด</button>'
           : q ? stepper(p.code, q)
           : `<button type="button" class="btn btn-add btn-block" data-add="${esc(p.code)}">${icon('i-plus')}เพิ่มลงตะกร้า</button>`}</div>
@@ -1357,7 +1370,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     $('lines').innerHTML = ls.map(l => `
       <li class="line${l.code === flashCode ? ' is-flash' : ''}" data-line="${esc(l.code)}">
         <button type="button" class="line-img" data-detail="${esc(l.code)}" aria-label="ดูรายละเอียด ${esc(l.code)}"><img src="${esc(l.p.image || PLACEHOLDER)}" alt="" data-fallback></button>
-        <div class="line-info"><div class="line-name">${esc(l.p.name || l.code)}</div><div class="line-unit">${baht(l.unit)} /ผืน</div></div>
+        <div class="line-info"><div class="line-name">${esc(l.p.name || l.code)}</div><div class="line-unit">${baht(l.unit)} /${esc(uomOf(l.code))}</div></div>
         <button type="button" class="line-del" data-remove="${esc(l.code)}" aria-label="ลบ ${esc(l.code)}"><svg class="i"><use href="#i-trash"/></svg></button>
         ${stepper(l.code, l.qty)}
         <div class="line-total">${baht(l.total)}</div>
@@ -1372,7 +1385,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     $('couponBtnText').textContent = pr.coupon ? 'เปลี่ยนโค้ด' : 'ส่วนลดคูปอง';
     $('cartSum').innerHTML = `
       <div class="sum-row"><span>จำนวนรายการ</span><b>${num(t.n)} รายการ</b></div>
-      <div class="sum-row"><span>จำนวนรวม</span><b>${num(t.qty)} ผืน</b></div>
+      <div class="sum-row"><span>จำนวนรวม</span><b>${esc(cartQtyText())}</b></div>
       ${pr.coupon ? `<div class="sum-row"><span>ยอดสินค้า</span><b>${baht(t.amt)}</b></div>
       <div class="sum-row disc"><span>ส่วนลดคูปอง<span class="cpn-pill">${esc(pr.coupon.code)}<button type="button" data-coupon-remove aria-label="เอาคูปอง ${esc(pr.coupon.code)} ออก"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></span></span><b>−${baht(pr.disc)}</b></div>
       <div class="sum-row total"><span>ยอดชำระ</span><b>${baht(pr.net)}</b></div>`
@@ -1382,7 +1395,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const t = totals();
     const b = $('cartBadge');
     b.hidden = !t.n; b.textContent = t.n > 99 ? '99+' : t.n;
-    $('coCount').textContent = `${num(t.qty)} ผืน จาก ${num(t.n)} รายการ`;
+    $('coCount').textContent = new Set(lines().map(l => uomOf(l.code))).size > 1 ? `${num(t.n)} รายการ` : `${cartQtyText()} จาก ${num(t.n)} รายการ`;   // หลายหน่วย: สั้นๆ (รายละเอียดอยู่ในสรุป)
     const pr = priced();
     $('coTotal').innerHTML = pr.disc ? `${baht(pr.net)}<span class="co-was">${baht(t.amt)}</span>` : baht(t.amt);
     const showCo = view === 'cart' && t.n > 0;
@@ -1398,7 +1411,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (!Number.isFinite(n) || n < 0) n = 0;
     if (n > maxFor(code)) {
       n = maxFor(code);
-      toast(stockOf(code) !== null && stockOf(code) < MAX_QTY ? `${code} เหลือ ${num(stockOf(code))} ผืน` : `สั่งได้สูงสุด ${num(MAX_QTY)} ผืนต่อรายการ`);
+      toast(stockOf(code) !== null && stockOf(code) < MAX_QTY ? `${esc(code)} เหลือ ${num(stockOf(code))} ${esc(uomOf(code))}` : `สั่งได้สูงสุด ${num(MAX_QTY)} ${esc(uomOf(code))}ต่อรายการ`);
     }
     const before = qtyOf(code);
     if (n === before) { if (opt.input) opt.input.value = n || ''; return; }
@@ -1419,18 +1432,18 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (!p) return;
     let n;
     if (!hasSwal) {
-      n = parseInt(window.prompt(`จำนวน ${p.name || p.code} (ผืน)`, '1'), 10);
+      n = parseInt(window.prompt(`จำนวน ${p.name || p.code} (${uomOf(code)})`, '1'), 10);
       if (!(n >= 1)) return;
     } else {
       const r = await modal(() => Dlg.fire({
         title: esc(p.name || p.code),
         html: `<div class="qd">
-          <p class="qd-price">${baht(p.price)} ต่อผืน</p>
+          <p class="qd-price">${baht(p.price)} ต่อ${esc(uomOf(code))}</p>
           <div class="qd-row">
             <button type="button" class="qd-btn" data-sq="dec" aria-label="ลดจำนวน"><svg><use href="#i-minus"/></svg></button>
             <div class="qd-num">
-              <input id="sw-qty" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" value="1" aria-label="จำนวน (ผืน)">
-              <span>ผืน</span>
+              <input id="sw-qty" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" value="1" aria-label="จำนวน (${esc(uomOf(code))})">
+              <span>${esc(uomOf(code))}</span>
             </div>
             <button type="button" class="qd-btn" data-sq="inc" aria-label="เพิ่มจำนวน"><svg><use href="#i-plus"/></svg></button>
           </div>
@@ -1462,11 +1475,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         },
         preConfirm: () => {
           const x = parseInt(document.getElementById('sw-qty').value, 10);
-          if (!(x >= 1)) { Swal.showValidationMessage('ใส่จำนวนอย่างน้อย 1 ผืน'); return false; }
-          if (x > MAX_QTY) { Swal.showValidationMessage(`สั่งได้สูงสุด ${num(MAX_QTY)} ผืน`); return false; }
+          if (!(x >= 1)) { Swal.showValidationMessage(`ใส่จำนวนอย่างน้อย 1 ${esc(uomOf(code))}`); return false; }
+          if (x > MAX_QTY) { Swal.showValidationMessage(`สั่งได้สูงสุด ${num(MAX_QTY)} ${esc(uomOf(code))}`); return false; }
           if (qtyOf(code) + x > maxFor(code)) {
             const room = maxFor(code) - qtyOf(code);
-            Swal.showValidationMessage(room > 0 ? `เหลือ ${num(stockOf(code))} ผืน${qtyOf(code) ? ` (ในตะกร้าแล้ว ${num(qtyOf(code))})` : ''} เพิ่มได้อีก ${num(room)} ผืน` : `ใส่ตะกร้าครบยอดคงเหลือแล้ว (${num(stockOf(code))} ผืน)`);
+            Swal.showValidationMessage(room > 0 ? `เหลือ ${num(stockOf(code))} ${esc(uomOf(code))}${qtyOf(code) ? ` (ในตะกร้าแล้ว ${num(qtyOf(code))})` : ''} เพิ่มได้อีก ${num(room)} ${esc(uomOf(code))}` : `ใส่ตะกร้าครบยอดคงเหลือแล้ว (${num(stockOf(code))} ${esc(uomOf(code))})`);
             return false;
           }
           return x;
@@ -1478,7 +1491,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const from = snapFrom(imgEl);
     setQty(code, Math.min(qtyOf(code) + n, maxFor(code)), { focus: '[data-step="inc"]' });
     flyToCart(from, n);
-    if (reduceMotion) toast(`เพิ่ม ${num(n)} ผืนลงตะกร้าแล้ว`);
+    if (reduceMotion) toast(`เพิ่ม ${num(n)} ${esc(uomOf(code))}ลงตะกร้าแล้ว`);
   }
 
   // ===== โยนสินค้าลงตะกร้า: รูปลอยเป็นวิถีโค้งลงไอคอนตะกร้า แล้วตะกร้า "รับ" พร้อม +จำนวน =====
@@ -1683,7 +1696,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const t = totals();
     const r = await dialog({
       icon: 'warning', iconColor: iconColor(), title: 'ล้างตะกร้า?',
-      html: `สินค้า ${num(t.n)} รายการ (${num(t.qty)} ผืน) จะถูกนำออกทั้งหมด`,
+      html: `สินค้า ${num(t.n)} รายการ (${esc(cartQtyText())}) จะถูกนำออกทั้งหมด`,
       showCancelButton: true, confirmButtonText: 'ล้างตะกร้า', cancelButtonText: 'ยกเลิก', focusCancel: true,
       customClass: Object.assign({}, SW_CLASS, { confirmButton: 'btn btn-primary btn-danger' }),
     });
@@ -1714,11 +1727,13 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     dCode = code;
     $('dImg').src = p.image || PLACEHOLDER;
     $('dTitle').textContent = p.name || p.code;
-    $('dSub').textContent = p.name ? p.code : 'ราคาต่อผืน';
-    $('dPrice').innerHTML = `${baht(p.price)}`;
+    $('dSub').textContent = p.name ? p.code : `ราคาต่อ${uomOf(code)}`;
+    $('dDesc').textContent = p.desc || ''; $('dDesc').hidden = !p.desc;
+    $('dQtyLabel').textContent = `จำนวน (${uomOf(code)})`;
+    $('dPrice').innerHTML = `${baht(p.price)}<small> /${esc(uomOf(code))}</small>`;
     const inCart = qtyOf(code);
     $('dInCart').hidden = !inCart;
-    $('dInCart').textContent = `มีในตะกร้าแล้ว ${num(inCart)} ผืน`;
+    $('dInCart').textContent = `มีในตะกร้าแล้ว ${num(inCart)} ${uomOf(code)}`;
     setDQty(inCart || 1);
     openLayer('detail');
     if (fromAdd) { const b = $('dAction'); b && b.focus({ preventScroll: true }); }
@@ -1738,7 +1753,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     setQty(code, n);
     if (n > before) flyToCart(from, n - before);
     closeLayer();
-    if (before || reduceMotion) toast(before ? `อัปเดตเป็น ${num(n)} ผืนแล้ว` : `เพิ่ม ${num(n)} ผืนลงตะกร้าแล้ว`);
+    if (before || reduceMotion) toast(before ? `อัปเดตเป็น ${num(n)} ${esc(uomOf(code))}แล้ว` : `เพิ่ม ${num(n)} ${esc(uomOf(code))}ลงตะกร้าแล้ว`);
   });
   $('dImgBtn').addEventListener('click', () => openViewer(dCode));
 
@@ -2358,7 +2373,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (!short.length && !missing.length) return true;
     const r = await dialog({
       icon: 'warning', iconColor: iconColor(), title: 'สินค้าคงเหลือไม่พอ',
-      html: short.map(x => `<p class="cx-line"><b>${esc(x.code)}</b> สั่ง ${num(x.qty)} ผืน ${x.available ? `เหลือ ${num(x.available)} ผืน` : 'สินค้าหมด'}</p>`).join('')
+      html: short.map(x => { const u = esc(x.uom || uomOf(x.code)); return `<p class="cx-line"><b>${esc(x.code)}</b> สั่ง ${num(x.qty)} ${u} ${x.available ? `เหลือ ${num(x.available)} ${u}` : 'สินค้าหมด'}</p>`; }).join('')
         + missing.map(c => `<p class="cx-line"><b>${esc(c)}</b> ปิดขายแล้ว</p>`).join(''),
       showCancelButton: true, confirmButtonText: 'ปรับตะกร้าให้', cancelButtonText: 'กลับไปแก้เอง',
     });
@@ -2391,7 +2406,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div><span>ผู้สั่ง</span><b>${esc(profile.full_name)}</b></div>
         <div><span>เบอร์โทร</span><b>${esc(profile.phone)}</b></div>
         ${profile.department ? `<div><span>หน่วยงาน</span><b>${esc(profile.department)}</b></div>` : ''}
-        <div><span>สินค้า</span><b>${num(t.n)} รายการ (${num(t.qty)} ผืน)</b></div>
+        <div><span>สินค้า</span><b>${num(t.n)} รายการ (${esc(cartQtyText())})</b></div>
         ${t.coupon ? `<div><span>ยอดสินค้า</span><b>${baht(t.amt)}</b></div>
         <div><span>ส่วนลด (${esc(couponCode)})</span><b class="is-disc">−${baht(t.disc)}</b></div>
         <div class="is-total"><span>ยอดชำระ</span><b>${baht(t.net)}</b></div>`
@@ -2438,10 +2453,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     saveCart(); renderGrid(); renderCart(); renderTotals();
     haptic([10, 40, 10]);
 
+    const soldText = qtyText(ls.map(l => ({ qty: l.qty, uom: uomOf(l.code) })));
     const done = await dialog({
       icon: 'success', iconColor: iconColor(),
       title: 'ส่งคำสั่งซื้อแล้ว',
-      html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${num(res.total_qty)} ผืน ${res.discount ? `ยอดชำระ ${baht(res.total_amount)} (ลด ${baht(res.discount)})` : `ยอดรวม ${baht(res.total_amount)}`}`
+      html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${esc(soldText)} ${res.discount ? `ยอดชำระ ${baht(res.total_amount)} (ลด ${baht(res.discount)})` : `ยอดรวม ${baht(res.total_amount)}`}`
         + (res.expires_at ? `<p class="pay-deadline">กรุณาแจ้งโอนก่อน ${esc(fmtDeadline(res.expires_at))} ไม่อย่างนั้นระบบจะยกเลิกให้อัตโนมัติ</p>` : ''),
       showDenyButton: true, confirmButtonText: 'ดูประวัติคำสั่งซื้อ', denyButtonText: 'สั่งสินค้าต่อ',
       showCancelButton: true, cancelButtonText: 'แจ้งโอนเงินตอนนี้',
@@ -2479,7 +2495,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <summary>
           <span class="hist-no">${esc(h.order_no)}</span>
           <span class="hist-total">${baht(h.total_amount)}</span>
-          <span class="hist-meta">${esc(h.created_at)} (${num(h.total_qty)} ผืน)${h.status === 'จัดส่งบางส่วน' && h.active_items ? ` ส่งแล้ว ${num(h.shipped_items)}/${num(h.active_items)} รายการ` : ''}</span>
+          <span class="hist-meta">${esc(h.created_at)} (${esc(qtyText((h.items || []).map(it => ({ qty: it.qty, uom: it.uom || uomOf(it.code) }))))})${h.status === 'จัดส่งบางส่วน' && h.active_items ? ` ส่งแล้ว ${num(h.shipped_items)}/${num(h.active_items)} รายการ` : ''}</span>
           <span class="chips"><span class="chip ${STATUS_CLASS[h.status] || ''}">${esc(h.status || 'รอดำเนินการ')}</span>
             ${payStatus(h) ? `<span class="chip ${PAY_CLASS[payStatus(h)] || ''}">${esc(payStatus(h))}</span>` : ''}</span>
         </summary>
@@ -2487,7 +2503,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           ${h.items.map(it => `
             <div class="hist-line${(it.status || h.status) === 'ยกเลิก' ? ' is-cancelled' : ''}">
               <img src="${esc((byCode[it.code] && byCode[it.code].image) || PLACEHOLDER)}" alt="" data-fallback>
-              <div><span class="hist-name">${esc(it.name || it.code)}</span><small>${num(it.qty)} × ${baht(it.unit)}</small>
+              <div><span class="hist-name">${esc(it.name || it.code)}</span><small>${num(it.qty)} ${esc(it.uom || uomOf(it.code))} × ${baht(it.unit)}</small>
                 ${it.status && it.status !== h.status ? `<span class="chip chip-sm ${STATUS_CLASS[it.status] || ''}">${esc(it.status)}</span>` : ''}
                 ${it.note ? `<p class="item-note"><b>หมายเหตุ</b> ${esc(it.note)}</p>` : ''}</div>
               <b>${baht(it.total)}</b>
