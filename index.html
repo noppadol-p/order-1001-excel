@@ -790,10 +790,78 @@ body.is-typing .tabbar, body.is-typing .checkout { display: none; }
 .swal2-container.swal2-top { padding-top: calc(var(--safe-t) + 8px); }
 .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab-h) + var(--safe-b) + 10px); }
 body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab-h) + 76px + var(--safe-b) + 10px); }
+.sw-cpn-ico:focus { outline: none; }
 /* รายละเอียดย่อ */
 .card-desc { margin: 2px 0 4px; font-size: 13px; line-height: 1.45; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .detail-desc { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
 #dPrice small { font-size: 14px; font-weight: 500; color: var(--muted); }
+/* ที่อยู่จัดส่ง / การรับสินค้า */
+.addr-title { display: flex; align-items: baseline; justify-content: space-between; }
+.addr-title small { font-size: 13px; font-weight: 400; color: var(--muted); }
+.addr-list { display: flex; flex-direction: column; gap: 10px; }
+.addr-card { background: var(--surface, #fff); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.addr-card.is-default { border-color: color-mix(in srgb, var(--ok, #2F6B3E) 45%, var(--line)); }
+.addr-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.addr-head b { font-size: 15px; }
+.addr-head .chip-btn { margin-left: auto; }
+.addr-ico { display: inline-grid; color: var(--accent, #9A6A45); }
+.addr-ico svg { width: 18px; height: 18px; flex: none; }
+.addr-badge { padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; background: color-mix(in srgb, var(--ok, #2F6B3E) 14%, transparent); color: var(--ok, #2F6B3E); }
+.addr-who { margin: 0; font-size: 14px; font-weight: 500; }
+.addr-text { margin: 4px 0 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
+.addr-note { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+.addr-acts { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.addr-del { margin-left: auto; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 10px; background: none; color: #B42318; cursor: pointer; }
+.addr-del svg { width: 20px; height: 20px; flex: none; }
+.addr-empty, .addr-hint { margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
+.addr-hint { margin-top: 8px; }
+.addr-add-btn { width: 100%; min-height: 48px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px dashed color-mix(in srgb, var(--ink) 25%, transparent); border-radius: 14px; background: transparent; color: var(--accent-ink, #6B4A2E); font: 600 15px var(--font); cursor: pointer; }
+.addr-add-btn svg { width: 18px; height: 18px; flex: none; }
+.dlv { display: flex; flex-direction: column; gap: 10px; }
+.dlv-opts { display: flex; gap: 10px; }
+.dlv-opt { flex: 1; display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface, #fff); cursor: pointer; }
+.dlv-opt.is-on { border: 2px solid var(--accent, #9A6A45); padding: 11px; background: color-mix(in srgb, var(--accent, #9A6A45) 6%, var(--surface, #fff)); }
+.dlv-top { display: flex; align-items: center; justify-content: space-between; }
+.dlv-ico { color: var(--accent, #9A6A45); display: inline-grid; }
+.dlv-ico svg { width: 22px; height: 22px; flex: none; }
+.dlv-opt input, .addr-opt input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent, #9A6A45); }
+.dlv-opt b { font-size: 15px; }
+.dlv-opt small { font-size: 13px; line-height: 1.45; color: var(--muted); }
+.addr-pick { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.addr-opt { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border-radius: 14px; border: 1px solid var(--line); cursor: pointer; }
+.addr-opt.is-on { border: 2px solid var(--accent, #9A6A45); padding: 11px; }
+.addr-opt input { margin-top: 2px; flex: none; }
+.addr-opt-body { display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+.addr-opt-body b { font-size: 15px; display: flex; align-items: center; gap: 6px; }
+.addr-opt-body small { font-size: 13px; line-height: 1.5; color: var(--muted); }
+.hist-dlv { display: flex; align-items: center; gap: 10px; margin: 10px 0 0; padding: 10px 12px; border-radius: 12px; background: var(--bg, #F5F0EA); }
+.hist-dlv > div { display: flex; flex-direction: column; gap: 2px; font-size: 14px; min-width: 0; }
+.hist-dlv small { font-size: 13px; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
+.hist-dlv .chip-btn { margin-left: auto; flex: none; }
+.sw-ship { display: flex; flex-direction: column; gap: 2px; text-align: left; font-size: 14px; padding: 2px 0 8px; }
+.sw-ship small { color: var(--muted); line-height: 1.5; }
+.sw-dlv { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
+/* ฟอร์มที่อยู่ */
+.sw-addr { max-height: 92vh; overflow-y: auto; }
+.af { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+.af-f { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500; min-width: 0; }
+.af-f small { font-weight: 400; color: var(--muted); }
+.af-f input, .af-f textarea { width: 100%; box-sizing: border-box; min-height: 46px; padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent); border-radius: 10px; background: #fff; font: 400 16px var(--font); color: var(--ink); }
+.af-f textarea { resize: none; }
+.af-f .is-invalid, .af-f input.is-invalid, .af-f textarea.is-invalid { border-color: #B42318; }
+.af-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.af-segs { display: flex; gap: 8px; }
+.af-seg { flex: 1; min-height: 44px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent); background: #fff; font: 500 15px var(--font); color: var(--ink); cursor: pointer; }
+.af-seg[aria-pressed="true"] { border-color: var(--accent, #9A6A45); background: color-mix(in srgb, var(--accent, #9A6A45) 10%, #fff); font-weight: 600; }
+.af-me { align-self: flex-start; margin-top: -4px; font-size: 13px; }
+.af-zipopts { display: flex; flex-wrap: wrap; gap: 8px; }
+.af-zipopts:empty { display: none; }
+.af-opt { min-height: 40px; padding: 0 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent); background: #fff; font: 500 14px var(--font); color: var(--ink); cursor: pointer; }
+.af-opt[aria-pressed="true"] { border-color: var(--accent, #9A6A45); background: color-mix(in srgb, var(--accent, #9A6A45) 12%, #fff); }
+.af-hint { width: 100%; margin: 0; font-size: 13px; color: var(--muted); }
+.af-def { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 15px; }
+.af-def input { width: 20px; height: 20px; accent-color: var(--accent, #9A6A45); }
+@media (max-width: 359px) { .af-2 { grid-template-columns: 1fr; } .dlv-opts { flex-direction: column; } }
 </style>
 </head>
 <body>
@@ -804,6 +872,9 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v10h16V10"/><path d="M3 10l2-6h14l2 6"/><path d="M9 20v-6h6v6"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h11v10H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
@@ -861,6 +932,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div class="panel"><ul class="lines" id="lines"></ul></div>
         <div class="section-title">ผู้สั่ง</div>
         <div class="panel buyer" id="buyer"></div>
+        <div class="section-title">การรับสินค้า</div>
+        <div class="dlv" id="delivery"></div>
         <div class="section-head">
           <div class="section-title">สรุป</div>
           <button type="button" class="coupon-link" id="couponBtn"><svg aria-hidden="true"><use href="#i-ticket"/></svg><span id="couponBtnText">ส่วนลดคูปอง</span></button>
@@ -929,6 +1002,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         </section>
       </div>
 
+      <div class="section-title addr-title">ที่อยู่จัดส่ง <small id="addrCount"></small></div>
+      <div class="addr-list" id="addrList"></div>
+      <button type="button" class="addr-add-btn" id="addrAdd"><svg class="i"><use href="#i-plus"/></svg>เพิ่มที่อยู่ใหม่</button>
+      <p class="addr-hint" id="addrFull" hidden>ครบจำนวนที่เก็บได้แล้ว แก้ไขหรือลบที่อยู่เดิมเพื่อเพิ่มใหม่</p>
+
       <div class="section-title">แอป</div>
       <div class="panel">
         <ul class="menu">
@@ -953,7 +1031,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.7.0</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.8.0</p>
     </div>
   </section>
 </main>
@@ -1033,7 +1111,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   const IMG_ACCEPT = 'image/' + '*';
   const USE_SW = true;
   const MAX_QTY = 9999;
-  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', session: 'b1001:session', coupon: 'b1001:coupon', productsSync: 'b1001:products-sync', pendingOrder: 'b1001:pending-order', pendingSlip: 'b1001:pending-slip', profileDirty: 'b1001:profile-dirty', cancelSeen: 'b1001:cancel-seen', iosHint: 'b1001:ios-hint' };
+  const K = { cart: 'b1001:cart', profile: 'b1001:profile', history: 'b1001:history', histSync: 'b1001:history-sync', device: 'b1001:device', account: 'b1001:account', session: 'b1001:session', coupon: 'b1001:coupon', productsSync: 'b1001:products-sync', pendingOrder: 'b1001:pending-order', pendingSlip: 'b1001:pending-slip', profileDirty: 'b1001:profile-dirty', cancelSeen: 'b1001:cancel-seen', iosHint: 'b1001:ios-hint', addresses: 'b1001:addresses', addrMax: 'b1001:addr-max', delivery: 'b1001:delivery' };
   const GOOGLE_CLIENT_ID = String(CFG.GOOGLE_CLIENT_ID || '').trim();
   const HISTORY_MAX = 50;
   const PLACEHOLDER = 'data:image/svg+xml;utf8,' + encodeURIComponent(
@@ -1217,6 +1295,38 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       if (code !== 'SUMMER50') return Promise.reject(new Error('ไม่พบโค้ดนี้ ตรวจตัวสะกดอีกครั้ง'));
       return wait({ code, percent: 0.5, discount: Math.round((arg.subtotal || 0) * 50) / 100, ends: '31/12/2026' });
     }
+    const demoAddr = () => store.get('b1001:demo-addr', []);
+    const saveDemoAddr = l => { store.set('b1001:demo-addr', l); return { addresses: l, max: 2 }; };
+    if (fn === 'getAddresses') return wait({ addresses: demoAddr(), max: 2 });
+    if (fn === 'saveAddress') {
+      const a = Object.assign({}, arg.address), l = demoAddr();
+      if (!a.name || !a.line || !/^\d{5}$/.test(a.zip || '') || !a.sub || !a.dist || !a.prov) return Promise.reject(new Error('กรอกที่อยู่ให้ครบ'));
+      if (!a.id && l.length >= 2) return Promise.reject(new Error('เก็บที่อยู่ได้สูงสุด 2 ที่อยู่ ลบที่อยู่เดิมก่อน'));
+      const id = a.id || 'A' + newId().slice(0, 9);
+      const def = a.is_default || !l.length || (l.find(x => x.id === a.id) || {}).is_default;
+      const next = l.filter(x => x.id !== id).map(x => Object.assign({}, x, { is_default: def ? false : x.is_default }));
+      next.push(Object.assign(a, { id, is_default: !!def }));
+      next.sort((x, y) => (y.is_default ? 1 : 0) - (x.is_default ? 1 : 0));
+      return wait(Object.assign({ id }, saveDemoAddr(next)));
+    }
+    if (fn === 'deleteAddress') {
+      const l = demoAddr(), gone = l.find(x => x.id === arg.id), rest = l.filter(x => x.id !== arg.id);
+      if (gone && gone.is_default && rest.length) rest[0].is_default = true;
+      return wait(saveDemoAddr(rest));
+    }
+    if (fn === 'setDefaultAddress') return wait(saveDemoAddr(demoAddr().map(x => Object.assign({}, x, { is_default: x.id === arg.id })).sort((x, y) => (y.is_default ? 1 : 0) - (x.is_default ? 1 : 0))));
+    const demoShip = dl => {
+      if (dl && dl.method === 'ship') { const a = demoAddr().find(x => x.id === dl.address_id); if (!a) throw new Error('ไม่พบที่อยู่จัดส่งที่เลือก กรุณาเลือกที่อยู่ใหม่'); return { delivery: 'จัดส่ง', ship_to: `${a.name} โทร ${a.phone} | ${addrText(a)}` }; }
+      return dl && dl.method === 'pickup' ? { delivery: 'รับที่บริษัท', ship_to: '' } : { delivery: '', ship_to: '' };
+    };
+    if (fn === 'changeDelivery') {
+      const all = demoOrders(), o = all.find(x => x.order_no === arg.order_no && x.device === arg.device_key);
+      if (!o) return Promise.reject(new Error('คำสั่งซื้อนี้ไม่ได้ส่งจากเครื่องหรือบัญชีนี้'));
+      if (o.status !== 'รอดำเนินการ') return Promise.reject(new Error(`คำสั่งซื้อนี้อยู่ระหว่าง${o.status} เปลี่ยนที่อยู่ไม่ได้ กรุณาติดต่อผู้ดูแล`));
+      let r; try { r = demoShip({ method: arg.method, address_id: arg.address_id }); } catch (e) { return Promise.reject(e); }
+      Object.assign(o, r); store.set('b1001:demo-orders', all);
+      return wait(Object.assign({ order_no: o.order_no }, r));
+    }
     if (fn === 'placeOrder') {
       const d = new Date(), p = n => String(n).padStart(2, '0');
       const prefix = 'ORD' + String(d.getFullYear()).slice(2) + p(d.getMonth() + 1) + p(d.getDate()) + '-';
@@ -1228,6 +1338,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       const disc = cp ? Math.round(amt * 50) / 100 : 0;
       const res = { order_no: prefix + String(seq).padStart(4, '0'), created_at: `${p(d.getDate())}/${p(d.getMonth() + 1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`, total_qty: qty,
         subtotal: amt, coupon: cp, discount: disc, total_amount: Math.round((amt - disc) * 100) / 100, status: 'รอดำเนินการ' };
+      try { Object.assign(res, demoShip(arg.delivery)); } catch (e) { return Promise.reject(e); }
       const all = demoOrders();
       all.unshift(Object.assign({ device: arg.device_key, full_name: arg.full_name, department: arg.department,
         items: arg.items.map(i => ({ code: i.code, name: '', qty: i.qty, unit: byCode[i.code].price, total: i.qty * byCode[i.code].price })) }, res));
@@ -1255,7 +1366,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   // หน่วยขาย (ผืน / พับ / กล่อง …) และจำนวนรวมแยกตามหน่วย เช่น "3 ผืน · 2 กล่อง" (คนละหน่วยบวกกันไม่ได้)
   const uomOf = code => (byCode[code] && byCode[code].uom) || 'ผืน';
   function qtyText(list) {
-    const by = Object.create(null), order = [];
+    const by = {}, order = [];
     list.forEach(x => { const u = x.uom || 'ผืน'; if (!(u in by)) { by[u] = 0; order.push(u); } by[u] += Number(x.qty) || 0; });
     return order.map(u => `${num(by[u])} ${u}`).join(' · ') || '0';
   }
@@ -1386,10 +1497,12 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     $('cartSum').innerHTML = `
       <div class="sum-row"><span>จำนวนรายการ</span><b>${num(t.n)} รายการ</b></div>
       <div class="sum-row"><span>จำนวนรวม</span><b>${esc(cartQtyText())}</b></div>
+      <div class="sum-row"><span>การรับสินค้า</span><b>${esc(deliveryLabel())}</b></div>
       ${pr.coupon ? `<div class="sum-row"><span>ยอดสินค้า</span><b>${baht(t.amt)}</b></div>
       <div class="sum-row disc"><span>ส่วนลดคูปอง<span class="cpn-pill">${esc(pr.coupon.code)}<button type="button" data-coupon-remove aria-label="เอาคูปอง ${esc(pr.coupon.code)} ออก"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></span></span><b>−${baht(pr.disc)}</b></div>
       <div class="sum-row total"><span>ยอดชำระ</span><b>${baht(pr.net)}</b></div>`
       : `<div class="sum-row total"><span>ยอดรวม</span><b>${baht(t.amt)}</b></div>`}`;
+    renderDelivery();
   }
   function renderTotals() {
     const t = totals();
@@ -1411,7 +1524,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (!Number.isFinite(n) || n < 0) n = 0;
     if (n > maxFor(code)) {
       n = maxFor(code);
-      toast(stockOf(code) !== null && stockOf(code) < MAX_QTY ? `${esc(code)} เหลือ ${num(stockOf(code))} ${esc(uomOf(code))}` : `สั่งได้สูงสุด ${num(MAX_QTY)} ${esc(uomOf(code))}ต่อรายการ`);
+      toast(stockOf(code) !== null && stockOf(code) < MAX_QTY ? `${code} เหลือ ${num(stockOf(code))} ${uomOf(code)}` : `สั่งได้สูงสุด ${num(MAX_QTY)} ${uomOf(code)}ต่อรายการ`);
     }
     const before = qtyOf(code);
     if (n === before) { if (opt.input) opt.input.value = n || ''; return; }
@@ -1475,11 +1588,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         },
         preConfirm: () => {
           const x = parseInt(document.getElementById('sw-qty').value, 10);
-          if (!(x >= 1)) { Swal.showValidationMessage(`ใส่จำนวนอย่างน้อย 1 ${esc(uomOf(code))}`); return false; }
-          if (x > MAX_QTY) { Swal.showValidationMessage(`สั่งได้สูงสุด ${num(MAX_QTY)} ${esc(uomOf(code))}`); return false; }
+          if (!(x >= 1)) { Swal.showValidationMessage(`ใส่จำนวนอย่างน้อย 1 ${uomOf(code)}`); return false; }
+          if (x > MAX_QTY) { Swal.showValidationMessage(`สั่งได้สูงสุด ${num(MAX_QTY)} ${uomOf(code)}`); return false; }
           if (qtyOf(code) + x > maxFor(code)) {
             const room = maxFor(code) - qtyOf(code);
-            Swal.showValidationMessage(room > 0 ? `เหลือ ${num(stockOf(code))} ${esc(uomOf(code))}${qtyOf(code) ? ` (ในตะกร้าแล้ว ${num(qtyOf(code))})` : ''} เพิ่มได้อีก ${num(room)} ${esc(uomOf(code))}` : `ใส่ตะกร้าครบยอดคงเหลือแล้ว (${num(stockOf(code))} ${esc(uomOf(code))})`);
+            Swal.showValidationMessage(room > 0 ? `เหลือ ${num(stockOf(code))} ${uomOf(code)}${qtyOf(code) ? ` (ในตะกร้าแล้ว ${num(qtyOf(code))})` : ''} เพิ่มได้อีก ${num(room)} ผืน` : `ใส่ตะกร้าครบยอดคงเหลือแล้ว (${num(stockOf(code))} ผืน)`);
             return false;
           }
           return x;
@@ -1491,7 +1604,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const from = snapFrom(imgEl);
     setQty(code, Math.min(qtyOf(code) + n, maxFor(code)), { focus: '[data-step="inc"]' });
     flyToCart(from, n);
-    if (reduceMotion) toast(`เพิ่ม ${num(n)} ${esc(uomOf(code))}ลงตะกร้าแล้ว`);
+    if (reduceMotion) toast(`เพิ่ม ${num(n)} ${uomOf(code)}ลงตะกร้าแล้ว`);
   }
 
   // ===== โยนสินค้าลงตะกร้า: รูปลอยเป็นวิถีโค้งลงไอคอนตะกร้า แล้วตะกร้า "รับ" พร้อม +จำนวน =====
@@ -1636,7 +1749,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     const cur = coupon();
     const r = await dialog({
       title: 'ส่วนลดคูปอง',
-      html: `<div class="sw-cpn-ico"><svg aria-hidden="true"><use href="#i-ticket"/></svg></div>
+      // ไอคอนรับโฟกัสแรกแทนช่องกรอก (SweetAlert2 โฟกัสช่องแรกเองถ้าไม่มี autofocus) คีย์บอร์ดจึงไม่เด้งจนกว่าจะแตะช่อง
+      html: `<div class="sw-cpn-ico" tabindex="-1" autofocus><svg aria-hidden="true"><use href="#i-ticket"/></svg></div>
         <p class="sw-cpn-note">ใส่โค้ดเพื่อรับส่วนลดท้ายบิลของคำสั่งซื้อนี้</p>
         <div class="sw-form"><div class="field"><label for="sw-coupon">โค้ดส่วนลด</label>
         <input id="sw-coupon" type="text" inputmode="text" pattern="[A-Za-z0-9\\-]*" placeholder="ตัวอย่าง: ABC-123" maxlength="40" autocomplete="off" autocapitalize="characters" spellcheck="false" enterkeyhint="done" value="${esc(cleanCode(cur ? cur.code : ''))}"></div></div>`,
@@ -1645,18 +1759,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
       didOpen: el => {                                   // ไม่โฟกัสช่องเอง (คีย์บอร์ดไม่เด้งจนกว่าจะแตะช่อง)
         const i = el.querySelector('#sw-coupon');
-        el.tabIndex = -1;                                // popup มี role/ชื่อจาก SweetAlert2 และไม่ทำให้คีย์บอร์ดมือถือเด้ง
-        el.focus({ preventScroll: true });
-        let composing = false;
-        const normalize = () => {
+        i.addEventListener('input', () => {
           const v = cleanCode(i.value);                  // ตัวพิมพ์ใหญ่ เหลือเฉพาะ A–Z 0–9 และ -
           if (v !== i.value) i.value = v;
           i.classList.remove('is-invalid'); Swal.resetValidationMessage();
-        };
-        i.addEventListener('compositionstart', () => { composing = true; });
-        i.addEventListener('compositionend', () => { composing = false; normalize(); });
-        i.addEventListener('input', e => { if (!composing && !e.isComposing) normalize(); });
-        i.addEventListener('blur', normalize);
+        });
         i.addEventListener('keydown', e => {             // Enter / "เสร็จ" บนคีย์บอร์ดมือถือ = กด "ใช้โค้ด"
           if (e.key === 'Enter' && !e.isComposing && !Swal.isLoading()) { e.preventDefault(); Swal.clickConfirm(); }
         });
@@ -1664,7 +1771,6 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       preConfirm: async () => {
         const i = document.getElementById('sw-coupon');
         const code = cleanCode(i.value);
-        i.value = code;
         const fail = m => { i.classList.add('is-invalid'); Swal.showValidationMessage(m); return false; };
         if (!code) return fail('กรอกโค้ดส่วนลด');
         if (offline) return fail('ยังออฟไลน์อยู่ ต่ออินเทอร์เน็ตแล้วลองใหม่');
@@ -1753,7 +1859,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     setQty(code, n);
     if (n > before) flyToCart(from, n - before);
     closeLayer();
-    if (before || reduceMotion) toast(before ? `อัปเดตเป็น ${num(n)} ${esc(uomOf(code))}แล้ว` : `เพิ่ม ${num(n)} ${esc(uomOf(code))}ลงตะกร้าแล้ว`);
+    if (before || reduceMotion) toast(before ? `อัปเดตเป็น ${num(n)} ${uomOf(dCode)}แล้ว` : `เพิ่ม ${num(n)} ${uomOf(dCode)}ลงตะกร้าแล้ว`);
   });
   $('dImgBtn').addEventListener('click', () => openViewer(dCode));
 
@@ -1952,21 +2058,11 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       pushProfile();
     }
   }
-  // ส่งทีละ request และวนส่ง revision ล่าสุดต่อ เพื่อไม่ให้ response เก่าล้าง dirty flag ของข้อมูลใหม่
-  let profilePushing = false;
-  async function pushProfile() {
-    if (profilePushing || offline || !profileOk() || !(API_URL || onAppsScript)) return;
-    profilePushing = true;
-    try {
-      while (store.get(K.profileDirty, false) && !offline && profileOk()) {
-        const snapshot = { full_name: profile.full_name, phone: profile.phone, department: profile.department };
-        store.set(K.profileDirty, false);
-        try { await call('saveProfile', Object.assign({}, ownerParams(), snapshot)); }
-        catch (e) { store.set(K.profileDirty, true); break; }
-      }
-    } finally {
-      profilePushing = false;
-    }
+  // ส่งข้อมูลผู้สั่งไปแท็บ ผู้ใช้ ถ้ายังค้าง (แก้ตอนออฟไลน์หรือส่งไม่สำเร็จ): ส่งเมื่อออนไลน์
+  function pushProfile() {
+    if (!store.get(K.profileDirty, false) || offline || !profileOk() || !(API_URL || onAppsScript)) return;
+    call('saveProfile', Object.assign({}, ownerParams(), { full_name: profile.full_name, phone: profile.phone, department: profile.department }))
+      .then(() => store.set(K.profileDirty, false)).catch(() => {});
   }
   async function askProfile() {
     const field = (name, label, type, extra) => `
@@ -2016,6 +2112,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     $('meSub').textContent = acc ? acc.email : profile.phone ? `โทร ${profile.phone}` : 'กรอกชื่อและเบอร์โทรเพื่อเริ่มสั่งซื้อ';
   }
   function renderMe() {
+    renderAddresses();
     const f = $('profileForm');
     ['full_name', 'department', 'phone'].forEach(k => { f.elements[k].value = profile[k] || ''; f.querySelector(`[data-field="${k}"]`).classList.remove('is-invalid'); });
     const n = store.get(K.history, []).length;
@@ -2284,14 +2381,17 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     requestPersist();
     renderMe();
     // เครื่องนี้มีคำสั่งซื้อที่สั่งโดยไม่ล็อกอิน: ถามก่อนย้ายเข้าบัญชี (กันกรณีมือถือใช้ร่วมกัน)
-    const pend = res.pending || [];
-    if (pend.length) {
+    const pend = res.pending || [], pAddr = Number(res.pending_addresses) || 0;
+    store.set(K.addresses, []); store.set(K.delivery, null);   // ที่อยู่ของบัญชีโหลดใหม่ด้านล่าง
+    if (pend.length || pAddr) {
       const shown = pend.slice(0, 5);
       const c = await dialog({
-        icon: 'question', iconColor: iconColor(), title: 'ย้ายคำสั่งซื้อในเครื่องนี้เข้าบัญชี?',
-        html: `พบ ${num(pend.length)} คำสั่งซื้อที่สั่งจากเครื่องนี้โดยไม่ได้เข้าสู่ระบบ ย้ายเข้าบัญชี <b>${esc(res.email)}</b> เฉพาะเมื่อเป็นของคุณเอง
-          <ul class="claim-list">${shown.map(o => `<li><span>${esc(o.order_no)}<small>${esc(o.created_at)} ${esc(o.full_name)}</small></span><b>${baht(o.total)}</b></li>`).join('')}</ul>
-          ${pend.length > shown.length ? `<p class="pay-line">และอีก ${num(pend.length - shown.length)} คำสั่งซื้อ</p>` : ''}`,
+        icon: 'question', iconColor: iconColor(), title: pend.length ? 'ย้ายคำสั่งซื้อในเครื่องนี้เข้าบัญชี?' : 'ย้ายที่อยู่ในเครื่องนี้เข้าบัญชี?',
+        html: (pend.length ? `พบ ${num(pend.length)} คำสั่งซื้อที่สั่งจากเครื่องนี้โดยไม่ได้เข้าสู่ระบบ` : `พบที่อยู่จัดส่ง ${num(pAddr)} ที่อยู่ที่บันทึกจากเครื่องนี้โดยไม่ได้เข้าสู่ระบบ`)
+          + ` ย้ายเข้าบัญชี <b>${esc(res.email)}</b> เฉพาะเมื่อเป็นของคุณเอง
+          ${pend.length ? `<ul class="claim-list">${shown.map(o => `<li><span>${esc(o.order_no)}<small>${esc(o.created_at)} ${esc(o.full_name)}</small></span><b>${baht(o.total)}</b></li>`).join('')}</ul>` : ''}
+          ${pend.length > shown.length ? `<p class="pay-line">และอีก ${num(pend.length - shown.length)} คำสั่งซื้อ</p>` : ''}
+          ${pend.length && pAddr ? `<p class="pay-line">พร้อมที่อยู่จัดส่ง ${num(pAddr)} ที่อยู่</p>` : ''}`,
         showDenyButton: true, confirmButtonText: 'ย้ายเข้าบัญชี', denyButtonText: 'ไม่ใช่ของฉัน ไม่ต้องย้าย',
         reverseButtons: false, customClass: Object.assign({}, SW_CLASS, { popup: 'sw is-stacked' }),
       });
@@ -2300,22 +2400,23 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           const r = await call('claimDeviceOrders', { session: res.session, device_key: deviceKey() });
           // ยืนยันแล้วว่าเครื่องนี้เป็นของคนเดียวกัน: บันทึกข้อมูลผู้สั่งของเครื่องนี้เข้าบัญชี (ใช้เติมฟอร์มบนเครื่องอื่น)
           if (profileOk()) saveProfile({});
-          toast(`ย้ายเข้าบัญชีแล้ว ${num(r.moved ? pend.length : 0)} คำสั่งซื้อ`);
+          toast(pend.length ? `ย้ายเข้าบัญชีแล้ว ${num(r.moved ? pend.length : 0)} คำสั่งซื้อ${r.moved_addresses ? ` และ ${num(r.moved_addresses)} ที่อยู่` : ''}` : `ย้ายที่อยู่เข้าบัญชีแล้ว ${num(r.moved_addresses || 0)} ที่อยู่`);
         } catch (e2) { toast(e2.message || 'ย้ายไม่สำเร็จ ลองใหม่ภายหลัง'); }
       } else {
-        toast('ไม่ย้าย คำสั่งซื้อเหล่านั้นยังอยู่กับเครื่องนี้');
+        toast(pend.length ? 'ไม่ย้าย คำสั่งซื้อเหล่านั้นยังอยู่กับเครื่องนี้' : 'ไม่ย้าย ที่อยู่เหล่านั้นยังอยู่กับเครื่องนี้');
       }
     } else {
       toast(`เข้าสู่ระบบแล้ว ${res.email}`);
     }
-    syncHistory(true);
+    syncHistory(true); syncAddresses();
   }
   async function signOutLocal() {
     try { if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); } catch (e) {}
     store.set(K.session, ''); store.set(K.account, null);
     store.set(K.history, []); store.set(K.histSync, 0);   // กลับไปใช้ประวัติของรหัสเครื่องนี้
-    renderMe();
-    syncHistory(true);
+    store.set(K.addresses, []); store.set(K.delivery, null);   // ที่อยู่ของบัญชีไม่ค้างในเครื่อง
+    renderMe(); renderCart();
+    syncHistory(true); syncAddresses();
   }
   $('accLogout').addEventListener('click', async () => {
     const acc = store.get(K.account, null);
@@ -2393,9 +2494,17 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     }
     if (!profileOk() && !(await askProfile())) return;
     if (!(await precheckCart(ls))) return;
+    // การรับสินค้า: จัดส่งต้องมีที่อยู่
+    let delivery = { method: 'pickup', address_id: '' }, shipAddr = null;
+    if (deliveryPref().method === 'ship') {
+      shipAddr = selectedAddr();
+      if (!shipAddr) { const id = await openAddressForm(); if (!id) return; setDelivery({ method: 'ship', address_id: id }); shipAddr = selectedAddr(); }
+      if (!shipAddr) return;
+      delivery = { method: 'ship', address_id: shipAddr.id };
+    }
     const t = priced();
     const couponCode = t.coupon ? t.coupon.code : '';
-    const sig = JSON.stringify([ls.map(l => [l.code, l.qty]), profile, couponCode]);
+    const sig = JSON.stringify([ls.map(l => [l.code, l.qty]), profile, couponCode, delivery]);
     if (!pending) { const saved = store.get(K.pendingOrder, null); if (saved && saved.sig === sig && Date.now() - saved.at < 6 * 3600e3) pending = saved; }
     if (!pending || pending.sig !== sig) pending = { id: newId(), sig, at: Date.now() };
     store.set(K.pendingOrder, pending);                 // ปิดแอประหว่างรอผลแล้วส่งใหม่ ก็ยังได้คำสั่งซื้อเดิม ไม่ซ้ำ
@@ -2407,6 +2516,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <div><span>เบอร์โทร</span><b>${esc(profile.phone)}</b></div>
         ${profile.department ? `<div><span>หน่วยงาน</span><b>${esc(profile.department)}</b></div>` : ''}
         <div><span>สินค้า</span><b>${num(t.n)} รายการ (${esc(cartQtyText())})</b></div>
+        <div><span>การรับสินค้า</span><b>${shipAddr ? `จัดส่ง: ${esc(shipAddr.label)}` : 'รับที่บริษัท'}</b></div>
+        ${shipAddr ? `<div class="sw-ship"><span>${esc(shipAddr.name)} · ${esc(shipAddr.phone)}</span><small>${esc(addrText(shipAddr))}</small></div>` : ''}
         ${t.coupon ? `<div><span>ยอดสินค้า</span><b>${baht(t.amt)}</b></div>
         <div><span>ส่วนลด (${esc(couponCode)})</span><b class="is-disc">−${baht(t.disc)}</b></div>
         <div class="is-total"><span>ยอดชำระ</span><b>${baht(t.net)}</b></div>`
@@ -2421,7 +2532,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           return await call('placeOrder', {
             full_name: profile.full_name, department: profile.department, phone: profile.phone,
             items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, coupon: couponCode, ...ownerParams(),
-            client: deviceInfo(),
+            client: deviceInfo(), delivery,
           });
         } catch (err) {
           if (window.Swal) Swal.showValidationMessage((err && err.message) || 'ส่งคำสั่งซื้อไม่สำเร็จ ลองใหม่อีกครั้ง');
@@ -2431,7 +2542,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     });
     let res = r.value;
     if (!hasSwal && r.isConfirmed) {
-      try { res = await call('placeOrder', { full_name: profile.full_name, department: profile.department, phone: profile.phone, items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, coupon: couponCode, ...ownerParams(), client: deviceInfo() }); }
+      try { res = await call('placeOrder', { full_name: profile.full_name, department: profile.department, phone: profile.phone, items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, coupon: couponCode, ...ownerParams(), client: deviceInfo(), delivery }); }
       catch (err) { alert(err.message); return; }
     }
     if (!r.isConfirmed || !res) return;
@@ -2444,6 +2555,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       full_name: profile.full_name, department: profile.department,
       total_qty: res.total_qty, total_amount: res.total_amount,
       subtotal: res.subtotal, coupon: res.coupon || '', discount: res.discount || 0, expires_at: res.expires_at || 0,
+      delivery: res.delivery || '', ship_to: res.ship_to || '',
       items: ls.map(l => ({ code: l.code, name: l.p.name || '', qty: l.qty, unit: l.unit, total: l.total })),
     });
     store.set(K.history, hist.slice(0, HISTORY_MAX));
@@ -2458,6 +2570,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       icon: 'success', iconColor: iconColor(),
       title: 'ส่งคำสั่งซื้อแล้ว',
       html: `เลขที่คำสั่งซื้อ<br><span class="sw-no">${esc(res.order_no)}</span><br>${esc(soldText)} ${res.discount ? `ยอดชำระ ${baht(res.total_amount)} (ลด ${baht(res.discount)})` : `ยอดรวม ${baht(res.total_amount)}`}`
+        + (res.delivery ? `<p class="sw-dlv">${res.delivery === 'จัดส่ง' && shipAddr ? `จัดส่งที่ ${esc(shipAddr.label)}` : esc(res.delivery)} (แก้ได้ในประวัติ จนกว่าจะเตรียมส่งของ)</p>` : '')
         + (res.expires_at ? `<p class="pay-deadline">กรุณาแจ้งโอนก่อน ${esc(fmtDeadline(res.expires_at))} ไม่อย่างนั้นระบบจะยกเลิกให้อัตโนมัติ</p>` : ''),
       showDenyButton: true, confirmButtonText: 'ดูประวัติคำสั่งซื้อ', denyButtonText: 'สั่งสินค้าต่อ',
       showCancelButton: true, cancelButtonText: 'แจ้งโอนเงินตอนนี้',
@@ -2471,6 +2584,250 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       if (h) { go('history'); openSlip(h); }
     }
   }
+
+  // ================= ที่อยู่จัดส่ง / การรับสินค้า =================
+  // ที่อยู่เก็บที่หลังบ้าน (แท็บ "ที่อยู่") ผูกกับเครื่องหรือบัญชี  แอปเก็บสำเนาไว้แสดงตอนออฟไลน์
+  // ข้อมูลรหัสไปรษณีย์ → แขวง/เขต/จังหวัด: ไฟล์แยก โหลดเมื่อเปิดฟอร์ม (โหลดไม่ได้ = กรอกเอง)
+  const ADDR_DATA_URL = CFG.ADDRESS_DATA_URL || (/github\.io$/.test(location.hostname) ? 'thai-address.json' : 'https://noppadol-p.github.io/order-1001-excel/thai-address.json');
+  const addrList = () => store.get(K.addresses, []);
+  const addrMax = () => store.get(K.addrMax, 2);
+  const addrText = a => [a.line, a.sub, a.dist, a.prov, a.zip].filter(Boolean).join(' ');
+  const deliveryPref = () => Object.assign({ method: 'pickup', address_id: '' }, store.get(K.delivery, {}) || {});
+  function selectedAddr() {
+    const d = deliveryPref(), l = addrList();
+    return l.find(a => a.id === d.address_id) || l.find(a => a.is_default) || l[0] || null;
+  }
+  function setDelivery(d) { store.set(K.delivery, Object.assign(deliveryPref(), d)); renderCart(); }
+  const deliveryLabel = () => { const d = deliveryPref(), a = selectedAddr(); return d.method === 'ship' ? (a ? `จัดส่ง (${a.label})` : 'จัดส่ง (ยังไม่เลือกที่อยู่)') : 'รับที่บริษัท'; };
+  let thaiAddr = null, thaiAddrLoading = null;
+  function loadThaiAddr() {
+    if (thaiAddr) return Promise.resolve(thaiAddr);
+    if (!thaiAddrLoading) {
+      thaiAddrLoading = fetch(ADDR_DATA_URL).then(r => (r.ok ? r.json() : null)).then(d => { thaiAddr = d && d.z ? d : null; return thaiAddr; })
+        .catch(() => null).then(v => { if (!v) thaiAddrLoading = null; return v; });
+    }
+    return thaiAddrLoading;
+  }
+  const zipOptions = zip => (thaiAddr && thaiAddr.z[zip] ? thaiAddr.z[zip].map(([t, di]) => ({ sub: t, dist: thaiAddr.d[di][0], prov: thaiAddr.p[thaiAddr.d[di][1]] })) : []);
+
+  async function syncAddresses() {
+    if (offline) return;
+    try {
+      const r = await call('getAddresses', ownerParams());
+      store.set(K.addresses, r.addresses || []); if (r.max) store.set(K.addrMax, r.max);
+    } catch (e) { return; }
+    renderAddresses(); renderCart();
+  }
+  function addrCard(a, actions) {
+    const id = esc(a.id), label = esc(a.label);
+    return `<article class="addr-card${a.is_default ? ' is-default' : ''}">
+      <div class="addr-head"><span class="addr-ico">${icon('i-pin')}</span><b>${label}</b>${a.is_default ? '<span class="addr-badge">ค่าเริ่มต้น</span>' : ''}</div>
+      <p class="addr-who">${esc(a.name)} · ${esc(a.phone)}</p>
+      <p class="addr-text">${esc(addrText(a))}</p>
+      ${a.note ? `<p class="addr-note">หมายเหตุ: ${esc(a.note)}</p>` : ''}
+      ${actions ? `<div class="addr-acts">
+        <button type="button" class="chip-btn" data-addr-edit="${id}">แก้ไข</button>
+        ${a.is_default ? '' : `<button type="button" class="link-btn" data-addr-default="${id}">ตั้งเป็นค่าเริ่มต้น</button>`}
+        <button type="button" class="addr-del" data-addr-del="${id}" aria-label="ลบที่อยู่ ${label}">${icon('i-trash')}</button>
+      </div>` : ''}
+    </article>`;
+  }
+  function renderAddresses() {
+    const box = $('addrList');
+    if (!box) return;
+    const list = addrList(), max = addrMax();
+    $('addrCount').textContent = `${num(list.length)} จาก ${num(max)} ที่อยู่`;
+    box.innerHTML = list.length ? list.map(a => addrCard(a, true)).join('')
+      : `<p class="addr-empty">ยังไม่มีที่อยู่จัดส่ง ถ้ารับสินค้าเองที่บริษัท ไม่ต้องเพิ่มก็ได้</p>`;
+    $('addrAdd').hidden = list.length >= max;
+    $('addrFull').hidden = list.length < max;
+  }
+  // ฟอร์มเพิ่ม/แก้ที่อยู่ (บันทึกที่หลังบ้าน ต้องออนไลน์)  คืนรหัสที่อยู่ หรือ null
+  async function openAddressForm(a) {
+    if (offline) { toast('ต้องออนไลน์เพื่อบันทึกที่อยู่'); return null; }
+    if (!a && addrList().length >= addrMax()) { toast(`เก็บที่อยู่ได้สูงสุด ${num(addrMax())} ที่อยู่ แก้ไขหรือลบที่อยู่เดิมก่อน`); return null; }
+    const cur = a || {}, preset = ['บ้าน', 'ที่ทำงาน'];
+    const lab = cur.label ? (preset.indexOf(cur.label) >= 0 ? cur.label : 'อื่นๆ') : 'บ้าน';
+    const seg = v => `<button type="button" class="af-seg" data-lab="${v}" aria-pressed="${v === lab}">${v}</button>`;
+    const fld = (id, label, val, extra) => `<label class="af-f" for="${id}"><span>${label}</span><input id="${id}" value="${esc(val || '')}" ${extra || ''}></label>`;
+    loadThaiAddr();
+    const r = await dialog({
+      title: a ? 'แก้ไขที่อยู่' : 'เพิ่มที่อยู่',
+      html: `<div class="af">
+        <div class="af-f"><span>ชื่อเรียกที่อยู่</span><div class="af-segs">${seg('บ้าน')}${seg('ที่ทำงาน')}${seg('อื่นๆ')}</div>
+          <input id="af-other" maxlength="30" placeholder="เช่น บ้านคุณแม่" value="${lab === 'อื่นๆ' ? esc(cur.label) : ''}" ${lab === 'อื่นๆ' ? '' : 'hidden'} aria-label="ชื่อเรียกที่อยู่"></div>
+        <div class="af-2">${fld('af-name', 'ชื่อผู้รับ', cur.name, 'maxlength="80" autocomplete="name"')}${fld('af-phone', 'เบอร์โทรผู้รับ', cur.phone, 'type="tel" inputmode="tel" maxlength="20" autocomplete="tel"')}</div>
+        <button type="button" class="link-btn af-me" id="af-me">ใช้ชื่อและเบอร์โทรจากข้อมูลผู้สั่ง</button>
+        <label class="af-f" for="af-line"><span>ที่อยู่</span><textarea id="af-line" rows="2" maxlength="200" placeholder="บ้านเลขที่ หมู่บ้าน ซอย ถนน">${esc(cur.line || '')}</textarea></label>
+        ${fld('af-zip', 'รหัสไปรษณีย์', cur.zip, 'inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="5 หลัก"')}
+        <div class="af-zipopts" id="af-zipopts" aria-live="polite"></div>
+        ${fld('af-sub', 'แขวง / ตำบล', cur.sub, 'maxlength="60"')}
+        <div class="af-2">${fld('af-dist', 'เขต / อำเภอ', cur.dist, 'maxlength="60"')}${fld('af-prov', 'จังหวัด', cur.prov, 'maxlength="60"')}</div>
+        ${fld('af-note', 'หมายเหตุสำหรับผู้ส่ง <small>(ไม่บังคับ)</small>', cur.note, 'maxlength="120" placeholder="เช่น ฝากไว้ที่ป้อม รปภ."')}
+        <label class="af-def"><input type="checkbox" id="af-def" ${cur.is_default || !addrList().length ? 'checked' : ''} ${cur.is_default ? 'disabled' : ''}>ตั้งเป็นที่อยู่ค่าเริ่มต้น</label>
+      </div>`,
+      showCancelButton: true, confirmButtonText: 'บันทึกที่อยู่', cancelButtonText: 'ยกเลิก', focusConfirm: false,
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
+      allowEscapeKey: () => !(window.Swal && Swal.isLoading()),
+      customClass: Object.assign({}, SW_CLASS, { popup: 'sw sw-addr' }),
+      didOpen: el => {
+        const q = id => el.querySelector('#' + id);
+        el.querySelectorAll('.af-seg').forEach(b => b.addEventListener('click', () => {
+          el.querySelectorAll('.af-seg').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+          q('af-other').hidden = b.dataset.lab !== 'อื่นๆ';
+          if (!q('af-other').hidden) q('af-other').focus();
+        }));
+        q('af-me').addEventListener('click', () => { q('af-name').value = profile.full_name || ''; q('af-phone').value = profile.phone || ''; });
+        const opts = q('af-zipopts');
+        const fill = o => { q('af-sub').value = o.sub; q('af-dist').value = o.dist; q('af-prov').value = o.prov; };
+        const showZip = async () => {
+          const z = q('af-zip').value;
+          if (!/^\d{5}$/.test(z)) { opts.innerHTML = ''; return; }
+          const data = await loadThaiAddr();
+          if (q('af-zip').value !== z) return;
+          if (!data) { opts.innerHTML = '<p class="af-hint">กรอกแขวง/ตำบล เขต/อำเภอ และจังหวัดเอง</p>'; return; }
+          const list = zipOptions(z);
+          if (!list.length) { opts.innerHTML = '<p class="af-hint">ไม่พบรหัสไปรษณีย์นี้ ตรวจอีกครั้ง หรือกรอกเอง</p>'; return; }
+          opts.innerHTML = `<p class="af-hint">เลือกแขวง/ตำบล</p>` + list.map((o, i) => `<button type="button" class="af-opt" data-i="${i}" aria-pressed="${o.sub === q('af-sub').value && o.dist === q('af-dist').value}">${esc(o.sub)} · ${esc(o.dist)}</button>`).join('');
+          opts.querySelectorAll('.af-opt').forEach(b => b.addEventListener('click', () => {
+            opts.querySelectorAll('.af-opt').forEach(x => x.setAttribute('aria-pressed', String(x === b))); fill(list[+b.dataset.i]);
+          }));
+          if (list.length === 1 && !q('af-sub').value) { fill(list[0]); opts.querySelector('.af-opt').setAttribute('aria-pressed', 'true'); }
+        };
+        q('af-zip').addEventListener('input', () => { const v = q('af-zip').value.replace(/\D/g, '').slice(0, 5); if (v !== q('af-zip').value) q('af-zip').value = v; showZip(); });
+        if (cur.zip) showZip();
+        el.querySelectorAll('input, textarea').forEach(x => x.addEventListener('input', () => { x.classList.remove('is-invalid'); Swal.resetValidationMessage(); }));
+      },
+      preConfirm: async () => {
+        const el = Swal.getPopup(), q = id => el.querySelector('#' + id);
+        const segOn = el.querySelector('.af-seg[aria-pressed="true"]');
+        const v = id => q(id).value.trim();
+        const label = segOn && segOn.dataset.lab !== 'อื่นๆ' ? segOn.dataset.lab : v('af-other');
+        const bad = (id, m) => { q(id).classList.add('is-invalid'); Swal.showValidationMessage(m); return false; };
+        if (!label) return bad('af-other', 'ตั้งชื่อเรียกที่อยู่');
+        if (!v('af-name')) return bad('af-name', 'กรอกชื่อผู้รับ');
+        const d = v('af-phone').replace(/\D/g, '').length; if (d < 9 || d > 15) return bad('af-phone', 'กรอกเบอร์โทรผู้รับให้ถูกต้อง (9–15 หลัก)');
+        if (!v('af-line')) return bad('af-line', 'กรอกที่อยู่ (บ้านเลขที่ ถนน)');
+        if (!/^\d{5}$/.test(v('af-zip'))) return bad('af-zip', 'รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก');
+        if (!v('af-sub')) return bad('af-sub', 'กรอกแขวง/ตำบล');
+        if (!v('af-dist')) return bad('af-dist', 'กรอกเขต/อำเภอ');
+        if (!v('af-prov')) return bad('af-prov', 'กรอกจังหวัด');
+        const address = { id: cur.id || '', label, name: v('af-name'), phone: v('af-phone'), line: v('af-line'), zip: v('af-zip'),
+          sub: v('af-sub'), dist: v('af-dist'), prov: v('af-prov'), note: v('af-note'), is_default: q('af-def').checked };
+        try { return await call('saveAddress', Object.assign({}, ownerParams(), { address })); }
+        catch (err) { Swal.showValidationMessage((err && err.message) || 'บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง'); return false; }
+      },
+    });
+    if (!r.isConfirmed || !r.value) return null;
+    store.set(K.addresses, r.value.addresses || []); if (r.value.max) store.set(K.addrMax, r.value.max);
+    renderAddresses(); renderCart();
+    toast(a ? 'บันทึกการแก้ไขแล้ว' : 'เพิ่มที่อยู่แล้ว');
+    return r.value.id || cur.id || null;
+  }
+  async function removeAddress(id) {
+    const a = addrList().find(x => x.id === id); if (!a) return;
+    if (offline) { toast('ต้องออนไลน์เพื่อลบที่อยู่'); return; }
+    const c = await dialog({ icon: 'warning', iconColor: iconColor(), title: `ลบที่อยู่ "${a.label}"?`, html: esc(addrText(a)),
+      showCancelButton: true, confirmButtonText: 'ลบที่อยู่', cancelButtonText: 'ยกเลิก' });
+    if (!c.isConfirmed) return;
+    try {
+      const r = await call('deleteAddress', Object.assign({}, ownerParams(), { id }));
+      store.set(K.addresses, r.addresses || []);
+      if (deliveryPref().address_id === id) store.set(K.delivery, Object.assign(deliveryPref(), { address_id: '' }));
+      renderAddresses(); renderCart(); toast('ลบที่อยู่แล้ว');
+    } catch (e) { toast(e.message || 'ลบไม่สำเร็จ ลองใหม่อีกครั้ง'); }
+  }
+  async function makeDefaultAddress(id) {
+    if (offline) { toast('ต้องออนไลน์เพื่อตั้งค่าเริ่มต้น'); return; }
+    try { const r = await call('setDefaultAddress', Object.assign({}, ownerParams(), { id })); store.set(K.addresses, r.addresses || []); renderAddresses(); renderCart(); }
+    catch (e) { toast(e.message || 'ทำรายการไม่สำเร็จ'); }
+  }
+  // เลือกการรับสินค้า: withPickup = มีตัวเลือก "รับที่บริษัท" ด้วย  คืน {method, address_id} หรือ null
+  async function chooseDelivery(opts) {
+    opts = opts || {};
+    const list = addrList(), cur = opts.current || {};
+    let addNew = false;
+    const sel = cur.method === 'pickup' ? 'pickup' : (cur.address_id || (selectedAddr() || {}).id || (opts.withPickup ? 'pickup' : ''));
+    const row = (v, inner) => `<label class="addr-opt${v === sel ? ' is-on' : ''}"><input type="radio" name="dlv-pick" value="${esc(v)}" ${v === sel ? 'checked' : ''}><span class="addr-opt-body">${inner}</span></label>`;
+    const r = await dialog({
+      title: opts.title || 'เลือกที่อยู่จัดส่ง',
+      html: `<div class="addr-pick" role="radiogroup" aria-label="${esc(opts.title || 'ที่อยู่จัดส่ง')}">
+        ${opts.withPickup ? row('pickup', `<b>รับที่บริษัท</b><small>รับเองเมื่อสถานะเป็น "เตรียมส่งของ"</small>`) : ''}
+        ${list.map(a => row(a.id, `<b>${esc(a.label)}${a.is_default ? ' <span class="addr-badge">ค่าเริ่มต้น</span>' : ''}</b><span>${esc(a.name)} · ${esc(a.phone)}</span><small>${esc(addrText(a))}</small>`)).join('')}
+      </div>${list.length < addrMax() ? `<button type="button" class="addr-add-btn" id="pkAdd">${icon('i-plus')}เพิ่มที่อยู่ใหม่</button>` : ''}`,
+      showCancelButton: true, confirmButtonText: opts.confirmText || 'ใช้ที่อยู่นี้', cancelButtonText: 'ยกเลิก',
+      showLoaderOnConfirm: !!opts.onPick,
+      allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
+      didOpen: el => {
+        el.querySelectorAll('input[name="dlv-pick"]').forEach(x => x.addEventListener('change', () => {
+          el.querySelectorAll('.addr-opt').forEach(l => l.classList.toggle('is-on', l.contains(x) && x.checked));
+        }));
+        const b = el.querySelector('#pkAdd'); if (b) b.addEventListener('click', () => { addNew = true; Swal.close(); });
+      },
+      preConfirm: async () => {
+        const x = Swal.getPopup().querySelector('input[name="dlv-pick"]:checked');
+        if (!x) { Swal.showValidationMessage('เลือกที่อยู่'); return false; }
+        const v = x.value === 'pickup' ? { method: 'pickup', address_id: '' } : { method: 'ship', address_id: x.value };
+        if (!opts.onPick) return v;
+        try { await opts.onPick(v); return v; }
+        catch (err) { Swal.showValidationMessage((err && err.message) || 'บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง'); return false; }
+      },
+    });
+    if (addNew) {
+      const id = await openAddressForm();
+      if (!id) return null;
+      const v = { method: 'ship', address_id: id };
+      if (opts.onPick) { try { await opts.onPick(v); } catch (e) { toast(e.message || 'บันทึกไม่สำเร็จ'); return null; } }
+      return v;
+    }
+    return r.isConfirmed ? r.value : null;
+  }
+  function renderDelivery() {
+    const box = $('delivery');
+    if (!box) return;
+    const d = deliveryPref(), a = selectedAddr();
+    const opt = (v, ic, t, sub) => `<label class="dlv-opt${d.method === v ? ' is-on' : ''}"><span class="dlv-top"><span class="dlv-ico">${icon(ic)}</span><input type="radio" name="dlv" value="${v}" ${d.method === v ? 'checked' : ''}></span><b>${t}</b><small>${sub}</small></label>`;
+    box.innerHTML = `<div class="dlv-opts" role="radiogroup" aria-label="วิธีรับสินค้า">
+        ${opt('pickup', 'i-store', 'รับที่บริษัท', 'รับเองเมื่อสถานะเป็น "เตรียมส่งของ"')}
+        ${opt('ship', 'i-truck', 'จัดส่ง', 'ส่งตามที่อยู่ที่เลือก')}
+      </div>` + (d.method !== 'ship' ? '' : a
+        ? `<article class="addr-card is-ship"><div class="addr-head"><span class="addr-ico">${icon('i-pin')}</span><b>ส่งที่: ${esc(a.label)}</b><button type="button" class="chip-btn" data-dlv-change>เปลี่ยน</button></div>
+            <p class="addr-who">${esc(a.name)} · ${esc(a.phone)}</p><p class="addr-text">${esc(addrText(a))}</p></article>`
+        : `<button type="button" class="addr-add-btn" data-dlv-add>${icon('i-plus')}เพิ่มที่อยู่จัดส่ง</button>`);
+  }
+  // แก้การรับสินค้าของคำสั่งซื้อในประวัติ: ได้จนกว่าสถานะจะเป็น "เตรียมส่งของ"
+  const canChangeDelivery = h => h.status === 'รอดำเนินการ';
+  async function changeOrderDelivery(no) {
+    const h = store.get(K.history, []).find(x => x.order_no === no);
+    if (!h || !canChangeDelivery(h)) return;
+    if (offline) { toast('ต้องออนไลน์เพื่อเปลี่ยนที่อยู่'); return; }
+    const cur = h.delivery === 'จัดส่ง' ? { method: 'ship', address_id: '' } : (h.delivery ? { method: 'pickup' } : {});
+    let res = null;
+    const v = await chooseDelivery({ withPickup: true, title: 'เปลี่ยนการรับสินค้า', confirmText: 'บันทึก', current: cur,
+      onPick: async pick => { res = await call('changeDelivery', Object.assign({}, ownerParams(), { order_no: no }, pick)); } });
+    if (!v || !res) return;
+    const hist = store.get(K.history, []), x = hist.find(o => o.order_no === no);
+    if (x) { x.delivery = res.delivery; x.ship_to = res.ship_to; store.set(K.history, hist); }
+    renderHistory(); toast('เปลี่ยนการรับสินค้าแล้ว');
+  }
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-addr-edit],[data-addr-del],[data-addr-default],[data-dlv-change],[data-dlv-add],[data-dlv-order],#addrAdd');
+    if (!t) return;
+    if (t.id === 'addrAdd') return openAddressForm();
+    if (t.dataset.addrEdit) return openAddressForm(addrList().find(a => a.id === t.dataset.addrEdit));
+    if (t.dataset.addrDel) return removeAddress(t.dataset.addrDel);
+    if (t.dataset.addrDefault) return makeDefaultAddress(t.dataset.addrDefault);
+    if (t.dataset.dlvOrder) return changeOrderDelivery(t.dataset.dlvOrder);
+    if (t.hasAttribute('data-dlv-add')) return openAddressForm().then(id => { if (id) setDelivery({ method: 'ship', address_id: id }); });
+    if (t.hasAttribute('data-dlv-change')) return chooseDelivery({ current: deliveryPref() }).then(v => { if (v) setDelivery(v); });
+  });
+  document.addEventListener('change', e => {
+    const x = e.target;
+    if (x.name !== 'dlv' || !x.checked) return;
+    setDelivery({ method: x.value });
+    if (x.value === 'ship' && !addrList().length) openAddressForm().then(id => { if (id) setDelivery({ method: 'ship', address_id: id }); });
+  });
 
   // ================= History =================
   const STATUS_CLASS = { 'เตรียมส่งของ': 'is-prep', 'จัดส่งแล้ว': 'is-done', 'ยกเลิก': 'is-cancel', 'จัดส่งบางส่วน': 'is-partial' };
@@ -2514,6 +2871,8 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
             <div><span>ยอดชำระ</span><b>${baht(h.total_amount)}</b></div></div>` : ''}
           ${payBox(h)}
           ${canCancel(h) ? `<button type="button" class="btn btn-ghost btn-block btn-cancel-order" data-cancel="${esc(h.order_no)}">ยกเลิกคำสั่งซื้อ</button>` : ''}
+          ${h.delivery || canChangeDelivery(h) ? `<div class="hist-dlv"><span class="addr-ico">${icon(h.delivery === 'จัดส่ง' ? 'i-truck' : 'i-store')}</span><div><b>${esc(h.delivery || 'ยังไม่ระบุการรับสินค้า')}</b>${h.ship_to ? `<small>${esc(h.ship_to)}</small>` : ''}</div>
+            ${canChangeDelivery(h) ? `<button type="button" class="chip-btn" data-dlv-order="${esc(h.order_no)}">เปลี่ยน</button>` : ''}</div>` : ''}
           <p class="hist-who">${esc(h.full_name)}${h.department ? ` (${esc(h.department)})` : ''}</p>
           <button type="button" class="btn btn-ghost btn-block" data-reorder="${esc(h.order_no)}">สั่งรายการเดิมอีกครั้ง</button>
         </div>
@@ -2664,14 +3023,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   });
 
   // ================= Load products =================
-  // ใช้ request เดียวร่วมกัน ป้องกัน response เก่ากลับมาทับสินค้า/สถานะจาก request ใหม่
-  let productsLoading = null;
-  function loadProducts(silent) {
-    if (productsLoading) return productsLoading;
-    productsLoading = loadProductsOnce(silent).finally(() => { productsLoading = null; });
-    return productsLoading;
-  }
-  async function loadProductsOnce(silent) {
+  async function loadProducts(silent) {
     if (!silent) skeleton();
     netBusy++; renderNet();
     try {
@@ -2679,7 +3031,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       products = (await call('getProducts')) || [];
       if (offline) { }                                  // ได้จากแคช ไม่นับเป็นการซิงก์
       else if (apiFromCache) netErr = true;              // ออนไลน์แต่หลังบ้านตอบไม่ได้: ใช้ข้อมูลเก่าไปก่อน แจ้งว่าซิงก์ไม่สำเร็จ
-      else store.set(K.productsSync, Date.now());         // ห้ามล้าง netErr ที่ concurrent history sync อาจเพิ่งตั้งไว้
+      else { store.set(K.productsSync, Date.now()); netErr = false; }
       byCode = Object.fromEntries(products.map(p => [p.code, p]));
       const trimmed = [];
       Object.keys(cart).forEach(c => {
@@ -2734,7 +3086,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   async function syncNow(quiet) {
     if (offline) { if (!quiet) toast('ยังออฟไลน์อยู่ ต่ออินเทอร์เน็ตแล้วลองใหม่'); return; }
     netErr = false; renderNet();
-    await Promise.all([loadProducts(true), signedIn() || store.get(K.history, []).length || view === 'history' ? syncHistory(true) : null]);
+    await Promise.all([loadProducts(true), signedIn() || store.get(K.history, []).length || view === 'history' ? syncHistory(true) : null, syncAddresses()]);
     if (!quiet) toast(netErr ? 'ซิงก์ไม่สำเร็จ ลองใหม่อีกครั้ง' : 'ซิงก์แล้ว');
   }
   $('netPill').addEventListener('click', async () => {
@@ -2859,6 +3211,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
   if (!/firefox/i.test(navigator.userAgent)) requestPersist();   // Chrome/Edge/Safari ตัดสินใจเองโดยไม่ถาม
   initNav();
   loadProducts();
+  setTimeout(syncAddresses, 800);                         // ที่อยู่จัดส่ง (ใช้ในแท็บ ฉัน และตะกร้า)
 })();
 </script>
 </body>
