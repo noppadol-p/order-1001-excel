@@ -131,6 +131,10 @@ svg.i { width: 22px; height: 22px; flex: none; }
 }
 /* ชื่อหน้า: หัวข้อใหญ่ด้านบนเนื้อหา แยกจากปุ่มย้อนกลับ */
 .page-title { font-size: 24px; font-weight: 600; line-height: 1.3; margin: 16px 0 0; }
+/* หัวข้อหน้า + ปุ่มระดับเดียวกันชิดขวา (เช่น ล้างตะกร้า) */
+.page-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.page-head .page-title { flex: 1 1 auto; min-width: 0; }
+.page-act { flex: none; margin: 16px -6px 0 0; }
 
 .back-link svg { width: 26px; height: 26px; flex: none; }
 .back-link:active { background: rgba(0, 0, 0, .07); }
@@ -155,8 +159,8 @@ svg.i { width: 22px; height: 22px; flex: none; }
 .net-pill:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; border-radius: 8px; }
 /* มือถือ: มีปุ่มอื่นอยู่ข้างๆ ให้ซ่อนเวลาเพื่อไม่ให้ล้น */
 @media (max-width: 480px) {
-  .appbar-actions:has(#installBtn:not([hidden])) .net-sub, .appbar-actions:has(#clearCartBtn:not([hidden])) .net-sub, .appbar-actions:has(.pill) .net-sub { display: none; }
-  .appbar-actions:has(#clearCartBtn:not([hidden])) .pill, .appbar-actions:has(#installBtn:not([hidden])) .pill { display: none; }
+  .appbar-actions:has(#installBtn:not([hidden])) .net-sub, .appbar-actions:has(.pill) .net-sub { display: none; }
+  .appbar-actions:has(#installBtn:not([hidden])) .pill { display: none; }
 }
 @media (max-width: 359px) { .net-pill .net-sub, .appbar-actions .pill { display: none; } }
 @media (max-width: 400px) { .appbar-actions .pill { display: none; } }   /* ป้ายโหมดตัวอย่าง (เฉพาะหน้าตัวอย่าง) ไม่แย่งที่บนจอแคบ */   /* จอแคบมาก: แสดงแค่สถานะ */
@@ -903,7 +907,6 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
         <button type="button" class="net-pill" id="netPill"><span id="netLabel">อัปเดต</span><span class="net-sub" id="netSub"></span></button>
         
         <button type="button" class="chip-btn" id="installBtn" hidden>ติดตั้งแอป</button>
-        <button type="button" class="text-btn" id="clearCartBtn" hidden>ล้างตะกร้า</button>
       </div>
     </div>
     <div class="search" id="searchRow" role="search">
@@ -921,7 +924,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
 <div class="ptr" id="ptr" aria-hidden="true"><svg><use href="#i-refresh"/></svg></div>
 
 <main>
-  <div class="wrap"><h1 class="page-title" id="pageTitle" hidden></h1></div>
+  <div class="wrap page-head"><h1 class="page-title" id="pageTitle" hidden></h1><button type="button" class="text-btn page-act" id="clearCartBtn" hidden>ล้างตะกร้า</button></div>
   <section class="view" id="view-products" aria-label="สินค้า">
     <div class="wrap">
       <div class="grid" id="grid"></div>
@@ -1034,7 +1037,7 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
           <li><button type="button" id="menuClearHistory" class="is-danger"><svg class="i"><use href="#i-trash"/></svg><span>เลิกเชื่อมประวัติกับเครื่องนี้</span></button></li>
         </ul>
       </div>
-      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.8.2</p>
+      <p class="foot-note">รหัสนี้เป็นของคุณคนเดียว อย่าส่งให้คนอื่น<br>1001 Premium Blankets เวอร์ชัน 1.8.3</p>
     </div>
   </section>
 </main>
