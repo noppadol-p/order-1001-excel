@@ -23,6 +23,6 @@ jobs:
           node --check sw.js
       - name: Validate release version
         run: |
-          python3 -c 'from pathlib import Path; assert "เวอร์ชัน 1.7.0" in Path("index.html").read_text(); assert "const VERSION = '\''1.7.0'\''" in Path("sw.js").read_text()'
+          python3 -c 'from pathlib import Path; assert "เวอร์ชัน 1.8.0" in Path("index.html").read_text(); assert "const VERSION = '\''1.8.0'\''" in Path("sw.js").read_text()'
       - name: Run regression tests
-        run: node --test tests/regression.cjs
+        run: node --test tests/*.cjs
