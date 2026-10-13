@@ -2512,13 +2512,24 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     if (!profileOk() && !(await askProfile())) return;
     if (!(await precheckCart(ls))) return;
     // การรับสินค้า: จัดส่งต้องมีที่อยู่
+    const owner = addrStamp();                          // ประทับเจ้าของ "ก่อน" อ่านการรับสินค้า/ที่อยู่: สำเนาที่สแนปไว้เป็นของคนนี้เท่านั้น
     let delivery = { method: 'pickup', address_id: '' }, shipAddr = null;
     if (deliveryPref().method === 'ship') {
       shipAddr = selectedAddr();
-      if (!shipAddr) { const id = await openAddressForm(); if (!id) return; setDelivery({ method: 'ship', address_id: id }); shipAddr = selectedAddr(); }
+      if (!shipAddr) {
+        const id = await openAddressForm(); if (!id) return;
+        if (!addrSameOwner(owner)) return;              // สลับบัญชี/บัตรผ่านหมดอายุระหว่างกรอกฟอร์ม: ที่อยู่ใหม่ไม่ใช่ของคนที่กดสั่ง
+        setDelivery({ method: 'ship', address_id: id }); shipAddr = selectedAddr();
+      }
       if (!shipAddr) return;
       delivery = { method: 'ship', address_id: shipAddr.id };
     }
+    // เทียบ "เนื้อหา" ของใบที่อยู่ ไม่ใช่ rev: sync ที่ได้ข้อมูลเดิมกลับมาต้องไม่ขวางการส่ง
+    const addrSig = a => (a ? JSON.stringify([a.id, a.label, a.name, a.phone, a.line, a.sub, a.dist, a.prov, a.zip, a.note || '', !!a.is_default]) : '');
+    const addrSnap = addrSig(shipAddr);
+    const sameOwner = () => addrSameOwner(owner);
+    // ด่านก่อนส่งจริง: ต้องเป็นเจ้าของคนเดิม และที่อยู่ที่เลือกต้องยังเป็นใบเดิมทั้งใบ (ถูกแก้/ถูกลบ = ไม่ส่ง)
+    const canSubmit = () => sameOwner() && addrSig(delivery.address_id ? addrList().find(a => a.id === delivery.address_id) : null) === addrSnap;
     const t = priced();
     const couponCode = t.coupon ? t.coupon.code : '';
     const sig = JSON.stringify([ls.map(l => [l.code, l.qty]), profile, couponCode, delivery]);
@@ -2545,6 +2556,10 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
       allowOutsideClick: () => !(window.Swal && Swal.isLoading()),
       allowEscapeKey: () => !(window.Swal && Swal.isLoading()),
       preConfirm: async () => {
+        if (!canSubmit()) {                             // สลับบัญชี/บัตรผ่านหมดอายุ หรือที่อยู่ถูกแก้ ระหว่างกล่องยืนยันเปิดอยู่
+          if (window.Swal) Swal.showValidationMessage('บัญชีหรือที่อยู่จัดส่งเปลี่ยนไประหว่างยืนยัน กรุณาตรวจสอบแล้วส่งคำสั่งซื้อใหม่อีกครั้ง');
+          return false;
+        }
         try {
           return await call('placeOrder', {
             full_name: profile.full_name, department: profile.department, phone: profile.phone,
@@ -2559,10 +2574,14 @@ body.has-checkout .swal2-container.swal2-bottom { padding-bottom: calc(var(--tab
     });
     let res = r.value;
     if (!hasSwal && r.isConfirmed) {
+      if (!canSubmit()) { alert('บัญชีหรือที่อยู่จัดส่งเปลี่ยนไประหว่างยืนยัน กรุณาตรวจสอบแล้วส่งคำสั่งซื้อใหม่อีกครั้ง'); return; }
       try { res = await call('placeOrder', { full_name: profile.full_name, department: profile.department, phone: profile.phone, items: ls.map(l => ({ code: l.code, qty: l.qty })), request_id: pending.id, coupon: couponCode, ...ownerParams(), client: deviceInfo(), delivery }); }
       catch (err) { alert(err.message); return; }
     }
     if (!r.isConfirmed || !res) return;
+    // ผลกลับมาช้าหลังสลับบัญชี/บัตรผ่านหมดอายุ: คำสั่งซื้อเป็นของเจ้าของเดิม ห้ามเขียนประวัติ/ล้างตะกร้าให้คนใหม่
+    // (ส่งสำเร็จไปแล้ว จึงล้าง request_id ค้างทิ้ง ไม่ให้ตกทอดไปรวมกับคำสั่งซื้อของเจ้าของคนใหม่)
+    if (!sameOwner()) { pending = null; store.set(K.pendingOrder, null); return; }
 
     // ระบบยืนยันแล้วว่าบันทึกลง Google Sheet จึงเก็บเข้าประวัติ
     pending = null; store.set(K.pendingOrder, null);
